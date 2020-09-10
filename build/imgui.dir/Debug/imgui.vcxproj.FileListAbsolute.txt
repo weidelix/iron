@@ -1,2 +1,0 @@
-C:\Users\mesin\Desktop\TODO\Iron\build\Debug\imgui.pdb
-C:\Users\mesin\Desktop\TODO\Iron\build\imgui.dir\Debug\imgui.pdb
