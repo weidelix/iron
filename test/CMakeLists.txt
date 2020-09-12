@@ -11,7 +11,8 @@ target_compile_definitions(Sandbox  PRIVATE STB_IMAGE_IMPLEMENTATION
                                     PRIVATE IRON_PLATFORM_WINDOW)
 
 # Include Paths
-target_include_directories(Sandbox  PRIVATE bin/$<CONFIG>/Iron
-                                    PRIVATE bin/$<CONFIG>
+target_include_directories(Sandbox  PRIVATE bin/$<CONFIGURATION>/Iron
+                                    PRIVATE bin/$<CONFIGURATION>/
+                                    PRIVATE ${CMAKE_SOURCE_DIR}/vendor/SPDLOG/include
                                     ${EXTRA_INCLUDES})
 

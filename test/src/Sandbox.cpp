@@ -1,26 +1,29 @@
-#include "Iron.h"
 #include <iostream>
+#include "Iron.h"
 
+//* NOTE:
+//* TRY REBUILDING IRON WHEN SANDBOX IS NOT WORKING
+//* IGNORE ERROR LINES INTELLISENSE IS STUPID
 
 class Sandbox : public Iron::Application
 {
 public:
-    Sandbox() { }
-    ~Sandbox() { }
-
+    // Runs code on start
     void OnStart() override
     {
-        std::cout << "Start" << std::endl;
+        DEBUG_INFO("Start");
     }
 
+    // Run code every frame
     void OnUpdate() override
     {
-        std::cout << "Update" << std::endl;
+        DEBUG_INFO("Update");
     }
 };
 
 Iron::Application *Iron::CreateApplication()
 {
+    DEBUG_INFO("Iron Engine version {0}", IRON_VERSION);
     return new Sandbox();
 }   
 

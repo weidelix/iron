@@ -34,11 +34,12 @@ target_include_directories(glad PRIVATE "${PROJECT_SOURCE_DIR}/vendor/GLAD/inclu
 file(GLOB source_files src/Iron/*.cpp)
 add_library(Iron SHARED ${source_files})
 
-set(IRON_DLL "${PROJECT_SOURCE_DIR}/bin/Debug")
+set(IRON_DLL "${CMAKE_SOURCE_DIR}/bin/Debug")
+file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/src/Iron/*.h)
 file(COPY "${CMAKE_SOURCE_DIR}/src/Iron.h" DESTINATION ${IRON_DLL})
-file(COPY "${CMAKE_SOURCE_DIR}/src/Iron/Application.h" DESTINATION ${IRON_DLL}/Iron)
-file(COPY "${CMAKE_SOURCE_DIR}/src/Iron/Core.h" DESTINATION ${IRON_DLL}/Iron)
-file(COPY "${CMAKE_SOURCE_DIR}/src/Iron/Entry.h" DESTINATION ${IRON_DLL}/Iron)
+file(COPY "${CMAKE_BINARY_DIR}/IronConfig.h" DESTINATION ${IRON_DLL})
+file(COPY ${HEADERS} DESTINATION ${IRON_DLL}/Iron)
+
 
 set_target_properties( Iron PROPERTIES 
                             ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
@@ -66,6 +67,7 @@ target_include_directories(Iron PRIVATE "${PROJECT_SOURCE_DIR}/vendor/GLFW/inclu
                                 PRIVATE "${PROJECT_SOURCE_DIR}/vendor/IMGUI/include"
                                 PRIVATE "${PROJECT_SOURCE_DIR}/vendor/STB/include"
                                 PRIVATE "${PROJECT_SOURCE_DIR}/vendor/GlAD/include"
+                                PRIVATE "${PROJECT_SOURCE_DIR}/vendor/SPDLOG/include"
                                 PRIVATE "${CMAKE_BUILD_DIR}"
                                 ${EXTRA_INCLUDES})
 

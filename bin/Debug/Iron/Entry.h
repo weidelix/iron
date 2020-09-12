@@ -6,11 +6,12 @@
 
     int main()
     {
+        Iron::Log::Init();
         auto* app = Iron::CreateApplication();
         app->Run();
         delete app;
     }
 
 #else
-    #error Iron only supports window at the moment!
+    #error Iron only supports windows at the moment!
 #endif

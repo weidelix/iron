@@ -7,7 +7,7 @@ namespace Iron
     void Application::OnStart()  { }
     void Application::OnUpdate() { }
     bool Application::Run() 
-    { 
+    {
         this->OnStart();
         this->OnUpdate();
         return true; 
