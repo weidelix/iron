@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "GL/glew.h"
+#include "glad/glad.h"
 #include "Renderer.h"
 #include "glm.hpp"
 #include "gtc/type_ptr.hpp"

@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "Renderer.h"
-#include "GL\glew.h"
+#include "glad/glad.h"
 
 class Texture2D
 {
