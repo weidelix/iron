@@ -1,29 +1,28 @@
-#include <iostream>
 #include "Iron.h"
 
-//* NOTE:
-//* TRY REBUILDING IRON WHEN SANDBOX IS NOT WORKING
-//* IGNORE ERROR LINES INTELLISENSE IS STUPID
-
+//NOTE: TRY RECONFIGURING PROJECT THEN REBUILDING WHEN NOT WORKING PROPERLY
 class Sandbox : public Iron::Application
 {
 public:
-    // Runs code on start
+    //* Runs code on start
     void OnStart() override
     {
-        DEBUG_INFO("Start");
+        
     }
 
-    // Run code every frame
+    //* Run code every frame
     void OnUpdate() override
     {
-        DEBUG_INFO("Update");
+
     }
+
+    void OnEvent(Iron::Event& event) override { }
+    void OnExit() override { }
 };
 
-Iron::Application *Iron::CreateApplication()
+//* Define "Iron::CreateApplication" method that returns an object that inherits from an "Application" object
+Iron::Application* Iron::CreateApplication()
 {
-    DEBUG_INFO("Iron Engine version {0}", IRON_VERSION);
+    LOG_INFO("Iron Engine v{0}", IRON_VERSION);
     return new Sandbox();
-}   
-
+}

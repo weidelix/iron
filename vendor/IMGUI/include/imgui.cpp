@@ -3234,7 +3234,8 @@ ImGuiContext* ImGui::GetCurrentContext()
 void ImGui::SetCurrentContext(ImGuiContext* ctx)
 {
 #ifdef IMGUI_SET_CURRENT_CONTEXT_FUNC
-    IMGUI_SET_CURRENT_CONTEXT_FUNC(ctx); // For custom thread-based hackery you may want to have control over this.
+    IMGUI_SET_CURRENT_CONTEXT_FUNC(ctx); // For custom thread-based hacke
+    ry you may want to have control over this.
 #else
     GImGui = ctx;
 #endif

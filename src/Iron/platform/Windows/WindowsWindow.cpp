@@ -1,0 +1,135 @@
+#include "WindowsWindow.h"
+
+namespace Iron
+{
+    static bool s_glfwIsInitialized = false;
+
+    Window* Window::Create(const WindowProps& prop)
+    {
+        return new WindowsWindow(prop);
+    }
+
+    WindowsWindow::WindowsWindow(const WindowProps& prop)
+    {
+        Init(prop);
+    }
+
+    WindowsWindow::~WindowsWindow()
+    {
+        Close();
+    }
+    
+    void WindowsWindow::Init(const WindowProps& prop)
+    {
+        m_data.Title  = prop.Title;
+        m_data.Width  = prop.Width;
+        m_data.Height = prop.Height;
+
+        if (!s_glfwIsInitialized)
+        {
+            int glfwState = glfwInit();
+            IRON_CORE_ASSERT(glfwState, "GLFW ERROR ({0}): Could not initialize glfw", glfwState);
+            s_glfwIsInitialized = true;
+        }
+
+        m_window = glfwCreateWindow((int)m_data.Width, (int)m_data.Height, m_data.Title.c_str(), nullptr, nullptr);
+        glfwMakeContextCurrent(m_window);
+        glfwSetWindowUserPointer(m_window, &m_data);
+
+        glfwSetErrorCallback([](int error, const char* desc)
+        {
+            IRON_CORE_ERROR("GLFW ERROR ({0}) : {1}", error, desc);
+        });
+
+        glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.OnExitCallback();
+            glfwDestroyWindow(window);
+        });
+
+        glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.Width = width; 
+            data.Height = height; 
+            WindowResizeEvent e(width, height);
+            data.EventCallback(e);
+        });
+
+        glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mod)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            switch(action)
+            {
+            case GLFW_PRESS: 
+            {
+                MouseButtonPressedEvent* e = new MouseButtonPressedEvent(button);
+                data.EventCallback(*e);
+                data.Events.push_back(e);
+            }
+            break;
+            case GLFW_RELEASE:
+            {
+                MouseButtonReleasedEvent* e = new MouseButtonReleasedEvent(button);
+                data.EventCallback(*e);
+                data.Events.push_back(e);
+            } 
+            break;
+            }
+        });
+
+        glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scanscode, int action, int mods)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            switch(action)
+            {
+                case GLFW_PRESS:
+                {
+                    KeyPressEvent* e = new KeyPressEvent(key, false);
+                    data.EventCallback(*e);
+                    data.Events.push_back(e);
+                }
+                break;
+
+                case GLFW_RELEASE:
+                {
+                    KeyReleaseEvent* e = new KeyReleaseEvent(key);
+                    data.EventCallback(*e);
+                    data.Events.push_back(e);
+                }
+                break;
+
+                case GLFW_REPEAT:
+                {
+                    KeyPressEvent* e = new KeyPressEvent(key, true);
+                    data.EventCallback(*e);
+                    data.Events.push_back(e);
+                }
+                break;
+            }
+        });
+        
+    }
+
+    void WindowsWindow::Close()
+    {
+        glfwDestroyWindow(m_window);
+    }
+
+    void WindowsWindow::OnUpdate()
+    {
+        glfwPollEvents();
+        glfwSwapBuffers(m_window);
+    }
+
+    void WindowsWindow::SetVSync(bool val)
+    {
+        if (val)
+            glfwSwapInterval(1);
+        else
+            glfwSwapInterval(0);
+
+        m_data.VSync = true;
+    }
+}
