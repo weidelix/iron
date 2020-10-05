@@ -8,7 +8,7 @@ namespace Iron
     enum class EventType
     {
         None,
-        KeyPress, KeyRelease, KeyRepeat, // Key events
+        CombinationKeyPress, KeyPress, KeyRelease, KeyRepeat, // Key events
         MouseClick, MouseRelease, MouseMove, MouseScroll, // Mouse events
         WindowResize, WindowFocus, WindowLostFocus, WindowMove, WindowMinimized, WindowClose, // Window events
         AppTick, AppUpdate, AppRender, // App events

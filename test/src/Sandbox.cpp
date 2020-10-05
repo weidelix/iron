@@ -13,14 +13,15 @@ public:
     //* Run code every frame
     void OnUpdate() override
     {
-
+        
     }
 
     void OnEvent(Iron::Event& event) override { }
+
     void OnExit() override { }
 };
 
-//* Define "Iron::CreateApplication" method that returns an object that inherits from an "Application" object
+//* Define "Iron::CreateApplication" method that returns an object that inherits from "Application" class
 Iron::Application* Iron::CreateApplication()
 {
     LOG_INFO("Iron Engine v{0}", IRON_VERSION);

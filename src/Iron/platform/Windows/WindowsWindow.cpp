@@ -35,6 +35,7 @@ namespace Iron
         m_window = glfwCreateWindow((int)m_data.Width, (int)m_data.Height, m_data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_window);
         glfwSetWindowUserPointer(m_window, &m_data);
+        glfwSwapInterval(1);
 
         glfwSetErrorCallback([](int error, const char* desc)
         {
@@ -79,16 +80,26 @@ namespace Iron
             }
         });
 
-        glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scanscode, int action, int mods)
+        glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int key)
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            KeyPressEvent* e = new KeyPressEvent(key, false);
+            data.Events.push_back(e);
+        });
+
+        glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             switch(action)
             {
                 case GLFW_PRESS:
                 {
-                    KeyPressEvent* e = new KeyPressEvent(key, false);
-                    data.EventCallback(*e);
-                    data.Events.push_back(e);
+                    if (mods != 0)
+                    {
+                        KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);
+                        data.EventCallback(*e);
+                        data.Events.push_back(e);
+                    }
                 }
                 break;
 
@@ -102,14 +113,16 @@ namespace Iron
 
                 case GLFW_REPEAT:
                 {
-                    KeyPressEvent* e = new KeyPressEvent(key, true);
-                    data.EventCallback(*e);
-                    data.Events.push_back(e);
+                    if  (mods != 0)
+                    {
+                        KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);               
+                        data.EventCallback(*e);
+                        data.Events.push_back(e);
+                    }
                 }
                 break;
             }
         });
-        
     }
 
     void WindowsWindow::Close()
@@ -119,6 +132,9 @@ namespace Iron
 
     void WindowsWindow::OnUpdate()
     {
+        for (auto* e : m_data.Events)
+            delete e;
+        m_data.Events.clear();
         glfwPollEvents();
         glfwSwapBuffers(m_window);
     }

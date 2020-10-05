@@ -2,97 +2,148 @@
 
 namespace Iron
 {
-    bool Input::Mouse(int button)
+    inline int Input::IsPrintable(int key)
     {
-        int i = 0;
-        for(auto& event : m_events)
+        if (key >= 32 && key <= 126)
+            return key;
+        else
+            return false;
+    }
+
+    inline int Input::IsControlChar(int key)
+    {
+        return (key >= 340 && key <= 348) ? (int)Key::ControlChar : key;
+    }
+
+    bool Input::Mouse(enum class MouseButton button)
+    {
+        for(auto* event : m_events)
         {
             if (event->GetEventType() == Iron::EventType::MouseClick)
             {
                 Iron::MouseButtonPressedEvent& m = (Iron::MouseButtonPressedEvent&)*event;
-                if (m.GetMouseEvent() == button)
-                {   
-                    delete event;
-                    m_events.erase(m_events.begin() + i);
+                if (m.GetMouseEvent() == (int)button)          
+                {
                     return true;
-                }
+                }      
             }
-            i++;
         }
         return false;
     }
 
     int Input::Mouse()
     {
-        int i = 0;
-        for(auto& event : m_events)
+        for(auto* event : m_events)
         {
             if (event->GetEventType() == Iron::EventType::MouseClick)
             {
                 Iron::MouseButtonPressedEvent& m = (Iron::MouseButtonPressedEvent&)*event;
-                delete event;
-                m_events.erase(m_events.begin() + i);
-                return m.GetMouseEvent();
+                int key = m.GetMouseEvent();
+                
+                return key;
             }
-            i++;
         }
-        return 0;
+        return (int)MouseButton::No_Input;
     }
 
     int Input::Key()
     {
-        int i = 0;
-        for(auto& event : m_events)
+        for(auto* event : m_events)
         {
-            if (event->GetEventType() == Iron::EventType::KeyRelease)
-            {
-                KeyReleaseEvent& M = (KeyReleaseEvent&)*event;
-                delete event;
-                m_events.erase(m_events.begin() + i);
-                return 0;
-            }
-
             if (event->GetEventType() == Iron::EventType::KeyPress)
             {
-               KeyPressEvent& m = (KeyPressEvent&)*event;                
+                KeyPressEvent& m = (KeyPressEvent&)*event;                
                 int key = m.GetKeyEvent();
-                delete event;
-                m_events.erase(m_events.begin() + i);
-                return key;                    
-                
+                return IsControlChar(IsPrintable((int)key));                    
             }
-            i++;
         }
-        return 0;
+        return (int)Key::No_Input;
     }
 
-    bool Input::Key(int key)
+    bool Input::Key(enum class Key key)
     {
-        int i = 0;
-        for(auto& event : m_events)
+        for(auto* event : m_events)
         {
-            if (event->GetEventType() == Iron::EventType::KeyRelease)
-            {
-                KeyReleaseEvent& M = (KeyReleaseEvent&)*event;
-                delete event;
-                m_events.erase(m_events.begin() + i);
-                return 0;
-            }
-
             if (event->GetEventType() == Iron::EventType::KeyPress)
             {
                 KeyPressEvent& m = (KeyPressEvent&)*event; 
-                if (m.GetKeyEvent() == key) 
+                if (m.GetKeyEvent() == (int)key) 
                 {
-                    delete event;
-                    m_events.erase(m_events.begin() + i);
-                    return key;                    
+                    return true;                    
                 }
-                delete event;
-                m_events.erase(m_events.begin() + i);
+            }   
+        }       
+        return false;
+    }
+
+    bool Input::KeyCombination(enum class ModKey modkey, enum class Key key)
+    {
+        for(auto* event : m_events)
+        {
+            if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
+            {
+                KeyCombinationEvent& m = (KeyCombinationEvent&)*event; 
+                if (m.GetModKeyEvent() == (int)modkey && m.GetKeyEvent() == (int)key) 
+                {
+                    return true;                    
+                }
             }
-            i++;
         }
-        return 0;
+        return false;
+    }
+
+    bool Input::KeyCombination(enum class ModKey modkey1, enum class ModKey modkey2, enum class Key key)
+    {
+        for(auto* event : m_events)
+        {
+            if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
+            {
+                KeyCombinationEvent& m = (KeyCombinationEvent&)*event; 
+                if (m.GetModKeyEvent() == ((int)modkey1 + (int)modkey2) && m.GetKeyEvent() == (int)key) 
+                {
+                    return true;                    
+                }
+            }
+        }
+        return false;
+    }
+
+    bool Input::KeyCombination(enum class ModKey modkey1, enum class Key key1, enum class Key key2)
+    {
+        static bool flag1 = false;
+        static bool flag2 = false;
+        static double time = 0.00;
+
+        for(auto* event : m_events)
+        {
+            if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
+            {
+                KeyCombinationEvent& m = (KeyCombinationEvent&)*event; 
+                if (m.GetModKeyEvent() == (int)modkey1 && m.GetKeyEvent() == (int)key1) 
+                {
+                    time = glfwGetTime();
+                    flag1 = true;
+                }
+                if (m.GetModKeyEvent() == (int)modkey1 && m.GetKeyEvent() == (int)key2)
+                {
+                    if (flag1)
+                    {
+                        time = glfwGetTime();
+                        flag2 = true;                    
+                    }
+                }
+            }
+        }
+        if (glfwGetTime() - time <= 0.50)
+        {   
+            if (flag1 && flag2) { flag1 = false; flag2 = false; return true; }
+        }
+        else
+        {
+            flag1 = false;
+            flag2 = false;
+        }
+        
+        return false;
     }
 }

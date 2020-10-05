@@ -4,138 +4,178 @@
 #include "Core.h"
 #include "Window.h"
 #include "Iron/platform/Windows/WindowsWindow.h"
+#include <GLFW/glfw3.h>
 
-enum Key
+enum class Key
 {
-    Key_Unkown           =  -1,
-    Key_Space             =  32,
-    Key_Apostrophe        =  39, 
-    Key_Comma             =  44,  
-    Key_Minus             =  45,
-    Key_Period            =  46,
-    Key_Slash             =  47,
-    Key_0                 =  48,
-    Key_1                 =  49,
-    Key_2                 =  50,
-    Key_3                 =  51,
-    Key_4                 =  52,    
-    Key_5                 =  53,    
-    Key_6                 =  54,    
-    Key_7                 =  55,    
-    Key_8                 =  56,    
-    Key_9                 =  57,    
-    Key_Semicolon       =  59 , 
-    Key_Equal             =  61 , 
-    Key_A                 =  65,    
-    Key_B                 =  66,    
-    Key_C                 =  67,    
-    Key_D                 =  68,    
-    Key_E                 =  69,    
-    Key_F                 =  70,    
-    Key_G                 =  71,    
-    Key_H                 =  72,    
-    Key_I                 =  73,    
-    Key_J                 =  74,    
-    Key_K                 =  75,    
-    Key_L                 =  76,    
-    Key_M                 =  77,    
-    Key_N                 =  78,    
-    Key_O                 =  79,    
-    Key_P                 =  80,    
-    Key_Q                 =  81,    
-    Key_R                 =  82,    
-    Key_S                 =  83,    
-    Key_T                 =  84,    
-    Key_U                 =  85,    
-    Key_V                 =  86,    
-    Key_W                 =  87,    
-    Key_X                 =  88,    
-    Key_Y                 =  89,    
-    Key_Z                 =  90,    
-    Key_Left_Bracket      =  91 ,
-    Key_Backslash         =  92 ,
-    Key_Right_Bracket     =  93 ,
-    Key_Grave_Accent      =  96 ,
-    Key_World_1           =  161,
-    Key_World_2           =  162,
-    Key_Escape            =  256,
-    Key_Enter             =  257,
-    Key_Tab               =  258,
-    Key_Backspace         =  259,
-    Key_Insert            =  260,
-    Key_Delete            =  261,
-    Key_Right             =  262,
-    Key_Left              =  263,
-    Key_Down              =  264,
-    Key_Up                =  265,
-    Key_Page_Up           =  266,
-    Key_Page_Down         =  267,
-    Key_Home              =  268,
-    Key_End               =  269,
-    Key_Caps_Lock         =  280,
-    Key_Scroll_Lock       =  281,
-    Key_Num_Lock          =  282,
-    Key_Print_Screen      =  283,
-    Key_Pause             =  284,
-    Key_F1                =  290,
-    Key_F2                =  291,
-    Key_F3                =  292,
-    Key_F4                =  293,
-    Key_F5                =  294,
-    Key_F6                =  295,
-    Key_F7                =  296,
-    Key_F8                =  297,
-    Key_F9                =  298,
-    Key_F10               =  299,
-    Key_F11               =  300,
-    Key_F12               =  301,
-    Key_F13               =  302,
-    Key_F14               =  303,
-    Key_F15               =  304,
-    Key_F16               =  305,
-    Key_F17               =  306,
-    Key_F18               =  307,
-    Key_F19               =  308,
-    Key_F20               =  309,
-    Key_F21               =  310,
-    Key_F22               =  311,
-    Key_F23               =  312,
-    Key_F24               =  313,
-    Key_F25               =  314,
-    Key_KP_0              =  320,
-    Key_KP_1              =  321,
-    Key_KP_2              =  322,
-    Key_KP_3              =  323,
-    Key_KP_4              =  324,
-    Key_KP_5              =  325,
-    Key_KP_6              =  326,
-    Key_KP_7              =  327,
-    Key_KP_8              =  328,
-    Key_KP_9              =  329,
-    Key_KP_Decimal        =  330,
-    Key_KP_Divide         =  331,
-    Key_KP_Multiply       =  332,
-    Key_KP_Substract      =  333,
-    Key_KP_Add            =  334,
-    Key_KP_Enter          =  335,
-    Key_KP_Equal          =  336,
-    Key_Left_Shift        =  340,
-    Key_Left_Control      =  341,
-    Key_Left_Alt          =  342,
-    Key_Left_Super        =  343,
-    Key_Right_Shift       =  344,
-    Key_Right_Control     =  345,
-    Key_Right_Alt         =  346,
-    Key_Right_Super       =  347,
-    Key_Menu              =  348,
-    Key_Last              =  348
+    No_Input          =  -2,
+    Unknown           =  -1,
+    Space             =  32,
+    Apostrophe        =  39, 
+    Comma             =  44,  
+    Minus             =  45,
+    Period            =  46,
+    Slash             =  47,
+    Num_0             =  48,
+    Num_1             =  49,
+    Num_2             =  50,
+    Num_3             =  51,
+    Num_4             =  52,    
+    Num_5             =  53,    
+    Num_6             =  54,    
+    Num_7             =  55,    
+    Num_8             =  56,    
+    Num_9             =  57,    
+    Semicolon         =  59, 
+    Equal             =  61, 
+    A                 =  65,    
+    B                 =  66,    
+    C                 =  67,    
+    D                 =  68,    
+    E                 =  69,    
+    F                 =  70,    
+    G                 =  71,    
+    H                 =  72,    
+    I                 =  73,    
+    J                 =  74,    
+    K                 =  75,    
+    L                 =  76,    
+    M                 =  77,    
+    N                 =  78,    
+    O                 =  79,    
+    P                 =  80,    
+    Q                 =  81,    
+    R                 =  82,    
+    S                 =  83,    
+    T                 =  84,    
+    U                 =  85,    
+    V                 =  86,    
+    W                 =  87,    
+    X                 =  88,    
+    Y                 =  89,    
+    Z                 =  90,    
+    Left_Bracket      =  91,
+    Backslash         =  92,
+    Right_Bracket     =  93,
+    Grave_Accent      =  96,
+    a                 =  97,
+    b                 =  98,
+    c                 =  99,
+    d                 =  100,
+    e                 =  101,
+    f                 =  102,
+    g                 =  103,
+    h                 =  104,
+    i                 =  105,
+    j                 =  106,
+    k                 =  107,
+    l                 =  108,
+    m                 =  109,
+    n                 =  110,
+    o                 =  111,
+    p                 =  112,
+    q                 =  113,
+    r                 =  114,
+    s                 =  115,
+    t                 =  116,
+    u                 =  117,
+    v                 =  118,
+    w                 =  119,
+    x                 =  120,
+    y                 =  121,
+    z                 =  122,
+    World_1           =  161,
+    World_2           =  162,
+    Esc               =  256,
+    Enter             =  257,
+    Tab               =  258,
+    Backspace         =  259,
+    Insert            =  260,
+    Delete            =  261,
+    Right             =  262,
+    Left              =  263,
+    Down              =  264,
+    Up                =  265,
+    Page_Up           =  266,
+    Page_Down         =  267,
+    Home              =  268,
+    End               =  269,
+    Caps_Lock         =  280,
+    Scroll_Lock       =  281,
+    Num_Lock          =  282,
+    Print_Screen      =  283,
+    Pause             =  284,
+    F1                =  290,
+    F2                =  291,
+    F3                =  292,
+    F4                =  293,
+    F5                =  294,
+    F6                =  295,
+    F7                =  296,
+    F8                =  297,
+    F9                =  298,
+    F10               =  299,
+    F11               =  300,
+    F12               =  301,
+    F13               =  302,
+    F14               =  303,
+    F15               =  304,
+    F16               =  305,
+    F17               =  306,
+    F18               =  307,
+    F19               =  308,
+    F20               =  309,
+    F21               =  310,
+    F22               =  311,
+    F23               =  312,
+    F24               =  313,
+    F25               =  314,
+    KP_0              =  320,
+    KP_1              =  321,
+    KP_2              =  322,
+    KP_3              =  323,
+    KP_4              =  324,
+    KP_5              =  325,
+    KP_6              =  326,
+    KP_7              =  327,
+    KP_8              =  328,
+    KP_9              =  329,
+    KP_Decimal        =  330,
+    KP_Divide         =  331,
+    KP_Multiply       =  332,
+    KP_Substract      =  333,
+    KP_Add            =  334,
+    KP_Enter          =  335,
+    KP_Equal          =  336,
+    Left_Shift        =  340,
+    Left_Control      =  341,
+    Left_Alt          =  342,
+    Left_Super        =  343,
+    Right_Shift       =  344,
+    Right_Control     =  345,
+    Right_Alt         =  346,
+    Right_Super       =  347,
+    Menu              =  348,
+    Last              =  348,
+    ControlChar       =  -2
 };
 
-enum MouseButton
+enum class ModKey
 {
-    MOUSE_LEFT,
-    MOUSE_RIGHT,
-    MOUSE_MIDDLE    
+    Shift            = 0x0001,
+    Control          = 0x0002,
+    Alt              = 0x0004,
+    Super            = 0x0008,
+    Caps_Lock        = 0x0010,
+    Num_Lock         = 0x0020,
+};
+
+enum class MouseButton
+{
+    No_Input         = -2,
+    Mouse_Left       =  0,
+    Mouse_Right,
+    Mouse_Middle    
 };
 
 namespace Iron
@@ -146,14 +186,50 @@ namespace Iron
         std::vector<Iron::Event*>& m_events;
         WindowsWindow& m_window;
 
+        int IsPrintable(int key);
+        int IsControlChar(int key);
+
     public:
         Input(WindowsWindow& window)
             :m_window(window), m_events(window.GetEvents())
         { }
 
-        bool Mouse(int button);
+        /*! @brief Check is the specified key is pressed
+         * 
+         *! @param button mouse button to check
+         * 
+         *! @return returns true if the specified button is pressed
+         */
+        bool Mouse(enum class MouseButton button);
+
+        /*! @brief Checks if any button in mouse is pressed
+         * 
+         * ! @return returns true if the specified button is pressed
+         */
         int Mouse();
-        bool Key(int key);
+
+        /*! @brief Checks is the specified key is pressed
+         * 
+         *! @param key Key the to check
+         * 
+         *! @return returns true if the specified button is pressed
+         */
+        bool Key(enum class Key key);
+
+        /*! @brief Checks if any button in keyboard is pressed
+         * 
+         *! @return returns the key that is pressed else returns 1 if it's a non-printable character
+         */
         int Key();
+
+        /*! @brief Checks if key combination is pressed
+         * 
+         *! @note Use uppercase key if using a letter
+         * 
+         *! @return returns true if combination is pressed
+         */
+        bool KeyCombination(enum class ModKey modkey, enum class Key key);
+        bool KeyCombination(enum class ModKey modkey1, enum class ModKey modkey2, enum class Key key);
+        bool KeyCombination(enum class ModKey modkey, enum class Key key1, enum class Key key2);
     };
 }

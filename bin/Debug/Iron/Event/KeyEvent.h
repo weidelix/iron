@@ -21,6 +21,26 @@ namespace Iron
         EVENT_CLASS_CATEGORY(InputCategory | KeyboardCategory);
     };
 
+    class IRON_API KeyCombinationEvent : public Event
+    {
+    private:
+        int m_modkey;
+        int m_key;
+        bool m_isRepeated;
+    public:
+        KeyCombinationEvent(int key, int modkey)
+            :m_modkey(modkey), m_key(key)
+        { }
+
+        inline int GetKeyEvent() { return m_key; }
+        inline int GetModKeyEvent() { return m_modkey; }
+        inline bool IsKeyRepeated() { return m_isRepeated; }
+        inline void SetKeyRepeated(bool val) { m_isRepeated = val; }
+
+        EVENT_CLASS_TYPE(CombinationKeyPress);
+        EVENT_CLASS_CATEGORY(InputCategory | KeyboardCategory);
+    };
+
     class IRON_API KeyReleaseEvent : public Event
     {
     private:
