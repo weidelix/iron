@@ -28,18 +28,23 @@ namespace Iron
         if (!s_glfwIsInitialized)
         {
             int glfwState = glfwInit();
-            IRON_CORE_ASSERT(glfwState, "GLFW ERROR ({0}): Could not initialize glfw", glfwState);
+            IRON_CORE_ASSERT(glfwState, "GLFW ERROR", "failed to initialize glfw");
             s_glfwIsInitialized = true;
         }
-
+    
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
         m_window = glfwCreateWindow((int)m_data.Width, (int)m_data.Height, m_data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(m_window);
         glfwSetWindowUserPointer(m_window, &m_data);
         glfwSwapInterval(1);
+        
+        int gladState = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        IRON_CORE_ASSERT(gladState, "GLAD ERROR"," failed to initialize glad");
 
         glfwSetErrorCallback([](int error, const char* desc)
         {
-            IRON_CORE_ERROR("GLFW ERROR ({0}) : {1}", error, desc);
+            IRON_CORE_ERROR("[GLFW ERROR]({0}): {1}", error, desc);
         });
 
         glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
@@ -100,6 +105,13 @@ namespace Iron
                         data.EventCallback(*e);
                         data.Events.push_back(e);
                     }
+
+                    if (mods == 0 && key > 122 && key < 320 || key > 339 && key < 349)
+                    {
+                        KeyPressEvent* e = new KeyPressEvent(key, false);
+                        data.EventCallback(*e);
+                        data.Events.push_back(e);
+                    }
                 }
                 break;
 
@@ -116,6 +128,13 @@ namespace Iron
                     if  (mods != 0)
                     {
                         KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);               
+                        data.EventCallback(*e);
+                        data.Events.push_back(e);
+                    }
+
+                    if (mods == 0 && key > 122 && key < 320 || key > 339 && key < 349)
+                    {
+                        KeyPressEvent* e = new KeyPressEvent(key, true);
                         data.EventCallback(*e);
                         data.Events.push_back(e);
                     }

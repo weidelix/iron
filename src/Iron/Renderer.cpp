@@ -1,19 +1,15 @@
 #include "Renderer.h"
-#include <iostream>
 
 void GlClearError()
 {
-	while (glGetError() != GL_NO_ERROR);
+	while (glad_glGetError() != GL_NO_ERROR);
 }
 
 bool GlLogCall(const char* function, const char* file, int line)
 {
-	while (GLenum error = glGetError())
+	while (GLenum error = glad_glGetError())
 	{
-		system("color 03");
-		std::cout << "[GL-ERROR]";
-		system("color 0f");
-		std::cout<< "(" << error << ") " << function << " " << file << " : " << line << std::endl;
+		IRON_CORE_ASSERT(false, "OPENGL ERROR", "{}", error);
 		return false;
 	}
 	return true;

@@ -5,10 +5,10 @@
 #include <fstream>
 #include <iostream>
 
-#include "glad/glad.h"
+#include <glm.hpp>
+#include <gtc/type_ptr.hpp>
+#include <glad/glad.h>
 #include "Renderer.h"
-#include "glm.hpp"
-#include "gtc/type_ptr.hpp"
 
 
 struct ShaderSource

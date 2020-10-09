@@ -1,6 +1,4 @@
-#pragma once 
-// #include <glad/glad.h>
-// #include <GLFW/glfw3.h>
+#pragma once
 // #include <imgui_impl_opengl3.h>
 // #include <imgui_impl_glfw.h>
 #include "pch.h"
@@ -19,13 +17,13 @@ namespace Iron
 
     public:
         Application();
-        virtual ~Application();
-        virtual void OnStart();
-        virtual void OnUpdate();
-        virtual void OnEvent(Event& event); 
-        virtual void OnExit();
-        bool Run();
-        Input Input();        
+        virtual ~Application()  { }
+        virtual void Start()  { }
+        virtual void Update() { }
+        virtual void OnEvent(Event& event) { }
+        virtual void OnExit() { }
+        virtual bool Run();
+        Input Input();
     };
 
     // DEFINE IN CLIENT

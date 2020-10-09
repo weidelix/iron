@@ -3,7 +3,7 @@
 #ifdef IRON_PLATFORM_WINDOW
     
     extern Iron::Application* Iron::CreateApplication();
-
+ 
     int main()
     {
         Iron::Log::Init();

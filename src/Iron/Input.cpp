@@ -7,22 +7,22 @@ namespace Iron
         if (key >= 32 && key <= 126)
             return key;
         else
-            return false;
+            return Key::NonPrintable;
     }
 
     inline int Input::IsControlChar(int key)
     {
-        return (key >= 340 && key <= 348) ? (int)Key::ControlChar : key;
+        return (key >= 340 && key <= 348) ? Key::NonPrintable : key;
     }
 
-    bool Input::Mouse(enum class MouseButton button)
+    bool Input::Mouse(enum Mouse button)
     {
         for(auto* event : m_events)
         {
             if (event->GetEventType() == Iron::EventType::MouseClick)
             {
                 Iron::MouseButtonPressedEvent& m = (Iron::MouseButtonPressedEvent&)*event;
-                if (m.GetMouseEvent() == (int)button)          
+                if (m.GetMouseEvent() == button)          
                 {
                     return true;
                 }      
@@ -43,7 +43,7 @@ namespace Iron
                 return key;
             }
         }
-        return (int)MouseButton::No_Input;
+        return -1;
     }
 
     int Input::Key()
@@ -54,20 +54,20 @@ namespace Iron
             {
                 KeyPressEvent& m = (KeyPressEvent&)*event;                
                 int key = m.GetKeyEvent();
-                return IsControlChar(IsPrintable((int)key));                    
+                return IsPrintable(key);                    
             }
         }
-        return (int)Key::No_Input;
+        return Key::No_Input;
     }
 
-    bool Input::Key(enum class Key key)
+    bool Input::Key(enum Key key)
     {
         for(auto* event : m_events)
         {
             if (event->GetEventType() == Iron::EventType::KeyPress)
             {
                 KeyPressEvent& m = (KeyPressEvent&)*event; 
-                if (m.GetKeyEvent() == (int)key) 
+                if (m.GetKeyEvent() == key) 
                 {
                     return true;                    
                 }
@@ -76,14 +76,14 @@ namespace Iron
         return false;
     }
 
-    bool Input::KeyCombination(enum class ModKey modkey, enum class Key key)
+    bool Input::KeyCom(enum ModKey modkey, enum Key key)
     {
         for(auto* event : m_events)
         {
             if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
             {
                 KeyCombinationEvent& m = (KeyCombinationEvent&)*event; 
-                if (m.GetModKeyEvent() == (int)modkey && m.GetKeyEvent() == (int)key) 
+                if (m.GetModKeyEvent() == modkey && m.GetKeyEvent() == key) 
                 {
                     return true;                    
                 }
@@ -92,14 +92,14 @@ namespace Iron
         return false;
     }
 
-    bool Input::KeyCombination(enum class ModKey modkey1, enum class ModKey modkey2, enum class Key key)
+    bool Input::KeyCom(enum ModKey modkey1, enum ModKey modkey2, enum Key key)
     {
         for(auto* event : m_events)
         {
             if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
             {
                 KeyCombinationEvent& m = (KeyCombinationEvent&)*event; 
-                if (m.GetModKeyEvent() == ((int)modkey1 + (int)modkey2) && m.GetKeyEvent() == (int)key) 
+                if (m.GetModKeyEvent() == (modkey1 + modkey2) && m.GetKeyEvent() == key) 
                 {
                     return true;                    
                 }
@@ -108,7 +108,7 @@ namespace Iron
         return false;
     }
 
-    bool Input::KeyCombination(enum class ModKey modkey1, enum class Key key1, enum class Key key2)
+    bool Input::KeyCom(enum ModKey modkey1, enum Key key1, enum Key key2)
     {
         static bool flag1 = false;
         static bool flag2 = false;
@@ -119,12 +119,12 @@ namespace Iron
             if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
             {
                 KeyCombinationEvent& m = (KeyCombinationEvent&)*event; 
-                if (m.GetModKeyEvent() == (int)modkey1 && m.GetKeyEvent() == (int)key1) 
+                if (m.GetModKeyEvent() == modkey1 && m.GetKeyEvent() == key1) 
                 {
                     time = glfwGetTime();
                     flag1 = true;
                 }
-                if (m.GetModKeyEvent() == (int)modkey1 && m.GetKeyEvent() == (int)key2)
+                if (m.GetModKeyEvent() == modkey1 && m.GetKeyEvent() == key2)
                 {
                     if (flag1)
                     {

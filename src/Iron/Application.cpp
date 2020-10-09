@@ -2,6 +2,7 @@
 #include "Log.h"
 #include "pch.h"
 #include "Iron/Event/Event.h"
+#include "Iron/Renderer.h"
 
 namespace Iron
 {
@@ -12,19 +13,14 @@ namespace Iron
         m_window->SetOnExitCallback(std::bind(&Application::OnExit, this));
     }
 
-    Application::~Application()  { }
-    void Application::OnStart()  { }
-    void Application::OnUpdate() { }
-
-    void Application::OnEvent(Event& event) { } 
-    void Application::OnExit() { } 
-
     bool Application::Run() 
     {
-        this->OnStart();
+        this->Start();
         while(isRunning)
         {
-            this->OnUpdate();
+            glClearColor(0.0, 0.0, 1.0, 1.0);
+            glClear(GL_COLOR_BUFFER_BIT);
+            this->Update();
             m_window->OnUpdate();            
         }
         return true; 

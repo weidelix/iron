@@ -74,6 +74,11 @@
         "stack": "cpp",
         "thread": "cpp",
         "variant": "cpp",
-        "xtree": "cpp"
-    }
+        "xtree": "cpp",
+        "complex": "cpp",
+        "format": "cpp"
+    },
+    "extensions.ignoreRecommendations": true,
+    "cmake.statusbar.visibility": "compact",
+    "autoHide.autoHidePanel": true
 }

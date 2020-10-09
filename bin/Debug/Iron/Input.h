@@ -6,10 +6,13 @@
 #include "Iron/platform/Windows/WindowsWindow.h"
 #include <GLFW/glfw3.h>
 
-enum class Key
+
+
+enum Key
 {
-    No_Input          =  -2,
+    NonPrintable      =  -2,
     Unknown           =  -1,
+    No_Input          =   0,
     Space             =  32,
     Apostrophe        =  39, 
     Comma             =  44,  
@@ -156,24 +159,23 @@ enum class Key
     Right_Alt         =  346,
     Right_Super       =  347,
     Menu              =  348,
-    Last              =  348,
-    ControlChar       =  -2
+    Last              =  348
 };
 
-enum class ModKey
+enum ModKey
 {
-    Shift            = 0x0001,
-    Control          = 0x0002,
-    Alt              = 0x0004,
-    Super            = 0x0008,
-    Caps_Lock        = 0x0010,
-    Num_Lock         = 0x0020,
+    M_Shift           = 0x0001,
+    M_Control         = 0x0002,
+    M_Alt             = 0x0004,
+    M_Super           = 0x0008,
+    M_Caps_Lock       = 0x0010,
+    M_Num_Lock        = 0x0020,
 };
 
-enum class MouseButton
+enum Mouse
 {
-    No_Input         = -2,
-    Mouse_Left       =  0,
+    No_Click          = -1,
+    Mouse_Left,
     Mouse_Right,
     Mouse_Middle    
 };
@@ -194,42 +196,75 @@ namespace Iron
             :m_window(window), m_events(window.GetEvents())
         { }
 
-        /*! @brief Check is the specified key is pressed
+        /**
+         *  @brief Check is the specified key is pressed
          * 
-         *! @param button mouse button to check
+         * @param button mouse button to check
          * 
-         *! @return returns true if the specified button is pressed
+         * @return returns true if the specified button is pressed
          */
-        bool Mouse(enum class MouseButton button);
+        bool Mouse(enum Mouse button);
 
-        /*! @brief Checks if any button in mouse is pressed
+        /**
+         *  @brief Checks if any button in mouse is pressed
          * 
-         * ! @return returns true if the specified button is pressed
+         * @return returns true if the specified button is pressed
          */
         int Mouse();
 
-        /*! @brief Checks is the specified key is pressed
+        /**
+         * @brief Checks is the specified key is pressed
          * 
-         *! @param key Key the to check
+         * @param key Key the to check
          * 
-         *! @return returns true if the specified button is pressed
+         * @return returns true if the specified button is pressed
          */
-        bool Key(enum class Key key);
+        bool Key(enum Key key);
 
-        /*! @brief Checks if any button in keyboard is pressed
+        /**
+         * @brief Checks if any button in keyboard is pressed
          * 
-         *! @return returns the key that is pressed else returns 1 if it's a non-printable character
+         * @return returns the key that is pressed else returns 1 if it's a non-printable character
          */
         int Key();
 
-        /*! @brief Checks if key combination is pressed
+        /** 
+         * @brief Checks if key combination is pressed
          * 
-         *! @note Use uppercase key if using a letter
+         * -Use uppercase key if using a letter-
+         *
+         * @param modkey control key to check
+         * @param key alphanumeric key to check
          * 
-         *! @return returns true if combination is pressed
+         * @return returns true if combination is pressed
          */
-        bool KeyCombination(enum class ModKey modkey, enum class Key key);
-        bool KeyCombination(enum class ModKey modkey1, enum class ModKey modkey2, enum class Key key);
-        bool KeyCombination(enum class ModKey modkey, enum class Key key1, enum class Key key2);
+        bool KeyCom(enum ModKey modkey, enum Key key);
+
+        /** 
+         * @brief Checks if key combination is pressed
+         * 
+         * -Use uppercase key if using a letter-
+         * 
+         * @param modkey1 first control key to check
+         * @param modkey2 second control key to check
+         * @param key alphanumeric key to check
+         *
+         * @return returns true if combination is pressed
+         */
+        bool KeyCom(enum ModKey modkey1, enum ModKey modkey2, enum Key key);
+
+        /**
+         *  @brief Checks if key combination is pressed
+         * 
+         * @note Use uppercase key if using a letter
+         * @warning This is an experimental feature and may not be included in the final product 
+         * 
+         * @param modkey control key to check
+         * @param key1 first alphanumeric key to check
+         * @param key2 second alphanumeric key to check
+         * 
+         * @return returns true if combination is pressed
+         */ 
+        bool KeyCom(enum ModKey modkey, enum Key key1, enum Key key2);
     };
 }

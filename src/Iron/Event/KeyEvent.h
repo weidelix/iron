@@ -54,4 +54,4 @@ namespace Iron
         EVENT_CLASS_TYPE(KeyRelease);
         EVENT_CLASS_CATEGORY(InputCategory | KeyboardCategory);
     };
-} // namespace Iron
+}
