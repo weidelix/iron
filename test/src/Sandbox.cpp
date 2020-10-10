@@ -12,7 +12,7 @@ public:
     // Runs code on start
     void Start() override
     {
-        LOG_C_WARN("YOW DUDE!", "don't forget to drink water :)");
+
     }
 
     // Runs code every frame
@@ -23,7 +23,7 @@ public:
  
     void OnEvent(Iron::Event& event) override 
     {
-
+        
     }
 
     void OnExit() override 
@@ -35,6 +35,6 @@ public:
 // Define "Iron::CreateApplication" method that returns an object tha    inherits from "Application" class
 Iron::Application* Iron::CreateApplication()
 {
-    LOG_INFO("Iron Engine v{0}\n", IRON_VERSION);
+    LOG_INFO("Iron Engine v{:.1}\n", IRON_VERSION);
     return new Sandbox();
 }
