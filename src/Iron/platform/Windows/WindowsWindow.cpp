@@ -89,6 +89,7 @@ namespace Iron
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             KeyPressEvent* e = new KeyPressEvent(key, false);
+            data.EventCallback(*e);
             data.Events.push_back(e);
         });
 
