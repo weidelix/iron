@@ -80,5 +80,5 @@
     },
     "extensions.ignoreRecommendations": true,
     "cmake.statusbar.visibility": "compact",
-    "autoHide.autoHidePanel": true
+    "autoHide.autoHidePanel": false
 }

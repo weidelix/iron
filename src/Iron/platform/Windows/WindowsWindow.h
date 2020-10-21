@@ -1,13 +1,11 @@
 #pragma once
 
-#include <glad/glad.h>
 #include "Iron/Window.h"
 #include "Iron/Log.h"
 #include "Iron/Event/MouseEvent.h"
 #include "Iron/Event/WindowEvent.h"
 #include "Iron/Event/KeyEvent.h"
 //#include "Event/ApplicationEvent.h"
-#include <GLFW/glfw3.h>
 
 namespace Iron
 {
@@ -20,7 +18,6 @@ namespace Iron
             unsigned int Width, Height;
             bool VSync;
             std::function<void(Event&)> EventCallback;
-            std::function<void()>       OnExitCallback;
             std::vector<Event*> Events;
         };
         WindowData m_data;
@@ -34,7 +31,7 @@ namespace Iron
         inline unsigned int GetHeight() override { return m_data.Height; } 
 
         inline void SetEventCallback(std::function<void(Event&)> callback) override { m_data.EventCallback = callback; }
-        inline void SetOnExitCallback(std::function<void(void)> callback) override { m_data.OnExitCallback = callback; }
+        inline GLFWwindow* GetWindowPointer() override { return m_window; }
         inline std::vector<Event*>& GetEvents() { return m_data.Events; }
         inline void SetVSync(bool val) override;
         inline void OnUpdate() override;

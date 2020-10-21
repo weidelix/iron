@@ -1,8 +1,8 @@
  #pragma once
 
-#include <glad/glad.h>
 #include "Core.h"
 #include "Log.h"
+#include <glad/glad.h>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
 #define GlCall(x) GlClearError();\

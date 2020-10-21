@@ -1,5 +1,4 @@
 #include "Iron.h"
-#include "Iron/Renderer.h"
 
 //NOTE: TRY RECONFIGURING PROJECT THEN REBUILDING WHEN NOT WORKING PROPERLY
 

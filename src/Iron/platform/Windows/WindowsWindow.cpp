@@ -1,3 +1,4 @@
+#include <glad/glad.h>
 #include "WindowsWindow.h"
 
 namespace Iron
@@ -35,6 +36,7 @@ namespace Iron
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
         m_window = glfwCreateWindow((int)m_data.Width, (int)m_data.Height, m_data.Title.c_str(), nullptr, nullptr);
+        
         glfwMakeContextCurrent(m_window);
         glfwSetWindowUserPointer(m_window, &m_data);
         glfwSwapInterval(1);
@@ -50,7 +52,6 @@ namespace Iron
         glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window)
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            data.OnExitCallback();
             glfwDestroyWindow(window);
         });
 
@@ -147,7 +148,7 @@ namespace Iron
 
     void WindowsWindow::Close()
     {
-        glfwDestroyWindow(m_window);
+        glfwTerminate();
     }
 
     void WindowsWindow::OnUpdate()

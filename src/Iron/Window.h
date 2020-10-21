@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Core.h"
 #include "Event/Event.h"
+#include <GLFW/glfw3.h>
 
 namespace Iron
 {
@@ -27,8 +28,8 @@ namespace Iron
         virtual unsigned int GetHeight() = 0;
 
         virtual void SetEventCallback(const std::function<void(Event&)> callback) = 0;
-        virtual void SetOnExitCallback(const std::function<void()> callback) = 0;
         virtual void SetVSync(bool val) = 0;
+        virtual GLFWwindow* GetWindowPointer() = 0;
 
         static Window* Create(const WindowProps& prop = WindowProps());
     };

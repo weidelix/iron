@@ -1,6 +1,5 @@
 #include "Log.h"
 
-
 namespace Iron
 {
     std::shared_ptr<Iron::Logger> Log::s_ClientLogger;

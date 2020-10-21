@@ -1,11 +1,10 @@
 #pragma once
-// #include <imgui_impl_opengl3.h>
-// #include <imgui_impl_glfw.h>
 #include "pch.h"
 #include "Core.h"
 #include "Window.h"
 #include "Iron/platform/Windows/WindowsWindow.h"
 #include "Input.h"
+#include "LayerStack.h"
 
 namespace Iron
 {
@@ -14,6 +13,8 @@ namespace Iron
     private:
         std::unique_ptr<Window> m_window;
         bool isRunning = true;
+        LayerStack m_layerStack;
+        static Application* m_instance;
 
     public:
         Application();
@@ -24,8 +25,14 @@ namespace Iron
         virtual void OnExit() { }
         virtual bool Run();
         Input Input();
+        static Application &Get();
+        Window& GetWindow();
+        void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
+		void PopLayer(Layer* layer);
+		void PopOverlay(Layer* overlay);
     };
 
     // DEFINE IN CLIENT
-    Application* CreateApplication();
+    extern Application* CreateApplication();
 }
