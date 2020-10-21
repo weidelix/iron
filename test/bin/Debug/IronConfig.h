@@ -1,4 +1,0 @@
-#define IRON_VERSION_MAJOR 1
-#define IRON_VERSION_MINOR 0
-
-#define IRON_VERSION 1.0
