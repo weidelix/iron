@@ -1,2 +1,8 @@
 /build/
 /src/Iron/a.txt
+*.pdb
+/bin/
+*.ini
+/.vs/
+/.vscode/
+/test/bin/
