@@ -1,8 +1,8 @@
-/build/
-/src/Iron/a.txt
+build/
+src/Iron/a.txt
 *.pdb
-/bin/
+bin/
 *.ini
-/.vs/
-/.vscode/
-/test/bin/
+.vs/
+.vscode/
+test/bin/
