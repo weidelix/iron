@@ -1,5 +1,5 @@
 build/
-src/Iron/a.txt
+*.txt
 *.pdb
 bin/
 *.ini
