@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include <glad/glad.h>
 
 void GlClearError()
 {

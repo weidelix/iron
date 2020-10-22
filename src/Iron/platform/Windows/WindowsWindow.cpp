@@ -29,7 +29,7 @@ namespace Iron
         if (!s_glfwIsInitialized)
         {
             int glfwState = glfwInit();
-            IRON_CORE_ASSERT(glfwState, "GLFW ERROR", "failed to initialize glfw");
+            IRON_CORE_ASSERT(glfwState, "Failed to initialize glfw");
             s_glfwIsInitialized = true;
         }
     
@@ -42,7 +42,7 @@ namespace Iron
         glfwSwapInterval(1);
         
         int gladState = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        IRON_CORE_ASSERT(gladState, "GLAD ERROR"," failed to initialize glad");
+        IRON_CORE_ASSERT(gladState, "failed to initialize glad");
 
         glfwSetErrorCallback([](int error, const char* desc)
         {

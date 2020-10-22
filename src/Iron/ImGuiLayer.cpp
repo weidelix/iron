@@ -11,7 +11,7 @@ namespace Iron
     ImFont* ImGuiLayer::m_defaultFont;
     ImFont* ImGuiLayer::m_widgetFont;
     ImFont* ImGuiLayer::m_titleBarFont;
-    ImGuiIO& ImGuiLayer::m_io = *(ImGuiIO*)0;
+    ImFontAtlas* ImGuiLayer::m_fontAtlas;
 
     ImGuiLayer::ImGuiLayer(const std::string &name)
         :Layer(name){ }
@@ -20,11 +20,21 @@ namespace Iron
 
     void ImGuiLayer::OnAttach() 
     { 
+        //m_fontAtlas->AddFontDefault(m_defaultFont->ConfigData);
+
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        //m_io = ImGui::GetIO();
+        ImGui::CreateContext(m_fontAtlas);
         ImGuiIO& io = ImGui::GetIO();
+        m_defaultFont  = io.Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Medium.ttf" , 18);
+        m_widgetFont   = io.Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Regular.ttf", 15);
+        m_titleBarFont = io.Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Bold.ttf"   , 25);
+        io.Fonts->AddFontDefault(m_defaultFont->ConfigData);
+
+        //IRON_CORE_INFO("{}\n", debugName);
+
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+        
         // Setup Platform/Renderer bindings
         Window &window = Application::Get().GetWindow();
         ImGui_ImplGlfw_InitForOpenGL(window.GetWindowPointer(), true);
@@ -46,51 +56,48 @@ namespace Iron
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
         
+        float indent_size = 20.0f;
         bool show = true;
 
-        {
+        Begin("Empty Panel");
+        if (ImGui::CollapsingHeader("Camera"))
+        {   
+            auto& data_8 = BeginPropPanel(indent_size);
             float float3[3] = { 0.0f ,0.0f, 0.0f };
-            Begin("Properties");
-            BeginWidget();
-            if (ImGui::CollapsingHeader("Animation"))
-            {   
-                float indent_size = 20.0f;
-                auto& data_0 = BeginPropPanel(indent_size);
-                auto& data_9 = BeginPropPanel(indent_size);
-                float float3[3] = { 0.0f ,0.0f, 0.0f };
-
-                BeginWidget(m_widgetFont);
-                auto& data_11 = BeginPropPanel(indent_size);
-                ImGui::DragFloat3("##hidden DragFloat3_1", float3, 1.0f, 0.0f, 100.0f);
-                ImGui::DragFloat3("##hidden DragFloat3_2", float3, 1.0f, 0.0f, 100.0f);
-                ImGui::DragFloat3("##hidden DragFloat3_3", float3, 1.0f, 0.0f, 100.0f);
-                if (ImGui::CollapsingHeader("Camera"))
-                {   
-                    auto& data_8 = BeginPropPanel(indent_size);
-                    float float3[3] = { 0.0f ,0.0f, 0.0f };
-                    BeginWidget(m_widgetFont);
-                    ImGui::PushItemWidth(ImGui::GetWindowWidth() - 6.0f);
-                    ImGui::DragFloat3("##hidden DragFloat3_1", float3, 1.0f, 0.0f, 100.0f);
-                    ImGui::DragFloat3("##hidden DragFloat3_2", float3, 1.0f, 0.0f, 100.0f);
-                    ImGui::DragFloat3("##hidden DragFloat3_3", float3, 1.0f, 0.0f, 100.0f);
-                    ImGui::Text("Hatdog");
-                    EndWidget();
-                    ImGui::PopItemWidth();
-                    EndPropPanel(data_8);
-                }
-                EndPropPanel(data_11);
-                EndWidget();
-
-                BeginWidget();
-                ImGui::TextWrapped("Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog");
-                EndWidget();
-
-                EndPropPanel(data_9);
-                EndPropPanel(data_0);
-            }
+            BeginWidget(m_widgetFont);
+            ImGui::PushItemWidth(ImGui::GetWindowWidth() - 6.0f);
+            ImGui::DragFloat3("##hidden DragFloat3_1", float3, 1.0f, 0.0f, 100.0f);
+            ImGui::DragFloat3("##hidden DragFloat3_2", float3, 1.0f, 0.0f, 100.0f);
+            ImGui::DragFloat3("##hidden DragFloat3_3", float3, 1.0f, 0.0f, 100.0f);
+            ImGui::Text("Hatdog");
             EndWidget();
-            End();
+            ImGui::PopItemWidth();
+            EndPropPanel(data_8);
         }
+        End();
+    
+        Begin("Properties");
+        if (ImGui::CollapsingHeader("Animation"))
+        {   
+            auto& data_0 = BeginPropPanel(indent_size);
+            auto& data_9 = BeginPropPanel(indent_size);
+            float float3[3] = { 0.0f ,0.0f, 0.0f };
+            BeginWidget(m_widgetFont);
+            auto& data_11 = BeginPropPanel(indent_size);
+            ImGui::DragFloat3("##hidden DragFloat3_1", float3, 1.0f, 0.0f, 100.0f);
+            ImGui::DragFloat3("##hidden DragFloat3_2", float3, 1.0f, 0.0f, 100.0f);
+            ImGui::DragFloat3("##hidden DragFloat3_3", float3, 1.0f, 0.0f, 100.0f);
+            
+            EndPropPanel(data_11);
+            EndWidget();
+            BeginWidget();
+            ImGui::TextWrapped("Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog");
+            EndWidget();
+            EndPropPanel(data_9);
+            EndPropPanel(data_0);
+        }
+        End();
+        
         ImGui::Render();
         glViewport(0, 0, window.GetWindow().GetWidth(), window.GetWindow().GetHeight());
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -99,14 +106,7 @@ namespace Iron
     void ImGuiLayer::OnEvent(Event& event) { }
 
     void ImGuiLayer::CherryTheme()
-    {
-        //Setup Fonts
-        m_defaultFont  = ImGui::GetIO().Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Medium.ttf" , 18);
-        m_widgetFont   = ImGui::GetIO().Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Regular.ttf", 15);
-        m_titleBarFont = ImGui::GetIO().Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Bold.ttf"   , 25);
-        
-        //ImGui::GetIO().FontDefault = m_defaultFont;
-
+    {     
         // cherry colors, 3 intensities
         #define HI(v)   ImVec4(0.502f, 0.075f, 0.256f, v)
         #define MED(v)  ImVec4(0.455f, 0.198f, 0.301f, v)
@@ -178,9 +178,9 @@ namespace Iron
         style.WindowTitleAlign.x = 0.02f;
         style.WindowTitleAlign.y = 0.20f;
         style.FrameBorderSize  = 3.0f;
-        style.FramePadding     = ImVec2(0.0f, 2.0f);
-        style.WindowPadding    = ImVec2(15.0f, 5.0f);
-        style.WindowBorderSize = 1.0f;
+        style.FramePadding     = ImVec2(4.0f, 4.0f);
+        style.WindowPadding    = ImVec2(15.0f, 3.0f);
+        style.WindowBorderSize = 4.0f;
         style.WindowMinSize    = ImVec2(50, 100);
         style.WindowMenuButtonPosition = ImGuiDir_Right;
     }
@@ -192,10 +192,12 @@ namespace Iron
         ImGui::Begin(name, isOpen, flags);
         ImGui::PopStyleColor();
         ImGui::PopFont();
+        ImGui::PushFont(m_defaultFont);
     }
 
     void ImGuiLayer::End()
     {
+        ImGui::PopFont();
         ImGui::End(); 
     }
 

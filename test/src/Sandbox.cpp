@@ -2,9 +2,6 @@
 
 //NOTE: TRY RECONFIGURING PROJECT THEN REBUILDING WHEN NOT WORKING PROPERLY
 
-#define PRINTL(x) std::cout << x << std::endl
-#define PRINT(x) std::cout << x
-
 class Sandbox : public Iron::Application
 {
 public:    
@@ -34,6 +31,6 @@ public:
 // Define "Iron::CreateApplication" method that returns an object tha    inherits from "Application" class
 Iron::Application* Iron::CreateApplication()
 {
-    LOG_INFO("Iron Engine v{:.1}\n", IRON_VERSION);
+    LOG_INFO("Iron Engine v{}", IRON_VERSION);
     return new Sandbox();
 }

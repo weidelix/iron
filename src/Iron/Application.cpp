@@ -9,8 +9,8 @@ namespace Iron
     Application* Application::m_instance = nullptr;
 
     Application::Application()  
-    {   
-        IRON_CORE_ASSERT(!m_instance, "IRON ERROR", "Applicaton instance already exist");
+    {
+        IRON_CORE_ASSERT(!m_instance, "[GLFW]: Applicaton instance already exist");
         
         m_instance = this;
         m_window = std::unique_ptr<Window>(Window::Create());

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
+#include "Platform/OpenGL/imgui_impl_glfw.h"
+#include "Platform/OpenGL/imgui_impl_opengl3.h"
 #include "Core.h"
 #include "Layer.h"
 
@@ -13,7 +13,7 @@ namespace Iron
         static ImFont* m_titleBarFont;
         static ImFont* m_defaultFont;
         static ImFont* m_widgetFont;
-        static ImGuiIO& m_io;
+        static ImFontAtlas* m_fontAtlas;
         int m_propStack = 0;
 
     public:

@@ -2,42 +2,38 @@
 
 #include "pch.h"
 #include "Core.h"
-#include "Logger.h"
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Iron
 {
     class IRON_API Log
     {
     private:
-        static std::shared_ptr<Iron::Logger> s_ClientLogger;
-        static std::shared_ptr<Iron::Logger> s_CoreLogger;
+        static std::shared_ptr<spdlog::logger> s_ClientLogger;
+        static std::shared_ptr<spdlog::logger> s_CoreLogger;
         
     public:
         static void Init();
-        inline static std::shared_ptr<Iron::Logger>& GetCoreLogger() { return s_CoreLogger; }
-        inline static std::shared_ptr<Iron::Logger>& GetClientLogger() { return s_ClientLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+        inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
     };
 }
 
 #ifdef IRON_DEBUG
     //DEBUG
-    #define IRON_CORE_INFO(...)     Iron::Log::GetCoreLogger()->Info   (__VA_ARGS__)
-    #define IRON_CORE_TRACE(...)    Iron::Log::GetCoreLogger()->Trace  (__VA_ARGS__)
-    #define IRON_CORE_WARN(...)     Iron::Log::GetCoreLogger()->Warn   (__VA_ARGS__)
-    #define IRON_CORE_C_WARN(...)   Iron::Log::GetCoreLogger()->C_Warn (__VA_ARGS__)
-    #define IRON_CORE_ERROR(...)    Iron::Log::GetCoreLogger()->Error  (__VA_ARGS__)
-    #define IRON_CORE_C_ERROR(...)  Iron::Log::GetCoreLogger()->C_Error(__VA_ARGS__)
-    #define IRON_CORE_FATAL(...)    Iron::Log::GetCoreLogger()->Fatal  (__VA_ARGS__)
-    #define IRON_CORE_C_FATAL(...)  Iron::Log::GetCoreLogger()->C_Fatal(__VA_ARGS__)
+    #define IRON_CORE_INFO(...)     SPDLOG_LOGGER_INFO      (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+    #define IRON_CORE_TRACE(...)    SPDLOG_LOGGER_TRACE     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+    #define IRON_CORE_WARN(...)     SPDLOG_LOGGER_WARN      (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+    #define IRON_CORE_ERROR(...)    SPDLOG_LOGGER_ERROR     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+    #define IRON_CORE_CRITICAL(...) SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetCoreLogger(), __VA_ARGS__)
     // CLient
-    #define LOG_INFO(...)           Iron::Log::GetClientLogger()->Info   (__VA_ARGS__)
-    #define LOG_TRACE(...)          Iron::Log::GetClientLogger()->Trace  (__VA_ARGS__)
-    #define LOG_WARN(...)           Iron::Log::GetClientLogger()->Warn   (__VA_ARGS__)
-    #define LOG_C_WARN(...)         Iron::Log::GetClientLogger()->C_Warn (__VA_ARGS__)
-    #define LOG_ERROR(...)          Iron::Log::GetClientLogger()->Error  (__VA_ARGS__)
-    #define LOG_C_ERROR(...)        Iron::Log::GetClientLogger()->C_Error(__VA_ARGS__)
-    #define LOG_FATAL(...)          Iron::Log::GetClientLogger()->Fatal  (__VA_ARGS__)                                 
-    #define LOG_C_FATAL(...)        Iron::Log::GetClientLogger()->C_Fatal(__VA_ARGS__)                                 
+    #define LOG_INFO(...)           SPDLOG_LOGGER_INFO      (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define LOG_TRACE(...)          SPDLOG_LOGGER_TRACE     (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define LOG_WARN(...)           SPDLOG_LOGGER_WARN      (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define LOG_ERROR(...)          SPDLOG_LOGGER_ERROR     (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define LOG_FATAL(...)          SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetClientLogger(), __VA_ARGS__) 
+                                 
 #else
     // Core
     #define IRON_CORE_WARN(...) 

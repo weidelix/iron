@@ -13,8 +13,8 @@
 #endif
 
 #ifdef ENABLE_ASSERT
-    #define IRON_CORE_ASSERT(x,...) { if(!(x)) { IRON_CORE_C_ERROR(__VA_ARGS__); __debugbreak(); } }
-    #define IRON_ASSERT(x,...) { if(!(x)) { LOG_C_ERROR(__VA_ARGS__); __debugbreak(); } }
+    #define IRON_CORE_ASSERT(x,...) { if(!(x)) { IRON_CORE_ERROR(__VA_ARGS__); __debugbreak(); } }
+    #define IRON_ASSERT(x,...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); } }
 #else
     #define IRON_CORE_ASSERT(x,...)
     #define IRON_ASSERT(x,...)
