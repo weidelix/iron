@@ -1,8 +1,8 @@
 #pragma once
 
 #include "pch.h"
-#include "Iron/Core.h"
-#include "Iron/Event/Event.h"
+#include "Core.h"
+#include "Event.h"
 
 namespace Iron
 {
@@ -14,21 +14,20 @@ namespace Iron
         WindowResizeEvent(unsigned int w, unsigned int h) 
             :width(w), height(h) { } 
 
-        ~WindowResizeEvent() { }
+        ~WindowResizeEvent() override { }
 
-        EVENT_CLASS_TYPE(WindowResize);
+        EVENT_CLASS_TYPE(EventType::WindowResize);
         EVENT_CLASS_CATEGORY(WindowCategory);
     };
 
     class IRON_API WindowMoveEvent : public Event
     {
     private:
-        /* data */
     public:
-        WindowMoveEvent(/* args */) { } 
-        ~WindowMoveEvent() { }
-
-        EVENT_CLASS_TYPE(WindowMove);
+        WindowMoveEvent() { } 
+        ~WindowMoveEvent() override { }
+        
+        EVENT_CLASS_TYPE(EventType::WindowMove);
         EVENT_CLASS_CATEGORY(WindowCategory);
     };
     
@@ -38,11 +37,11 @@ namespace Iron
         
     public:
         WindowCloseEvent() { }
-        ~WindowCloseEvent() { }
+        ~WindowCloseEvent() override { }
 
-        EVENT_CLASS_TYPE(WindowClose);
+        EVENT_CLASS_TYPE(EventType::WindowClose);
         EVENT_CLASS_CATEGORY(WindowCategory);
     };
     
     
-} // namespace Iron
+}

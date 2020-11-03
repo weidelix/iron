@@ -1,15 +1,15 @@
 //--------------------- Iron Internal --------------------//
 
-#include "Iron/Log.h"
+#include "Log.h"
 #include "pch.h"
-#include "Iron/Core.h"
-#include "Iron/Application.h"
+#include "Core.h"
+#include "Application.h"
 #include "IronConfig.h"
-#include "Iron/Event/Event.h"
-#include "Iron/Event/MouseEvent.h"
+#include "Event/Event.h"
+#include "Event/MouseEvent.h"
 
 //-------------------- EntryPoint -----------------------//
 
-#include "Iron/Entry.h"
+#include "Entry.h"
 
 //-------------------------------------------------------//

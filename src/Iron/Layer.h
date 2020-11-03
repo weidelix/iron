@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Core.h"
 #include "Event/Event.h"
+#include <string>
 
 namespace Iron
 {
@@ -17,7 +18,7 @@ namespace Iron
 		virtual void OnAttach() { }
 		virtual void OnDetach() { }
 		virtual void OnUpdate() { }
-		virtual void OnEvent(Event& event) { }
+		virtual void OnEvent(Iron::Event& event) { }
 
 		const std::string& GetName() const { return m_debugName; }
     };

@@ -1,40 +1,43 @@
 #include "Application.h"
 #include "Log.h"
 #include "pch.h"
-#include "Iron/Event/Event.h"
+#include "Event/Event.h"
 #include "ImGuiLayer.h"
 
 namespace Iron
 {
     Application* Application::m_instance = nullptr;
 
-    Application::Application()  
+    Application::Application()
+        :m_window(std::unique_ptr<Window>(Window::Create())),
+         m_input(m_window.get())
     {
-        IRON_CORE_ASSERT(!m_instance, "[GLFW]: Applicaton instance already exist");
-        
+        IRON_CORE_ASSERT(!m_instance, "[IRON]: An instance already exist!");
         m_instance = this;
-        m_window = std::unique_ptr<Window>(Window::Create());
         m_window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
     }
-
+    
     bool Application::Run() 
     {
-        this->Start();
-        PushOverlay(new ImGuiLayer("ImGui Layer"));
+        m_instance->Start();
+        //PushOverlay(new ImGuiLayer("ImGui Layer"));
         while(isRunning)
         {
             glClearColor(0.0, 0.0, 1.0, 1.0);
             glClear(GL_COLOR_BUFFER_BIT);
-            this->Update();
+            m_instance->Update();
 
             for (auto* layer : m_layerStack)
-            {
                 layer->OnUpdate();
-            }
 
             m_window->OnUpdate();            
         }
         return true; 
+    }
+
+    Input Application::Input()
+    {
+        return m_input;
     }
 
     Application& Application::Get() 
@@ -47,27 +50,22 @@ namespace Iron
         return *m_window;
     }
 
-    Input Application::Input()
-    {
-        return Iron::Input(*(WindowsWindow*)m_window.get());
-    }
-
     void Application::PushLayer(Layer* layer)
     {
         m_layerStack.PushLayer(layer);
     }
 
-	void Application::PushOverlay(Layer* overlay)
+    void Application::PushOverlay(Layer* overlay)
     {
         m_layerStack.PushOverlay(overlay);
     }
 
-	void Application::PopLayer(Layer* layer)
+    void Application::PopLayer(Layer* layer)
     {
         m_layerStack.PopLayer(layer);
     }
 
-	void Application::PopOverlay(Layer* overlay)
+    void Application::PopOverlay(Layer* overlay)
     {
         m_layerStack.PopOverlay(overlay);
     }

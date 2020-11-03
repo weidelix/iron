@@ -10,8 +10,8 @@ namespace Iron
         double posX, posY;
     public:
         MouseMoveEvent(double x, double y)
-            :posX(x), posY(y)
-        { }
+            :posX(x), posY(y) { }
+        ~MouseMoveEvent() override { }
 
         double GetMousePositionX()
         {
@@ -23,7 +23,7 @@ namespace Iron
             return posY;
         }
 
-        EVENT_CLASS_TYPE(MouseMove);        
+        EVENT_CLASS_TYPE(EventType::MouseMove);        
         EVENT_CLASS_CATEGORY(MouseCategory);
 
     };
@@ -34,8 +34,8 @@ namespace Iron
         float xoffset, yoffset;
     public:
         MouseScrollEvent(float x, float y)
-            :xoffset(x), yoffset(y)
-        { }
+            :xoffset(x), yoffset(y) { }
+        ~MouseScrollEvent() override { }
 
         float GetMouseXOffset()
         {
@@ -47,7 +47,7 @@ namespace Iron
             return yoffset;
         }
 
-        EVENT_CLASS_TYPE(MouseScroll);
+        EVENT_CLASS_TYPE(EventType::MouseScroll);
         EVENT_CLASS_CATEGORY(MouseCategory);
 
     };
@@ -59,7 +59,8 @@ namespace Iron
     protected:
         MouseButtonEvent(int button)
         :m_button(button) { }
-        ~MouseButtonEvent() { }
+        virtual ~MouseButtonEvent() override { }
+    
     public:
         inline int GetMouseEvent() { return m_button; } 
         EVENT_CLASS_CATEGORY(MouseCategory | MouseButtonCategory);
@@ -69,14 +70,11 @@ namespace Iron
     {
     public:
         MouseButtonPressedEvent(int button)
-            :MouseButtonEvent(button)
-        { }
+            :MouseButtonEvent(button) { }
 
-        ~MouseButtonPressedEvent() 
-        { }
+        ~MouseButtonPressedEvent() override { }
 
-
-        EVENT_CLASS_TYPE(MouseClick)
+        EVENT_CLASS_TYPE(EventType::MouseClick)
     };
 
     class IRON_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -84,15 +82,10 @@ namespace Iron
     public:
         MouseButtonReleasedEvent(int button)
             :MouseButtonEvent(button)
-        {
+        { }
 
-        }
+        ~MouseButtonReleasedEvent() override { }
 
-        ~MouseButtonReleasedEvent() 
-        {
-
-        }
-
-        EVENT_CLASS_TYPE(MouseClick)
+        EVENT_CLASS_TYPE(EventType::MouseClick)
     };
-} // namespace Iron
+}

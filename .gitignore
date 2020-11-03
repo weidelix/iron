@@ -6,3 +6,7 @@ bin/
 .vs/
 .vscode/
 test/bin/
+GPATH
+GRTAGS
+GTAGS
+.ccls-cache

@@ -6,6 +6,8 @@
 #include "Window.h"
 #include "Application.h"
 
+using namespace ImGui;
+
 namespace Iron
 {
     ImFont* ImGuiLayer::m_defaultFont;
@@ -14,27 +16,25 @@ namespace Iron
     ImFontAtlas* ImGuiLayer::m_fontAtlas;
 
     ImGuiLayer::ImGuiLayer(const std::string &name)
-        :Layer(name){ }
-
+        :Layer(name)
+    {
+        m_propStack.reserve(10);
+    }
+    
     ImGuiLayer::~ImGuiLayer() { }
-
+    
     void ImGuiLayer::OnAttach() 
-    { 
-        //m_fontAtlas->AddFontDefault(m_defaultFont->ConfigData);
-
+    {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
-        ImGui::CreateContext(m_fontAtlas);
-        ImGuiIO& io = ImGui::GetIO();
+        CreateContext(m_fontAtlas);
+        ImGuiIO& io = GetIO();
         m_defaultFont  = io.Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Medium.ttf" , 18);
         m_widgetFont   = io.Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Regular.ttf", 15);
         m_titleBarFont = io.Fonts->AddFontFromFileTTF("../../../res/fonts/Quicksand-Bold.ttf"   , 25);
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.Fonts->AddFontDefault(m_defaultFont->ConfigData);
 
-        //IRON_CORE_INFO("{}\n", debugName);
-
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-        
         // Setup Platform/Renderer bindings
         Window &window = Application::Get().GetWindow();
         ImGui_ImplGlfw_InitForOpenGL(window.GetWindowPointer(), true);
@@ -42,71 +42,62 @@ namespace Iron
         // Setup Dear ImGui style
         CherryTheme();
     }
-    void  ImGuiLayer::OnDetach() 
+
+    void ImGuiLayer::OnDetach()
     {
         ImGui_ImplOpenGL3_Shutdown();
-	    ImGui_ImplGlfw_Shutdown();
-	    ImGui::DestroyContext();
+        ImGui_ImplGlfw_Shutdown();
+        DestroyContext();
     }
     
     void ImGuiLayer::OnUpdate() 
     { 
         auto& window = Application::Get();
-        ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-        
-        float indent_size = 20.0f;
+        ImGui_ImplOpenGL3_NewFrame();        
+        ImGui_ImplGlfw_NewFrame();
+        NewFrame();
+            
+        float indent_size = 10.0f;
         bool show = true;
 
-        Begin("Empty Panel");
-        if (ImGui::CollapsingHeader("Camera"))
-        {   
-            auto& data_8 = BeginPropPanel(indent_size);
-            float float3[3] = { 0.0f ,0.0f, 0.0f };
-            BeginWidget(m_widgetFont);
-            ImGui::PushItemWidth(ImGui::GetWindowWidth() - 6.0f);
-            ImGui::DragFloat3("##hidden DragFloat3_1", float3, 1.0f, 0.0f, 100.0f);
-            ImGui::DragFloat3("##hidden DragFloat3_2", float3, 1.0f, 0.0f, 100.0f);
-            ImGui::DragFloat3("##hidden DragFloat3_3", float3, 1.0f, 0.0f, 100.0f);
-            ImGui::Text("Hatdog");
-            EndWidget();
-            ImGui::PopItemWidth();
-            EndPropPanel(data_8);
+        Begin("Sample_1 Test");
+        if (CollapsingHeader("Position"))
+        {
+            float test[4] = {0, 0, 0, 0};
+            BeginPropPanel(indent_size);
+            BeginPropPanel(indent_size);
+            DragFloat4("##0", test, 1.0f, 1.0f);
+            TextWrapped("when the days are cold the cars all folded the saints we prayed are all made of gold");
+            EndPropPanel();
+            DragFloat4("##0", test, 1.0f, 1.0f);
+            TextWrapped("we dont believe whats on tv because its what we want to see and what we want we know we cant believe");
+            EndPropPanel();
         }
         End();
-    
-        Begin("Properties");
-        if (ImGui::CollapsingHeader("Animation"))
-        {   
-            auto& data_0 = BeginPropPanel(indent_size);
-            auto& data_9 = BeginPropPanel(indent_size);
-            float float3[3] = { 0.0f ,0.0f, 0.0f };
-            BeginWidget(m_widgetFont);
-            auto& data_11 = BeginPropPanel(indent_size);
-            ImGui::DragFloat3("##hidden DragFloat3_1", float3, 1.0f, 0.0f, 100.0f);
-            ImGui::DragFloat3("##hidden DragFloat3_2", float3, 1.0f, 0.0f, 100.0f);
-            ImGui::DragFloat3("##hidden DragFloat3_3", float3, 1.0f, 0.0f, 100.0f);
-            
-            EndPropPanel(data_11);
-            EndWidget();
-            BeginWidget();
-            ImGui::TextWrapped("Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog  Hatdog");
-            EndWidget();
-            EndPropPanel(data_9);
-            EndPropPanel(data_0);
-        }
+
+        Begin("Sample_2 Test");
+        if (CollapsingHeader("Hatdog"))
+        {
+            float test[4] = {0, 0, 0, 0};
+            BeginPropPanel(indent_size);
+            BeginPropPanel(indent_size); 
+            DragFloat4("##0", test, 1.0f, 1.0f);
+            TextWrapped("but our house gets cold when cut the heating without you ill be freezing");
+            EndPropPanel();
+            DragFloat4("##0", test, 1.0f, 1.0f);
+            TextWrapped("have you ever loved? We should go again. I'll be down when its over baby yeah! I'll be your man");
+            EndPropPanel();
+        }        
         End();
-        
-        ImGui::Render();
+        Render();
+        ImGui_ImplOpenGL3_RenderDrawData(GetDrawData());
         glViewport(0, 0, window.GetWindow().GetWidth(), window.GetWindow().GetHeight());
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-    
+
     void ImGuiLayer::OnEvent(Event& event) { }
 
     void ImGuiLayer::CherryTheme()
-    {     
+    {    
         // cherry colors, 3 intensities
         #define HI(v)   ImVec4(0.502f, 0.075f, 0.256f, v)
         #define MED(v)  ImVec4(0.455f, 0.198f, 0.301f, v)
@@ -116,14 +107,14 @@ namespace Iron
         #define HOV(v)  ImVec4(0.20f, 0.20f, 0.20f, v)
         #define DEF(v)  ImVec4(0.17f, 0.17f, 0.17f, v)
         #define ACTV(v) ImVec4(0.13f, 0.13f, 0.13f, v)
-        // text
-        #define TEXT(v) ImVec4(0.860f, 0.930f, 0.890f, v)
+        // TEXT
+        #define TXT(v) ImVec4(0.860f, 0.930f, 0.890f, v)
 
-        auto& style = ImGui::GetStyle();
+        auto& style = GetStyle();
 
-        style.Colors[ImGuiCol_Text] = TEXT(0.78f);
-        style.Colors[ImGuiCol_TextDisabled] = TEXT(0.28f);
-        style.Colors[ImGuiCol_WindowBg] = BG(1.0f); // Darker BG
+        style.Colors[ImGuiCol_Text] = TXT(0.78f);
+        style.Colors[ImGuiCol_TextDisabled] = TXT(0.28f);
+        style.Colors[ImGuiCol_WindowBg] = BG(1.0f);
         style.Colors[ImGuiCol_PopupBg] = BG(0.9f);
         style.Colors[ImGuiCol_Border] = ImVec4(0.31f, 0.31f, 1.00f, 0.00f);
         style.Colors[ImGuiCol_BorderShadow] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
@@ -134,7 +125,7 @@ namespace Iron
         style.Colors[ImGuiCol_TitleBgActive] = BG(1.0f);
         style.Colors[ImGuiCol_TitleBgCollapsed] = BG(1.0f);
 
-        style.Colors[ImGuiCol_Tab] = BG(1.00f); // E
+        style.Colors[ImGuiCol_Tab] = BG(1.00f);
         style.Colors[ImGuiCol_TabHovered] = MED(0.86f);
         style.Colors[ImGuiCol_TabActive] = HI(1.00f);
         style.Colors[ImGuiCol_TabUnfocused] = LOW(0.60f);
@@ -156,9 +147,9 @@ namespace Iron
         style.Colors[ImGuiCol_ResizeGrip] = ImVec4(0.47f, 0.77f, 0.83f, 0.04f);
         style.Colors[ImGuiCol_ResizeGripHovered] = MED(0.78f);
         style.Colors[ImGuiCol_ResizeGripActive] = MED(1.00f);
-        style.Colors[ImGuiCol_PlotLines] = TEXT(0.63f);
+        style.Colors[ImGuiCol_PlotLines] = TXT(0.63f);
         style.Colors[ImGuiCol_PlotLinesHovered] = MED(1.00f);
-        style.Colors[ImGuiCol_PlotHistogram] = TEXT(0.63f);
+        style.Colors[ImGuiCol_PlotHistogram] = TXT(0.63f);
         style.Colors[ImGuiCol_PlotHistogramHovered] = MED(1.00f);
         style.Colors[ImGuiCol_TextSelectedBg] = MED(0.43f);
         style.Colors[ImGuiCol_ModalWindowDarkening] = BG(0.73f);
@@ -166,7 +157,7 @@ namespace Iron
         style.ChildRounding = 10.0f;
         style.WindowRounding = 0.0f;
         style.FrameRounding = 3.0f;
-        style.ItemSpacing = ImVec2(7, 4);
+        style.ItemSpacing = ImVec2(0, 4);
         style.ItemInnerSpacing = ImVec2(5, 1);
         style.TouchExtraPadding = ImVec2(0, 0);
         style.IndentSpacing = 6.0f;
@@ -177,7 +168,7 @@ namespace Iron
         
         style.WindowTitleAlign.x = 0.02f;
         style.WindowTitleAlign.y = 0.20f;
-        style.FrameBorderSize  = 3.0f;
+        style.FrameBorderSize  = 0.0f;
         style.FramePadding     = ImVec2(4.0f, 4.0f);
         style.WindowPadding    = ImVec2(15.0f, 3.0f);
         style.WindowBorderSize = 4.0f;
@@ -187,51 +178,54 @@ namespace Iron
     
     void ImGuiLayer::Begin(const char *name, bool* isOpen, ImGuiWindowFlags flags)
     {
-        ImGui::PushFont(m_titleBarFont);
-        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.652f, 0.275f, 0.456f, 1.0f));
-        ImGui::Begin(name, isOpen, flags);
-        ImGui::PopStyleColor();
-        ImGui::PopFont();
-        ImGui::PushFont(m_defaultFont);
+        PushFont(m_titleBarFont);
+        PushStyleColor(ImGuiCol_Text, ImVec4(0.652f, 0.275f, 0.456f, 1.0f));
+        Begin(name, isOpen, flags);
+        PopStyleColor();
+        PopFont();
+        PushFont(m_defaultFont);
     }
 
     void ImGuiLayer::End()
     {
-        ImGui::PopFont();
-        ImGui::End(); 
+        PopFont();
+        End(); 
     }
 
     void ImGuiLayer::BeginWidget(ImFont *font)
     {
-        ImGui::PushFont(font);
+        PushFont(font);
     }
 
     void ImGuiLayer::EndWidget()
     {
-        ImGui::PopFont();
+        PopFont();
     }
 
-    ImVec4 ImGuiLayer::BeginPropPanel(float w)
+    void ImGuiLayer::BeginPropPanel(float indent)
     {
-        m_propStack++;
-        ImGui::Dummy({0.0f, 0.0f});
-        ImGui::SameLine();
-        ImGui::Indent(w);
-        ImVec2 itemMin = ImGui::GetItemRectMin(); 
-        return ImVec4(itemMin.x, itemMin.y, w, NULL);  
+        Dummy({ 0.0f, 0.0f });
+        SameLine();
+        Indent(indent);
+        ImVec2 itemMin = GetItemRectMin(); 
+        m_propStack.emplace_back(itemMin.x, itemMin.y, indent);
+        PushItemWidth(GetWindowContentRegionWidth() - (indent * (PropStackSize() - 1)) - GetStyle().FramePadding.x);
     }
 
-    void ImGuiLayer::EndPropPanel(ImVec4& data)
+    void ImGuiLayer::EndPropPanel()
     {
-        ImVec2 itemMax = ImGui::GetItemRectMax();        
-        ImGui::GetWindowDrawList()->AddLine
+        ImVec2 itemMax = GetItemRectMax();
+        ImVec3& data = m_propStack.back();       
+        GetWindowDrawList()->AddLine
            ({data.x, data.y},
             {data.x, itemMax.y},
-            ImGui::GetColorU32(ImVec4(1.0 - (0.18 * (float)m_propStack), 0.275f, 0.456f, 1.0f)),
+            GetColorU32({ 1.0f - (0.18f * PropStackSize()), 0.275f, 0.456f, 1.0f }),
             2.0f);
 
-        m_propStack--;
-        if (m_propStack < 0) IRON_CORE_ASSERT(false, "IMGUI LAYER ERROR", "BeginPropLayer/EndPropLayer mismatch, call BeginPropLayer before calling EndPropLayer\n");
-        ImGui::Unindent(data.z);
+        if (PropStackSize() < 0) 
+            IRON_CORE_ASSERT(false, "[LAYER ERROR] BeginPropLayer/EndPropLayer mismatch, call BeginPropLayer before calling EndPropLayer");
+        PopItemWidth();
+        Unindent(data.z);
+        m_propStack.pop_back();
     }
 }

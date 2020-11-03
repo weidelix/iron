@@ -23,10 +23,12 @@ namespace Iron
 		m_layers.emplace_back(overlay);
         overlay->OnAttach();
 	}
-
+	
 	void LayerStack::PopLayer(Layer* layer)
 	{
 		auto it = std::find(m_layers.begin(), m_layers.begin() + m_layerIndex, layer);
+
+		// if layer is not the last layer in the stack
 		if (it != m_layers.begin() + m_layerIndex)
 		{
 			layer->OnDetach();

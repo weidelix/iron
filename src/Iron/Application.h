@@ -2,19 +2,20 @@
 #include "pch.h"
 #include "Core.h"
 #include "Window.h"
-#include "Iron/platform/Windows/WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 #include "Input.h"
 #include "LayerStack.h"
 
 namespace Iron
 {
-    class IRON_API Application 
+   class IRON_API Application 
     {
     private:
+        static Application* m_instance;
         std::unique_ptr<Window> m_window;
         bool isRunning = true;
         LayerStack m_layerStack;
-        static Application* m_instance;
+        Input m_input;
 
     public:
         Application();

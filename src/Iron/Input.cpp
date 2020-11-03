@@ -2,7 +2,13 @@
 
 namespace Iron
 {
-    inline int Input::IsPrintable(int key)
+    Input::Input(Window* window)
+        :m_window(window), m_events(window->GetEvents()) 
+    { 
+        
+    }
+
+    int Input::IsPrintable(int key)
     {
         if (key >= 32 && key <= 126)
             return key;
@@ -10,14 +16,14 @@ namespace Iron
             return Key::NonPrintable;
     }
 
-    inline int Input::IsControlChar(int key)
+    int Input::IsControlChar(int key)
     {
         return (key >= 340 && key <= 348) ? Key::NonPrintable : key;
     }
 
     bool Input::Mouse(enum Mouse button)
     {
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::MouseClick)
             {
@@ -33,7 +39,7 @@ namespace Iron
 
     int Input::Mouse()
     {
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::MouseClick)
             {
@@ -48,7 +54,7 @@ namespace Iron
 
     int Input::Key()
     {
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::KeyPress)
             {
@@ -62,7 +68,7 @@ namespace Iron
 
     bool Input::Key(enum Key key)
     {
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::KeyPress)
             {
@@ -78,7 +84,7 @@ namespace Iron
 
     bool Input::KeyCom(enum ModKey modkey, enum Key key)
     {
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
             {
@@ -94,7 +100,7 @@ namespace Iron
 
     bool Input::KeyCom(enum ModKey modkey1, enum ModKey modkey2, enum Key key)
     {
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
             {
@@ -114,7 +120,7 @@ namespace Iron
         static bool flag2 = false;
         static double time = 0.00;
 
-        for(auto* event : m_events)
+        for(auto* event : *m_events)
         {
             if (event->GetEventType() == Iron::EventType::CombinationKeyPress)
             {

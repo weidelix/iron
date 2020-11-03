@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Iron/Window.h"
-#include "Iron/Log.h"
-#include "Iron/Event/MouseEvent.h"
-#include "Iron/Event/WindowEvent.h"
-#include "Iron/Event/KeyEvent.h"
+#include "Window.h"
+#include "Log.h"
+#include "Event/MouseEvent.h"
+#include "Event/WindowEvent.h"
+#include "Event/KeyEvent.h"
 //#include "Event/ApplicationEvent.h"
 
 namespace Iron
@@ -32,7 +32,7 @@ namespace Iron
 
         inline void SetEventCallback(std::function<void(Event&)> callback) override { m_data.EventCallback = callback; }
         inline GLFWwindow* GetWindowPointer() override { return m_window; }
-        inline std::vector<Event*>& GetEvents() { return m_data.Events; }
+        inline std::vector<Event*>* GetEvents() override { return &m_data.Events; }
         inline void SetVSync(bool val) override;
         inline void OnUpdate() override;
 

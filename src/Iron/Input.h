@@ -3,10 +3,8 @@
 #include "pch.h"
 #include "Core.h"
 #include "Window.h"
-#include "Iron/platform/Windows/WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 #include <GLFW/glfw3.h>
-
-
 
 enum Key
 {
@@ -185,19 +183,18 @@ namespace Iron
     class IRON_API Input
     {
     private:
-        std::vector<Iron::Event*>& m_events;
-        WindowsWindow& m_window;
+        Window* m_window;
+        std::vector<Iron::Event*>* m_events;
 
-        int IsPrintable(int key);
-        int IsControlChar(int key);
+         int IsPrintable(int key);
+         int IsControlChar(int key);
 
     public:
-        Input(WindowsWindow& window)
-            :m_window(window), m_events(window.GetEvents())
-        { }
+        Input(Window* window);
+        ~Input() = default;
 
         /**
-         *  @brief Check is the specified key is pressed
+         * @brief Check is the specified key is pressed
          * 
          * @param button mouse button to check
          * 
@@ -206,7 +203,7 @@ namespace Iron
         bool Mouse(enum Mouse button);
 
         /**
-         *  @brief Checks if any button in mouse is pressed
+         * @brief Checks if any button in mouse is pressed
          * 
          * @return returns true if the specified button is pressed
          */

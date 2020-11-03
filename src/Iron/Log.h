@@ -28,11 +28,11 @@ namespace Iron
     #define IRON_CORE_ERROR(...)    SPDLOG_LOGGER_ERROR     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
     #define IRON_CORE_CRITICAL(...) SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetCoreLogger(), __VA_ARGS__)
     // CLient
-    #define LOG_INFO(...)           SPDLOG_LOGGER_INFO      (Iron::Log::GetClientLogger(), __VA_ARGS__)
-    #define LOG_TRACE(...)          SPDLOG_LOGGER_TRACE     (Iron::Log::GetClientLogger(), __VA_ARGS__)
-    #define LOG_WARN(...)           SPDLOG_LOGGER_WARN      (Iron::Log::GetClientLogger(), __VA_ARGS__)
-    #define LOG_ERROR(...)          SPDLOG_LOGGER_ERROR     (Iron::Log::GetClientLogger(), __VA_ARGS__)
-    #define LOG_FATAL(...)          SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetClientLogger(), __VA_ARGS__) 
+    #define IRON_INFO(...)           SPDLOG_LOGGER_INFO      (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define IRON_TRACE(...)          SPDLOG_LOGGER_TRACE     (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define IRON_WARN(...)           SPDLOG_LOGGER_WARN      (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define IRON_ERROR(...)          SPDLOG_LOGGER_ERROR     (Iron::Log::GetClientLogger(), __VA_ARGS__)
+    #define IRON_FATAL(...)          SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetClientLogger(), __VA_ARGS__) 
                                  
 #else
     // Core
@@ -42,9 +42,9 @@ namespace Iron
     #define IRON_CORE_TRACE(...)
     #define IRON_CORE_FATAL(...)
     // CLient
-    #define LOG_WARN(...) 
-    #define LOG_ERROR(...)
-    #define LOG_INFO(...) 
-    #define LOG_TRACE(...)
-    #define LOG_FATAL(...)
+    #define IRON_INFO(...) 
+    #define IRON_TRACE(...)
+    #define IRON_WARN(...) 
+    #define IRON_ERROR(...)
+    #define IRON_FATAL(...)
 #endif

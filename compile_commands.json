@@ -1,0 +1,117 @@
+[
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -I../vendor/GLAD/include -I../vendor/GLFW/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\imgui.dir\\vendor\\IMGUI\\imgui.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\vendor\\IMGUI\\imgui.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/vendor/IMGUI/imgui.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -I../vendor/GLAD/include -I../vendor/GLFW/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\imgui.dir\\vendor\\IMGUI\\imgui_demo.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\vendor\\IMGUI\\imgui_demo.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/vendor/IMGUI/imgui_demo.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -I../vendor/GLAD/include -I../vendor/GLFW/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\imgui.dir\\vendor\\IMGUI\\imgui_draw.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\vendor\\IMGUI\\imgui_draw.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/vendor/IMGUI/imgui_draw.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -I../vendor/GLAD/include -I../vendor/GLFW/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\imgui.dir\\vendor\\IMGUI\\imgui_widgets.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\vendor\\IMGUI\\imgui_widgets.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/vendor/IMGUI/imgui_widgets.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -emit-pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\cmake_pch.hxx.pch -c C:\\Users\\mesin\\Desktop\\Iron\\build\\CMakeFiles\\Iron.dir\\cmake_pch.hxx.cxx",
+  "file": "C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.cxx"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Application.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Application.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Application.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\ImGuiLayer.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\ImGuiLayer.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/ImGuiLayer.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Input.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Input.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Input.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Layer.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Layer.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Layer.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\LayerStack.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\LayerStack.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/LayerStack.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Log.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Log.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Log.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Platform\\OpenGL\\imgui_impl_glfw.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Platform\\OpenGL\\imgui_impl_glfw.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Platform/OpenGL/imgui_impl_glfw.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Platform\\OpenGL\\imgui_impl_opengl3.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Platform\\OpenGL\\imgui_impl_opengl3.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Platform/OpenGL/imgui_impl_opengl3.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Platform\\Windows\\WindowsWindow.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Platform\\Windows\\WindowsWindow.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Platform/Windows/WindowsWindow.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Renderer\\IndexBuffer.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Renderer\\IndexBuffer.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Renderer/IndexBuffer.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Renderer\\Renderer.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Renderer\\Renderer.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Renderer/Renderer.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Renderer\\Shader.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Renderer\\Shader.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Renderer/Shader.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Renderer\\Texture2D.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Renderer\\Texture2D.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Renderer/Texture2D.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Renderer\\VertexArray.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Renderer\\VertexArray.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Renderer/VertexArray.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Renderer\\VertexBuffer.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Renderer\\VertexBuffer.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Renderer/VertexBuffer.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_BUILD_DLL -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DIron_EXPORTS -DSTB_IMAGE_IMPLEMENTATION -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -I../src/Iron -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -Xclang -include-pch -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx.pch -Xclang -include -Xclang C:/Users/mesin/Desktop/Iron/build/CMakeFiles/Iron.dir/cmake_pch.hxx -o CMakeFiles\\Iron.dir\\src\\Iron\\Viewport.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\src\\Iron\\Viewport.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/src/Iron/Viewport.cpp"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang.exe -I../vendor/GLAD/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o CMakeFiles\\glad.dir\\vendor\\GLAD\\src\\glad.c.obj -c C:\\Users\\mesin\\Desktop\\Iron\\vendor\\GLAD\\src\\glad.c",
+  "file": "C:/Users/mesin/Desktop/Iron/vendor/GLAD/src/glad.c"
+},
+{
+  "directory": "C:/Users/mesin/Desktop/Iron/build",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\CLANG_~1.EXE -DENABLE_ASSERT -DIRON_DEBUG -DIRON_PLATFORM_WINDOW -DSTB_IMAGE_IMPLEMENTATION -I../test/bin/Debug/Iron -I../vendor/GLFW/include -I../vendor/GLM-0.9.9.8/glm/glm -I../vendor/IMGUI -I../vendor/STB/include -I../vendor/GlAD/include -I../vendor/SPDLOG/include -g -Xclang -gcodeview -O0 -D_DEBUG -D_DLL -D_MT -Xclang --dependent-lib=msvcrtd -o test\\build\\CMakeFiles\\Sandbox.dir\\src\\Sandbox.cpp.obj -c C:\\Users\\mesin\\Desktop\\Iron\\test\\src\\Sandbox.cpp",
+  "file": "C:/Users/mesin/Desktop/Iron/test/src/Sandbox.cpp"
+}
+]

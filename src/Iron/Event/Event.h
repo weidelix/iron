@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Iron/Core.h"
+#include "Core.h"
 #include "pch.h"
 
 namespace Iron
@@ -26,7 +26,7 @@ namespace Iron
         MouseButtonCategory =  BIT(6)
     };
 
-    #define EVENT_CLASS_TYPE(type)  static EventType GetStaticType() { return EventType::##type; }\
+    #define EVENT_CLASS_TYPE(type)  static EventType GetStaticType() { return type; }\
                                     virtual EventType GetEventType() const override { return GetStaticType(); }\
                                     virtual const char* GetName() const override { return #type; }
 
@@ -38,6 +38,7 @@ namespace Iron
     protected:
         bool m_handled = false;
     public:
+        virtual ~Event() { };
         virtual int GetCategoryFlags() const = 0;
         virtual const char* GetName() const = 0;
         virtual EventType GetEventType() const = 0;
@@ -59,7 +60,6 @@ namespace Iron
             :m_event(event)
         { }
 
-        //? Should I call this for every type of event?
         template<typename T>
         void Dispatch(EventFunc<T>& func)
         {
