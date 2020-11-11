@@ -1,5 +1,5 @@
 build/
-*.txt
+a.txt
 *.pdb
 bin/
 *.ini
@@ -10,3 +10,4 @@ GPATH
 GRTAGS
 GTAGS
 .ccls-cache
+scripts/

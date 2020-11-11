@@ -1,28 +1,25 @@
 #include "Iron.h"
 
+using namespace Iron;
+
 //NOTE: TRY RECONFIGURING PROJECT THEN REBUILDING WHEN NOT WORKING PROPERLY
-class Sandbox : public Iron::Application
+class Sandbox : public Application
 {
-public:    
+public:
     // Runs code on start
     void Start() override
     {
-
+        
     }
 
     // Runs code every frame
     void Update() override
-    {       
-        
+    {
+        //IRON_INFO(Input().Key());
     }
  
-    void OnEvent(Iron::Event& event) override 
+    void OnEvent(Event& event) override 
     {
-        
-    }
-
-    void OnExit() override 
-    { 
 
     }
 };

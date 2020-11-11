@@ -8,7 +8,7 @@
 
 namespace Iron
 {
-   class IRON_API Application 
+    class IRON_API Application 
     {
     private:
         static Application* m_instance;

@@ -19,8 +19,8 @@ namespace Iron
     
     bool Application::Run() 
     {
+        //PushOverlay(new ImGuiLayer("ImGuiLayer"));
         m_instance->Start();
-        //PushOverlay(new ImGuiLayer("ImGui Layer"));
         while(isRunning)
         {
             glClearColor(0.0, 0.0, 1.0, 1.0);
@@ -34,7 +34,7 @@ namespace Iron
         }
         return true; 
     }
-
+    
     Input Application::Input()
     {
         return m_input;

@@ -165,9 +165,9 @@ unsigned int Shaders::Id() const
 
 ShaderSource ShaderSource::ParseShaderSource(const std::string& shaderPath)
 {
-	std::ifstream stream(shaderPath);
+	std::ifstream stream(shaderPath, std::ios::in);
 	std::string line;
-
+    
 	enum class Shaderintype
 	{
 		NONE = -1,
@@ -197,5 +197,6 @@ ShaderSource ShaderSource::ParseShaderSource(const std::string& shaderPath)
 			ss[(int)type] << line << "\n";
 		}
 	}
+     
 	return { ss[0].str(), ss[1].str() };
 }
