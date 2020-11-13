@@ -5,7 +5,7 @@
 #include "Event/MouseEvent.h"
 #include "Event/WindowEvent.h"
 #include "Event/KeyEvent.h"
-//#include "Event/ApplicationEvent.h"
+#include "Event/ApplicationEvent.h"
 
 namespace Iron
 {

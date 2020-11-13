@@ -15,7 +15,7 @@ public:
     // Runs code every frame
     void Update() override
     {
-        //IRON_INFO(Input().Key());
+        IRON_INFO(Input().Key());
     }
  
     void OnEvent(Event& event) override 

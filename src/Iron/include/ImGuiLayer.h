@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Platform/OpenGL/imgui_impl_glfw.h"
-#include "Platform/OpenGL/imgui_impl_opengl3.h"
+#include "Platform/OpenGL/ImGui_GLFW.h"
+#include "Platform/OpenGL/ImGui_OpenGL3.h"
 #include "Log.h"
 #include "Core.h"
 #include "Layer.h"
@@ -17,7 +17,7 @@ namespace Iron
             ImVec3()                                { x = y = z = 0.0f; }
             ImVec3(float _x, float _y, float _z)    { x = _x; y = _y; z = _z; }
         };
-
+        
         static ImFont* m_titleBarFont;
         static ImFont* m_defaultFont;
         static ImFont* m_widgetFont;

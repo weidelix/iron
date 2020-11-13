@@ -7,7 +7,7 @@ namespace Iron
     
     void Log::Init()
     {
-        spdlog::set_pattern("[%oms] | %^%l%$ | %s:%# | %v");
+        spdlog::set_pattern("[%^%l%$] : [%oms] : %@ - %v");
         s_CoreLogger = spdlog::stdout_color_mt("Iron");
         s_CoreLogger->set_level(spdlog::level::trace);
         s_ClientLogger = spdlog::stdout_color_mt("Client");
