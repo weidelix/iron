@@ -2,23 +2,23 @@
 
 namespace Iron
 {
-    void Viewport::OnAttach()
-    {
-         
-    }
+	void Viewport::OnAttach()
+	{
+		 
+	}
 
-    void Viewport::OnDetach()
-    {
-        
-    }
+	void Viewport::OnDetach()
+	{
+		
+	}
 
-    void Viewport::OnUpdate()
-    {
+	void Viewport::OnUpdate()
+	{
 
-    }
+	}
 
-    void Viewport::OnEvent(Event& event)
-    {
-        
-    }
+	void Viewport::OnEvent(Event& event)
+	{
+		
+	}
 }

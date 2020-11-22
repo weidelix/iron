@@ -6,12 +6,12 @@
 
 namespace Iron
 {
-    class IRON_API LayerStack
-    {
-    private:
+	class IRON_API LayerStack
+	{
+	private:
 		std::vector<Layer*> m_layers;
 		unsigned int m_layerIndex = 0;
-    public:
+	public:
 		LayerStack() = default;
 		~LayerStack();
 
@@ -23,5 +23,5 @@ namespace Iron
 		std::vector<Layer*>::iterator begin() { return m_layers.begin(); }
 		std::vector<Layer*>::iterator end() { return m_layers.end(); }
 
-    };
+	};
 }

@@ -35,12 +35,20 @@ target_precompile_headers(Iron PRIVATE ${CMAKE_SOURCE_DIR}/src/Iron/include/pch.
 target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
 
 # Link Files
-target_link_libraries(Iron PUBLIC glfw3
-                           PUBLIC opengl32
+target_link_libraries(Iron PUBLIC opengl32
                            PUBLIC imgui
-                           PUBLIC glad)
+                           PUBLIC glad
+                           PUBLIC glfw3)
 
 # Add Macro Definitions
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    message("Compiler -- Clang")
+    target_compile_definitions(Iron PUBLIC USE_CLANG)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    message("Compiler -- MSVC")
+    target_compile_definitions(Iron PUBLIC USE_MSVC)
+endif()
+
 target_compile_definitions(Iron PUBLIC  STB_IMAGE_IMPLEMENTATION
                                 PUBLIC  IRON_PLATFORM_WINDOW
                                 PRIVATE IRON_BUILD_DLL
@@ -57,7 +65,7 @@ target_include_directories(Iron PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLFW/include"
                                 PRIVATE "${CMAKE_SOURCE_DIR}/src/Iron/include")
 
 
-add_custom_command(TARGET Iron POST_BUILD 
+add_custom_command(TARGET Iron PRE_BUILD 
                             COMMAND ${CMAKE_COMMAND} -E copy_directory
                             "${CMAKE_SOURCE_DIR}/src/Iron/include/"
                             ${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}/Iron/include/
