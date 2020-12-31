@@ -1,4 +1,4 @@
-#include "Renderer/IndexBuffer.h"
+#include "Renderer/IndexBuffer.hpp"
 
 namespace Iron
 {

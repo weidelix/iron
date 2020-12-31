@@ -1,4 +1,4 @@
-#include "Renderer/VertexBuffer.h"
+#include "Renderer/VertexBuffer.hpp"
 
 namespace Iron
 {

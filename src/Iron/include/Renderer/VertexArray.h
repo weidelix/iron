@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Renderer/Renderer.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.hpp"
+#include "Renderer/VertexBuffer.hpp"
 
 namespace Iron
 {
