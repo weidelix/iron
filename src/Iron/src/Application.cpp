@@ -1,7 +1,9 @@
-#include "Application.h"
 #include "pch.h"
 #include "Event/Event.h"
 #include "ImGuiLayer.h"
+//#include "Renderer/RenderCommand.h"
+#include "Application.h"
+//#include "Renderer/Renderer.h"
 
 namespace Iron
 {
@@ -16,20 +18,54 @@ namespace Iron
 		m_window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 	}
 	
+	float pos[] = {
+		0.5f, -0.5f, 0.0f,
+   	0.5f, -0.5f, 0.0f,
+   	0.0f,  0.5f, 0.0f
+	};
+
+	unsigned int indices[] = 
+	{
+		0, 1, 2,
+		//2, 3, 1
+	};
+
+
 	bool Application::Run() 
 	{
+		// VertexArray vertexArray = VertexArray::Create();
+		// IndexBuffer indexBuffer(indices, 6);
+		// VertexBuffer vertexBuffer(pos, 9 * sizeof(float));
+		// vertexArray.SetIndexBuffer(&indexBuffer);
+
 		//PushOverlay(new ImGuiLayer("ImGuiLayer"));
+		//RenderCommand::SetClearColor({ 0.0, 0.0, 1.0, 1.0 });
 		m_instance->Start();
 		while(isRunning)
 		{
-			glClearColor(0.0, 0.0, 1.0, 1.0);
+			//RenderCommand::Clear();
+			//Renderer::Submit(vertexArray);
 			glClear(GL_COLOR_BUFFER_BIT);
 			m_instance->Update();
 			for (auto* layer : m_layerStack)
-				layer->OnUpdate();
+			{
+				layer->OnUpdate(); 
+			}
 			m_window->OnUpdate();
 		}
 		return true; 
+	}
+	
+	bool Callback(Event& event)
+	{
+		IRON_INFO(event.ToString());
+		return true;
+	}
+
+	void Application::OnEvent(Event& event)
+	{
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<KeyPressEvent>(std::bind(&Callback, std::placeholders::_1));
 	}
 	
 	Input Application::Input()

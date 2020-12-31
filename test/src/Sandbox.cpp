@@ -1,4 +1,4 @@
-#include "Iron.h"
+#include "Iron.hpp"
 
 using namespace Iron;
 
@@ -7,19 +7,15 @@ class Sandbox : public Application
 {
 public:
 	// Runs code on start
-	void Start() override
-	{
-		
+	void Start() override 
+	{ 
+
 	}
 
 	// Runs code every frame
 	void Update() override
 	{
-		IRON_INFO(Input().Key());
-	}
-
-	void OnEvent(Event& event) override 
-	{	
+		
 	}
 };
 

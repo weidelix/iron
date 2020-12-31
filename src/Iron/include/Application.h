@@ -22,9 +22,9 @@ namespace Iron
 		virtual ~Application()  { }
 		virtual void Start()  { }
 		virtual void Update() { }
-		virtual void OnEvent(Event& event) { }
 		virtual void OnExit() { }
 		virtual bool Run();
+		virtual void OnEvent(Event& event);
 		Input Input();
 		static Application &Get();
 		Window& GetWindow();

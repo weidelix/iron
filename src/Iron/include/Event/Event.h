@@ -42,17 +42,14 @@ namespace Iron
 		virtual int GetCategoryFlags() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual EventType GetEventType() const = 0;
-		virtual std::string ToString() { return GetName(); }
+		virtual std::string ToString() const { return GetName(); }
 
 		inline bool IsInCategory(EventCategory category) { return GetCategoryFlags() & category; }
 	};
 
 	class EventDispatcher
-	{
-		template<typename T>
-		using EventFunc = std::function<bool(T&)>;
-	
-	private: 
+	{	
+		private: 
 		Event& m_event;
 	
 	public:
@@ -60,15 +57,20 @@ namespace Iron
 			:m_event(event)
 		{ }
 
-		template<typename T>
-		void Dispatch(EventFunc<T>& func)
+		template<typename T, typename F>
+		bool Dispatch(const F& func)
 		{
 			if (m_event.GetEventType() == T::GetStaticType())
 			{
-				m_event.m_handled = func(*(T*)&m_event);
+				m_event.m_handled = func(static_cast<T&>(m_event));
 				return true;
 			}
 			return false;
-			}
+		}
 	};
+
+	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	{
+		return os << e.ToString();
+	}
 }

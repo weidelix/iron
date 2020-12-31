@@ -21,14 +21,14 @@ namespace Iron
 }
 
 #ifdef IRON_DEBUG
-	//DEBUG
-	#define IRON_CORE_INFO(...)     SPDLOG_LOGGER_INFO      (Iron::Log::GetCoreLogger(), __VA_ARGS__)
-	#define IRON_CORE_TRACE(...)    SPDLOG_LOGGER_TRACE     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
-	#define IRON_CORE_WARN(...)     SPDLOG_LOGGER_WARN      (Iron::Log::GetCoreLogger(), __VA_ARGS__)
-	#define IRON_CORE_ERROR(...)    SPDLOG_LOGGER_ERROR     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
-	#define IRON_CORE_CRITICAL(...) SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetCoreLogger(), __VA_ARGS__)
-	// CLient
-	#define IRON_INFO(...)           SPDLOG_LOGGER_INFO      (Iron::Log::GetClientLogger(), __VA_ARGS__)
+	// Internal Logging
+	#define IRON_CORE_INFO(...)    	SPDLOG_LOGGER_INFO      (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+	#define IRON_CORE_TRACE(...)   	SPDLOG_LOGGER_TRACE     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+	#define IRON_CORE_WARN(...)    	SPDLOG_LOGGER_WARN      (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+	#define IRON_CORE_ERROR(...)   	SPDLOG_LOGGER_ERROR     (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+	#define IRON_CORE_CRITICAL(...)	SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetCoreLogger(), __VA_ARGS__)
+	// Client Logging
+	#define IRON_INFO(...)           SPDLOG_LOGGER_INFO		(Iron::Log::GetClientLogger(), __VA_ARGS__)
 	#define IRON_TRACE(...)          SPDLOG_LOGGER_TRACE     (Iron::Log::GetClientLogger(), __VA_ARGS__)
 	#define IRON_WARN(...)           SPDLOG_LOGGER_WARN      (Iron::Log::GetClientLogger(), __VA_ARGS__)
 	#define IRON_ERROR(...)          SPDLOG_LOGGER_ERROR     (Iron::Log::GetClientLogger(), __VA_ARGS__)
@@ -47,4 +47,13 @@ namespace Iron
 	#define IRON_WARN(...) 
 	#define IRON_ERROR(...)
 	#define IRON_FATAL(...)
+#endif
+
+// Disable using internal logging for client 
+#ifndef IRON_BUILD_DLL
+	#define IRON_CORE_INFO(...)
+	#define IRON_CORE_TRACE(...)
+	#define IRON_CORE_WARN(...)
+	#define IRON_CORE_ERROR(...)
+	#define IRON_CORE_FATAL(...)
 #endif
