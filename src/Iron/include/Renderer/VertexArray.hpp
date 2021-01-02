@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Renderer/Renderer.h"
 #include "Renderer/IndexBuffer.hpp"
 #include "Renderer/VertexBuffer.hpp"
 
@@ -12,8 +11,8 @@ namespace Iron
 		unsigned int m_RendererId;
 		IndexBuffer* m_indexBuffer = nullptr;
 		VertexBuffer* m_vertexBuffer = nullptr;
-		VertexArray();
 	public:
+		VertexArray();
 		~VertexArray();
 		void Bind() const;
 		static VertexArray Create();

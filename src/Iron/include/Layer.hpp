@@ -1,9 +1,8 @@
 #pragma once
 
-#include "pch.h"
-#include "Core.h"
-#include "Event/Event.h"
-#include <string>
+#include "pch.hpp"
+#include "Core.hpp"
+#include "Event/Event.hpp"
 
 namespace Iron
 {

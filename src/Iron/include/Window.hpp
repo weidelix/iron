@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pch.h"
-#include "Core.h"
-#include "Event/Event.h"
+#include "pch.hpp"
+#include "Core.hpp"
+#include "Event/Event.hpp"
 #include <GLFW/glfw3.h>
 
 namespace Iron

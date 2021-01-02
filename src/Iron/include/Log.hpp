@@ -1,7 +1,7 @@
 #pragma once
 
-#include "pch.h"
-#include "Core.h"
+#include "pch.hpp"
+#include "Core.hpp"
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 

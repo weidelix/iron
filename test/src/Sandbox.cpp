@@ -8,7 +8,7 @@ class Sandbox : public Application
 public:
 	// Runs code on start
 	void Start() override 
-	{ 
+	{
 
 	}
 

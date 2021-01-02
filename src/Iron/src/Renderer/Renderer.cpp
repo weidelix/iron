@@ -1,16 +1,11 @@
-#include "Renderer/Renderer.h"
+#include "Renderer/Renderer.hpp" 
 
-void GlClearError()
+namespace Iron
 {
-	while (glad_glGetError() != GL_NO_ERROR);
-}
-
-bool GlLogCall(const char* function, const char* file, int line)
-{
-	while (GLenum error = glad_glGetError())
-	{
-		IRON_CORE_ASSERT(false, "OPENGL ERROR", "{}", error);
-		return false;
+	void Renderer::BeginScene() { }
+	void Renderer::EndScene() { }
+	void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArr) 
+	{ 
+			RenderCommand::DrawIndexed(vertexArr);
 	}
-	return true;
-} 
+}

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "pch.h"
-#include "Core.h"
-#include "Window.h"
-#include "Platform/Windows/WindowsWindow.h"
+#include "pch.hpp"
+#include "Core.hpp"
+#include "Window.hpp"
+#include "Platform/Windows/WindowsWindow.hpp"
 #include <GLFW/glfw3.h>
 
 enum Key

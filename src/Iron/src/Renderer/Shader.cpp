@@ -1,4 +1,4 @@
-#include "Renderer/Shaders.h"
+#include "Renderer/Shaders.hpp"
 
 Shaders::Shaders(const char* vertex, const char* fragment)
 {

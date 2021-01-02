@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 
 project(Iron VERSION 1.0)
-configure_file(src/Iron/IronConfig.h.in IronConfig.h)
+configure_file(src/Iron/IronConfig.hpp.in IronConfig.hpp)
 
 # -------------------------------- DEPENDENCIES -------------------------------- #
 
@@ -20,7 +20,7 @@ file(GLOB_RECURSE source_files ${CMAKE_SOURCE_DIR}/src/Iron/src/*.cpp)
 add_library(Iron SHARED ${source_files})
 set(CONFIG_TYPE Debug)
 set(IRON_DLL "${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}")
-file(COPY "${CMAKE_BINARY_DIR}/IronConfig.h" DESTINATION "${IRON_DLL}/Iron/include")
+file(COPY "${CMAKE_BINARY_DIR}/IronConfig.hpp" DESTINATION "${IRON_DLL}/Iron/include")
 
 set_target_properties(Iron PROPERTIES 
 						   		ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
@@ -29,16 +29,16 @@ set_target_properties(Iron PROPERTIES
 						   		OUTPUT_NAME "iron")
 
 # Pre-compiled Headers
-target_precompile_headers(Iron PRIVATE ${CMAKE_SOURCE_DIR}/src/Iron/include/pch.h)
+target_precompile_headers(Iron PRIVATE ${CMAKE_SOURCE_DIR}/src/Iron/include/pch.hpp)
 
 # Link Paths
 target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
 
 # Link Files
 target_link_libraries(Iron PUBLIC opengl32
-						   PUBLIC imgui
-						   PUBLIC glad
-						   PUBLIC glfw3)
+						   		PUBLIC imgui
+						   		PUBLIC glad
+						   		PUBLIC glfw3)
 
 # Add Macro Definitions
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")

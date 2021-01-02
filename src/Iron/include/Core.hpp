@@ -29,5 +29,3 @@
 	#define IRON_CORE_ASSERT(x,...)
 	#define IRON_ASSERT(x,...)
 #endif
-
-

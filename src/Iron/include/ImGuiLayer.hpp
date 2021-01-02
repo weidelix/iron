@@ -2,9 +2,9 @@
 
 #include "Platform/OpenGL/ImGui_GLFW.h"
 #include "Platform/OpenGL/ImGui_OpenGL3.h"
-#include "Log.h"
-#include "Core.h"
-#include "Layer.h"
+#include "Log.hpp"
+#include "Core.hpp"
+#include "Layer.hpp"
 
 namespace Iron
 {

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "pch.h"
-#include "Core.h"
-#include "Layer.h"
+#include "pch.hpp"
+#include "Core.hpp"
+#include "Layer.hpp"
 
 namespace Iron
 {

@@ -1,5 +1,5 @@
 #include <glad/glad.h>
-#include "Platform/Windows/WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.hpp"
 
 namespace Iron
 {
@@ -35,6 +35,7 @@ namespace Iron
      
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+        //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
         m_window = glfwCreateWindow((int)m_data.Width, (int)m_data.Height, m_data.Title.c_str(), nullptr, nullptr);
           
         glfwMakeContextCurrent(m_window);

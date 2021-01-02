@@ -1,5 +1,4 @@
 #pragma once
-#include "Renderer/Renderer.h"
 
 namespace Iron
 {

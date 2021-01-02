@@ -5,11 +5,9 @@
 #include <fstream>
 #include <iostream>
 
-#include "Renderer/Renderer.h"
+#include "Renderer/RenderCommand.hpp"
 #include <glm.hpp>
 #include <gtc/type_ptr.hpp>
-#include <glad/glad.h>
-
 
 struct ShaderSource
 {

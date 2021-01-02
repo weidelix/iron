@@ -2,8 +2,7 @@
 #include <string>
 #include <iostream>
 
-#include "Renderer/Renderer.h"
-#include <glad/glad.h>
+#include "Renderer/RenderCommand.hpp"
 
 class Texture2D
 {

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Window.h"
-#include "Log.h"
-#include "Event/MouseEvent.h"
-#include "Event/WindowEvent.h"
-#include "Event/KeyEvent.h"
-#include "Event/ApplicationEvent.h"
+#include "Window.hpp"
+#include "Log.hpp"
+#include "Event/MouseEvent.hpp"
+#include "Event/WindowEvent.hpp"
+#include "Event/KeyEvent.hpp"
+#include "Event/ApplicationEvent.hpp"
 
 namespace Iron
 {

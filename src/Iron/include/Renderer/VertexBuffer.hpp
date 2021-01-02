@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Renderer/Renderer.h"
-
 #define TRANSFORM 0
 #define TEXT_COORD 1
 #define NORMAL 2

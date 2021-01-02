@@ -1,6 +1,6 @@
-#include "Core.h"
-#include "Event/Event.h"
-#include "pch.h"
+#pragma once
+
+#include "Event/Event.hpp"
 
 namespace Iron
 {

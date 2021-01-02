@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Core.h"
-#include "pch.h"
+#include "Core.hpp"
+#include "pch.hpp"
 
 namespace Iron
 {

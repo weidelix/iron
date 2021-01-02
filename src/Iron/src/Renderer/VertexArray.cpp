@@ -1,4 +1,5 @@
-#include "Renderer/VertexArray.h"
+#include "Renderer/VertexArray.hpp"
+#include "Renderer/RenderCommand.hpp"
 
 namespace Iron
 {

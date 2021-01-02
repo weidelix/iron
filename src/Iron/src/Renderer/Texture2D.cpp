@@ -1,4 +1,4 @@
-#include "Renderer/Texture2D.h"
+#include "Renderer/Texture2D.hpp"
 #include "stb_image.h"
 
 Texture2D::Texture2D(const char *path, int textureUnit, bool invert)

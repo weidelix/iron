@@ -1,10 +1,10 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm.hpp>
-#include "ImGuiLayer.h"
+#include "ImGuiLayer.hpp"
 #include <imgui_internal.h>
-#include "Window.h"
-#include "Application.h"
+#include "Window.hpp"
+#include "Application.hpp"
 
 using namespace ImGui;
 
