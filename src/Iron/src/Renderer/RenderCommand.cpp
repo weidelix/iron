@@ -1,16 +1,38 @@
 #include "Renderer/RenderCommand.hpp"
 
-void GlClearError()
+namespace Iron
 {
-	while (glad_glGetError() != GL_NO_ERROR);
-}
+	RenderApi *RenderCommand::s_api = new OpenglApi();
 
-bool GlLogCall(const char* function, const char* file, int line)
-{
-	while (GLenum error = glad_glGetError())
+	void RenderCommand::SetClearColor(const glm::vec4& clearCol)
 	{
-		IRON_CORE_ASSERT(false, "OPENGL ERROR", "{}", error);
-		return false;
+		s_api->SetClearColor(clearCol);			
 	}
-	return true;
+
+	void RenderCommand::Clear()
+	{
+		s_api->Clear();
+	}
+
+	void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr)
+	{
+		s_api->DrawIndexed(vertexArr);
+	}
+
+	void RenderCommand::UseRenderer(Api api)
+	{
+		switch(api)
+		{
+			case Api::OpenGL:
+			{
+				s_api = dynamic_cast<OpenglApi*>(s_api);
+				break;
+			}
+			case Api::DirectX:
+			{
+				IRON_CORE_INFO("DirectX isn't available right now");
+				break;
+			}
+		};
+	}
 }

@@ -20,10 +20,10 @@ namespace Iron
 
 	public:
 		Application();
-		virtual ~Application()  { }
-		virtual void Start()  { }
-		virtual void Update() { }
-		virtual void OnExit() { }
+		virtual ~Application(){ }
+		virtual void Start(){ }
+		virtual void Update(){ }
+		virtual void OnExit(){ }
 		virtual bool Run();
 		virtual void OnEvent(Event& event);
 		Input Input();

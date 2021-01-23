@@ -36,7 +36,7 @@ namespace Iron
 		GlCall(glVertexAttribBinding(attribIndex, bindingIndex));
 	}
 
-	void VertexArray::VertexAttribFormat(unsigned int attribIndex, unsigned int componentCount, unsigned int type,								   unsigned int normalize,   unsigned int attribOffset)
+	void VertexArray::VertexAttribFormat(unsigned int attribIndex, unsigned int componentCount, unsigned int type, unsigned int normalize, unsigned int attribOffset)
 	{
 		GlCall(glVertexAttribFormat(attribIndex, componentCount, type, normalize, attribOffset));
 	}

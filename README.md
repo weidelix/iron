@@ -4,4 +4,8 @@
 * Model loading and primitives 
 * Engine API
 
+## TODO
+* Check for data leaks (especially in events)
+* Implement primitive game objects
+
 ## More engine description will be added in the future👍

@@ -6,6 +6,6 @@ namespace Iron
 	void Renderer::EndScene() { }
 	void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArr) 
 	{ 
-			RenderCommand::DrawIndexed(vertexArr);
+		RenderCommand::DrawIndexed(vertexArr);
 	}
 }
