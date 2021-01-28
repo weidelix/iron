@@ -1,6 +1,3 @@
-[submodule "vendor/FMT-7.0.3"]
-	path = vendor/FMT-7.0.3
-	url = https://github.com/fmtlib/fmt
 [submodule "test/bin/Debug/vendor/IMGUI"]
 	path = test/bin/Debug/vendor/IMGUI
 	url = https://github.com/ocornut/imgui
@@ -9,3 +6,6 @@
 	path = vendor/IMGUI
 	url = https://github.com/ocornut/imgui
 	branch = docking
+[submodule "vendor/SPDLOG"]
+	path = vendor/SPDLOG
+	url = https://github.com/gabime/spdlog
