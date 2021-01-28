@@ -1,7 +1,7 @@
 #pragma once
 #include "Renderer/Components/Mesh.hpp"
 #include "Renderer/Components/Transform.hpp"
-#include "Renderer/RenderCommand.hpp"
+#include "Core.hpp"
 
 namespace Iron
 {
@@ -14,34 +14,23 @@ namespace Iron
 		Cylinder
 	};
 	
-	class GameObject
+	class IRON_API GameObject
 	{
 	private:
-		GameObject();
 		Mesh m_mesh;
 		Transform m_transform;
+
 	public:
+		GameObject();
+		GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count);
+		GameObject(Mesh &mesh);
 		~GameObject();
-
+		
+		void Draw();
+		
 		// This won't be implemented until model loading is complete
-		void Draw() { }
-		
-		static void Create() { }
-		
-		static GameObject CreateEmpty() { return GameObject(); }
-		
-		static GameObject CreatePrimitive(Primitives primitive)
-		{
-			switch(primitive)
-			{
-				case Primitives::Plane:
-				{
-					return GameObject();
-					break;
-				}
-			}
-
-			return GameObject::CreateEmpty();
-		}
+		static void Create();
+		static GameObject CreateEmpty();
+		static GameObject CreatePrimitive(Primitives primitive);
 	};
 }

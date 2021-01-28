@@ -1,6 +1,3 @@
-[submodule "vendor/FMT-7.0.3"]
-	path = vendor/FMT-7.0.3
-	url = https://github.com/fmtlib/fmt
 [submodule "test/bin/Debug/vendor/IMGUI"]
 	path = test/bin/Debug/vendor/IMGUI
 	url = https://github.com/ocornut/imgui
