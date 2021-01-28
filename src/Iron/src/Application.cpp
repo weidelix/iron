@@ -3,6 +3,7 @@
 #include "Event/Event.hpp"
 #include "ImGuiLayer.hpp"
 #include "Application.hpp"
+#include "Renderer/GameObject.hpp"
 
 namespace Iron
 {
@@ -24,13 +25,6 @@ namespace Iron
   	 0.0f,  1.0f, 0.0f,
 	};
 
-	float color[] = 
-	{
-		1.0, 0.0, 0.0, 1.0,
-		0.0, 1.0, 0.0, 1.0,
-		0.0, 0.0, 1.0, 1.0,
-	};
-
 	unsigned int indices[] = 
 	{
 		0, 1, 2,
@@ -39,26 +33,12 @@ namespace Iron
 	bool Application::Run() 
 	{
 		RenderCommand::UseRenderer(Api::OpenGL);
-		// PushOverlay(new ImGuiLayer("ImGuiLayer"));
-		std::shared_ptr<VertexArray> vertexArray = std::make_shared<VertexArray>();
-		
-		VertexArray::EnableVertexAttribArray(0);
-		VertexArray::VertexAttribBinding(0, 0);
-
-		vertexArray->VertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
-
-		IndexBuffer indexBuffer(indices, 6);		
-		VertexBuffer posBuffer(pos, 9 * sizeof(float));
-		
-		posBuffer.BindVertex(0, 0, 3 * sizeof(float));		
-		vertexArray->SetIndexBuffer(&indexBuffer);
-		
 		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
 		m_instance->Start();
+		
 		while(isRunning)
 		{
 			RenderCommand::Clear();
-			Renderer::Submit(vertexArray);
 			m_instance->Update();
 			for (auto* layer : m_layerStack)
 			{
