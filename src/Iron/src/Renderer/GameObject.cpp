@@ -58,7 +58,7 @@ namespace Iron
 				};
 
 				Mesh mesh(pos, 12 * sizeof(float), indices, 6);
-				return GameObject(mesh);
+				return GameObject(pos, 12 * sizeof(float), indices, 6);
 				break;
 			}
 			case Primitives::Box:

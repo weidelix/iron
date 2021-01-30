@@ -14,7 +14,7 @@ namespace Iron
 	public:
 		RenderApi() { }
 		virtual ~RenderApi(){ }
-
+ 
 		virtual void SetClearColor(const glm::vec4& clearCol){ }
 		virtual void Clear(){ }
 		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr){ }
