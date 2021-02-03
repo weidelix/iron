@@ -28,7 +28,7 @@ namespace Iron
 
 	void GameObject::Draw() 
 	{ 
-		//m_mesh.GetVertexArray()->Bind();
+		m_mesh.GetVertexArray()->Bind();
 		Renderer::Submit(m_mesh.GetVertexArray());
 	}
 	
