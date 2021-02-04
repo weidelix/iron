@@ -6,6 +6,7 @@ namespace Iron
 {
 	class Mesh
 	{
+	private:
 		std::shared_ptr<VertexArray> m_vertexArray = std::make_shared<VertexArray>();
 		VertexBuffer m_vertexBuffer;
 		IndexBuffer m_indexBuffer;

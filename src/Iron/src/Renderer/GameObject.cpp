@@ -32,11 +32,15 @@ namespace Iron
 		Renderer::Submit(m_mesh.GetVertexArray());
 	}
 	
-	// This won't be implemented until model loading is complete
+	//*This won't be implemented until model loading is complete
+	//* Might be replaced with "Model::Load"
+	/* static */
 	void GameObject::Create() { }
 
+	/* static */
 	GameObject GameObject::CreateEmpty() { return GameObject(); }
 
+	/* static */
 	GameObject GameObject::CreatePrimitive(Primitives primitive)
 	{
 		switch(primitive)
@@ -67,7 +71,7 @@ namespace Iron
 			case Primitives::Sphere:
 				break;
 		}
-
+		
 		return GameObject::CreateEmpty();
 	}
 }

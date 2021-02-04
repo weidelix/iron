@@ -4,13 +4,16 @@
 namespace Iron
 {
 	Mesh::Mesh(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
-	:m_vertexBuffer(vertexBuffer, size), m_indexBuffer(indexBuffer, count)
+		:m_vertexBuffer(vertexBuffer, size), 
+		 m_indexBuffer(indexBuffer, count)
 	{
 		Init();
 	}
 
 	Mesh::Mesh(const Mesh& mesh)
-	:m_vertexArray(mesh.m_vertexArray), m_vertexBuffer(mesh.m_vertexBuffer), m_indexBuffer(mesh.m_indexBuffer)
+		:m_vertexArray(mesh.m_vertexArray), 
+		 m_vertexBuffer(mesh.m_vertexBuffer), 
+		 m_indexBuffer(mesh.m_indexBuffer)
 	{
 		Init();
 	}

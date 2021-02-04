@@ -28,7 +28,6 @@ namespace Iron
 		
 		void Draw();
 		
-		// This won't be implemented until model loading is complete
 		static void Create();
 		static GameObject CreateEmpty();
 		static GameObject CreatePrimitive(Primitives primitive);
