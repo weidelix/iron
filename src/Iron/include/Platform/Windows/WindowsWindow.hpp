@@ -14,11 +14,11 @@ namespace Iron
 	private:
 		struct WindowData
 		{
-			std::string Title;
+			string Title;
 			unsigned int Width, Height;
 			bool VSync;
-			std::function<void(Event&)> EventCallback;
-			std::vector<Event*> Events;
+			function<void(Event&)> EventCallback;
+			vector<Event*> Events;
 		};
 		WindowData m_data;
 		GLFWwindow* m_window;
@@ -29,9 +29,9 @@ namespace Iron
 		
 		inline unsigned int GetWidth() override { return m_data.Width; } 
 		inline unsigned int GetHeight() override { return m_data.Height; } 
-		inline void SetEventCallback(std::function<void(Event&)> callback) override { m_data.EventCallback = callback; }
+		inline void SetEventCallback(function<void(Event&)> callback) override { m_data.EventCallback = callback; }
 		inline GLFWwindow* GetWindowPointer() override { return m_window; }
-		inline std::vector<Event*>* GetEvents() override { return &m_data.Events; }
+		inline vector<Event*>* GetEvents() override { return &m_data.Events; }
 		inline void SetVSync(bool val) override;
 		inline void OnUpdate() override;
 		

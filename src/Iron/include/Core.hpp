@@ -2,6 +2,8 @@
 
 #define BIT(x) (1 << x)
 
+using namespace std;
+
 #if defined(IRON_PLATFORM_WINDOW)
 		#if defined(IRON_BUILD_DLL)
 		  	#if defined(USE_CLANG)       // Set Clang specific macros

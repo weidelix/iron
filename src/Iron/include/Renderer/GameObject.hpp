@@ -23,6 +23,7 @@ namespace Iron
 	public:
 		GameObject();
 		GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count);
+		GameObject(const GameObject &gameObject);
 		GameObject(Mesh &mesh);
 		~GameObject();
 		

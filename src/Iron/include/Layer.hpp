@@ -9,9 +9,9 @@ namespace Iron
 	class IRON_API Layer
 	{
 	protected:
-		std::string m_debugName;
+		string m_debugName;
 	public:
-		Layer(const std::string& debugName = "Layer");
+		Layer(const string& debugName = "Layer");
 		virtual ~Layer();
 
 		virtual void OnAttach() { }
@@ -19,6 +19,6 @@ namespace Iron
 		virtual void OnUpdate() { }
 		virtual void OnEvent(Iron::Event& event) { }
 
-		const std::string& GetName() const { return m_debugName; }
+		const string& GetName() const { return m_debugName; }
 	};
 }

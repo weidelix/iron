@@ -22,11 +22,11 @@ namespace Iron
 		static ImFont* m_defaultFont;
 		static ImFont* m_widgetFont;
 		static ImFontAtlas* m_fontAtlas;
-		std::vector<ImVec3> m_propStack;
+		vector<ImVec3> m_propStack;
 		
 
 	public:
-		ImGuiLayer(const std::string& name);
+		ImGuiLayer(const string& name);
 		~ImGuiLayer();
 
 		void OnAttach() override;

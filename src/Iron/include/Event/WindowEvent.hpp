@@ -10,7 +10,9 @@ namespace Iron
 		unsigned int width, height;
 	public:
 		WindowResizeEvent(unsigned int w, unsigned int h) 
-				:width(w), height(h) { } 
+			:width(w), height(h) 
+		{ } 
+		
 		~WindowResizeEvent() override { }
 		EVENT_CLASS_TYPE(EventType::WindowResize);
 		EVENT_CLASS_CATEGORY(WindowCategory);

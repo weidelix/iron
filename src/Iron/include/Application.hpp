@@ -13,7 +13,7 @@ namespace Iron
 	{
 	private:
 		static Application* m_instance;
-		std::unique_ptr<Window> m_window;
+		unique_ptr<Window> m_window;
 		bool isRunning = true;
 		LayerStack m_layerStack;
 		Input m_input;

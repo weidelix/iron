@@ -18,7 +18,7 @@ namespace Iron
 	public:
 		static void SetClearColor(const glm::vec4& clearCol);
 		static void Clear();
-		static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr);
+		static void DrawIndexed(const shared_ptr<VertexArray>& vertexArr);
 		static void UseRenderer(Api api);
 	};
 }

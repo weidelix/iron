@@ -2,10 +2,10 @@
 
 Shaders::Shaders(const char* vertex, const char* fragment)
 {
-	std::cout << "Use \"std::string\" for for passing shader code" << std::endl;
+	cout << "Use \"string\" for for passing shader code" << endl;
 }
 
-Shaders::Shaders(const std::string& vertex, const std::string& fragment)
+Shaders::Shaders(const string& vertex, const string& fragment)
 {
 	CreateShader(vertex, fragment);
 	glUseProgram(m_RendererId);
@@ -22,7 +22,7 @@ Shaders::~Shaders()
 	GlCall(glDeleteProgram(m_RendererId));
 }
 
-unsigned int Shaders::CompileShader(unsigned int type, const std::string& source)
+unsigned int Shaders::CompileShader(unsigned int type, const string& source)
 {
 	unsigned int id = glCreateShader(type);
 	const char* src = source.c_str();
@@ -37,14 +37,14 @@ unsigned int Shaders::CompileShader(unsigned int type, const std::string& source
 		GlCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
 		char* log = (char*)_alloca(length * sizeof(char));
 		GlCall(glGetShaderInfoLog(id, length, &length, log));
-		std::cout << "[GL ERROR] " << (type == GL_VERTEX_SHADER ? "Vertex " : "Fragment ")
-			<< "Shader: " << log << std::endl;
+		cout << "[GL ERROR] " << (type == GL_VERTEX_SHADER ? "Vertex " : "Fragment ")
+			<< "Shader: " << log << endl;
 		GlCall(glDeleteShader(id));
 
 		return 0;
 	}
 	else
-		std::cout << "[SUCCESS] Compilation successful!" << std::endl;
+		cout << "[SUCCESS] Compilation successful!" << endl;
 
 	return id;
 }
@@ -64,19 +64,19 @@ unsigned int Shaders::CompileShader(unsigned int type, const char* source)
 		GlCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
 		char* log = (char*)_alloca(length * sizeof(char));
 		GlCall(glGetShaderInfoLog(id, length, &length, log));
-		std::cout << "[GL ERROR] " << (type == GL_VERTEX_SHADER ? "Vertex " : "Fragment ")
-			<< "Shader: " << log << std::endl;
+		cout << "[GL ERROR] " << (type == GL_VERTEX_SHADER ? "Vertex " : "Fragment ")
+			<< "Shader: " << log << endl;
 		GlCall(glDeleteShader(id));
 
 		return 0;
 	}
 	else
-		std::cout << "[SUCCESS] Compilation successful!" << std::endl;
+		cout << "[SUCCESS] Compilation successful!" << endl;
 
 	return id;
 }
 
-void Shaders::CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+void Shaders::CreateShader(const string& vertexShader, const string& fragmentShader)
 {
 	m_RendererId		= glCreateProgram();
 	vertexShaderId		= CompileShader(GL_VERTEX_SHADER, vertexShader);
@@ -163,10 +163,10 @@ unsigned int Shaders::Id() const
 
 // ShaderSource
 
-ShaderSource ShaderSource::ParseShaderSource(const std::string& shaderPath)
+ShaderSource ShaderSource::ParseShaderSource(const string& shaderPath)
 {
-	std::ifstream stream(shaderPath, std::ios::in);
-	std::string line;
+	ifstream stream(shaderPath, ios::in);
+	string line;
     
 	enum class Shaderintype
 	{
@@ -175,19 +175,19 @@ ShaderSource ShaderSource::ParseShaderSource(const std::string& shaderPath)
 		FRAGMENint = 1,
 	};
 
-	std::stringstream ss[2];
+	stringstream ss[2];
 	Shaderintype type = Shaderintype::NONE;
 
 	while (getline(stream, line))
 	{
-		if (line.find("#shader") != std::string::npos)
+		if (line.find("#shader") != string::npos)
 		{
-			if (line.find("vertex") != std::string::npos)
+			if (line.find("vertex") != string::npos)
 			{
 				type = Shaderintype::VERintEX;
 			}
 
-			else if (line.find("fragment") != std::string::npos)
+			else if (line.find("fragment") != string::npos)
 			{
 				type = Shaderintype::FRAGMENint;
 			}

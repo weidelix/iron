@@ -9,6 +9,6 @@ namespace Iron
 	public:
 		static void BeginScene();
 		static void EndScene();
-		static void Submit(const std::shared_ptr<VertexArray>& vertexArr);
+		static void Submit(const shared_ptr<VertexArray>& vertexArr);
 	};
 }

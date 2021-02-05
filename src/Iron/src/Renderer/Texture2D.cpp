@@ -30,7 +30,7 @@ Texture2D::Texture2D(const char *path, int textureUnit, bool invert)
 		}
 		else
 		{
-			std::cout << "[ERROR] Failed to load image" << std::endl;
+			cout << "[ERROR] Failed to load image" << endl;
 		}
 	}
 }
@@ -65,7 +65,7 @@ void Texture2D::AddTexture(const char *path, int textureUnit, bool invert) const
 	}
 	else
 	{
-		std::cout << "[FAIL] Failed to load image" << std::endl;
+		cout << "[FAIL] Failed to load image" << endl;
 	}
 }
 

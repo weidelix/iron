@@ -14,7 +14,7 @@ namespace Iron
 		s_api->Clear();
 	}
 
-	void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr)
+	void RenderCommand::DrawIndexed(const shared_ptr<VertexArray>& vertexArr)
 	{
 		s_api->DrawIndexed(vertexArr);
 	}

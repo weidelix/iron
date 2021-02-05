@@ -9,3 +9,4 @@ test/bin/
 bin/Debug/
 bin/Release/
 .ccls-cache/
+.ccls

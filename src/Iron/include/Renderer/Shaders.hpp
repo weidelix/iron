@@ -11,10 +11,10 @@
 
 struct ShaderSource
 {
-	std::string vertex;
-	std::string fragment;
+	string vertex;
+	string fragment;
 
-	static ShaderSource ParseShaderSource(const std::string& shaderPath);
+	static ShaderSource ParseShaderSource(const string& shaderPath);
 };
 
 class Shaders
@@ -26,13 +26,13 @@ private:
 
 public:
 	Shaders(const char *vertex, const char *fragment);
-	Shaders(const std::string &vertex, const std::string &fragment);
+	Shaders(const string &vertex, const string &fragment);
 	Shaders(ShaderSource source);
 	~Shaders();
 
-	unsigned int CompileShader(unsigned int type, const std::string& sourcecode);
+	unsigned int CompileShader(unsigned int type, const string& sourcecode);
 	unsigned int CompileShader(unsigned int type, const char* source);
-	void CreateShader(const std::string& vertex, const std::string& fragment);
+	void CreateShader(const string& vertex, const string& fragment);
 
 	void SetInt1(const char *name, int val1);
 	void SetInt2(const char *name, int val1, int val2);

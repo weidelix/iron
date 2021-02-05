@@ -4,14 +4,24 @@
 namespace Iron
 {
 	VertexArray::VertexArray()
+		:m_vertexBuffer(nullptr, 0),
+		 m_indexBuffer(nullptr, 0)
 	{
-		GlCall(glGenVertexArrays(1, &m_RendererId));
-		GlCall(glBindVertexArray(m_RendererId));
+		GlCall(glGenVertexArrays(1, &m_rendererId));
+		GlCall(glBindVertexArray(m_rendererId));
+	}
+
+	VertexArray::VertexArray(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
+		:m_vertexBuffer(vertexBuffer, size),
+		 m_indexBuffer(indexBuffer, count)
+	{
+		GlCall(glGenVertexArrays(1, &m_rendererId));
+		GlCall(glBindVertexArray(m_rendererId));
 	}
 
 	VertexArray::~VertexArray()
 	{
-		GlCall(glDeleteVertexArrays(1, &m_RendererId));
+		GlCall(glDeleteVertexArrays(1, &m_rendererId));
 	}
 
 	VertexArray VertexArray::Create()
@@ -21,7 +31,7 @@ namespace Iron
 
 	void VertexArray::Bind() const
 	{
-		GlCall(glBindVertexArray(m_RendererId));
+		GlCall(glBindVertexArray(m_rendererId));
 	}
 
 	/* static */ 
@@ -41,22 +51,22 @@ namespace Iron
 		GlCall(glVertexAttribFormat(attribIndex, componentCount, type, normalize, attribOffset));
 	}
 
-	void VertexArray::SetIndexBuffer(IndexBuffer* indexBuffer)
+	void VertexArray::SetIndexBuffer(IndexBuffer indexBuffer)
 	{
 		m_indexBuffer = indexBuffer;
 	}
 
-	IndexBuffer* VertexArray::GetIndexBuffer()
+	IndexBuffer& VertexArray::GetIndexBuffer()
 	{
 		return m_indexBuffer;
 	}
 
-	void VertexArray::SetVertexBuffer(VertexBuffer* vertexBuffer)
+	void VertexArray::SetVertexBuffer(VertexBuffer vertexBuffer)
 	{
 		m_vertexBuffer = vertexBuffer;
 	}
 
-	VertexBuffer* VertexArray::GetVertexBuffer()
+	VertexBuffer& VertexArray::GetVertexBuffer()
 	{
 		return m_vertexBuffer;
 	}

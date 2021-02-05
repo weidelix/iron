@@ -4,13 +4,19 @@
 namespace Iron
 {
 	GameObject::GameObject()
-		:m_mesh(nullptr, 0, nullptr, 0)
+		:m_mesh(make_shared<VertexArray>(nullptr, 0, nullptr, 0))
 	{ 
 
 	}
 
 	GameObject::GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
-		:m_mesh(vertexBuffer, size, indexBuffer, count)
+		:m_mesh(make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count))
+	{
+
+	}
+
+	GameObject::GameObject(const GameObject &gameObject)
+		:m_mesh(gameObject.m_mesh)
 	{
 
 	}
@@ -27,7 +33,7 @@ namespace Iron
 	}
 
 	void GameObject::Draw() 
-	{ 
+	{
 		m_mesh.GetVertexArray()->Bind();
 		Renderer::Submit(m_mesh.GetVertexArray());
 	}
@@ -61,7 +67,7 @@ namespace Iron
 					2, 3, 1
 				};
 
-				Mesh mesh(pos, 12 * sizeof(float), indices, 6);
+				//Mesh mesh(pos, 12 * sizeof(float), indices, 6);
 				return GameObject(pos, 12 * sizeof(float), indices, 6);
 				break;
 			}

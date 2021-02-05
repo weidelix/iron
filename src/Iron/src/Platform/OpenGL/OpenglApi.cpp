@@ -9,7 +9,7 @@ bool GlLogCall(const char* function, const char* file, int line)
 {
 	while (GLenum error = glad_glGetError())
 	{
-		IRON_CORE_ASSERT(false, "OPENGL ERROR", "{}", error);
+		IRON_CORE_ASSERT(false, "OPENGL ERROR {0}", error);
 		return false;
 	}
 	return true;
@@ -31,8 +31,8 @@ namespace Iron
 		GlCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
-	void OpenglApi::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr)
+	void OpenglApi::DrawIndexed(const shared_ptr<VertexArray>& vertexArr)
 	{
-		GlCall(glDrawElements(GL_TRIANGLES, vertexArr->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
+		GlCall(glDrawElements(GL_TRIANGLES, vertexArr->GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr));
 	}
 }

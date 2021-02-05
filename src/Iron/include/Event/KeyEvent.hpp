@@ -44,7 +44,7 @@ namespace Iron
 		int m_key;
 	public:
 		KeyReleaseEvent(int key)
-				:m_key(key) { }
+			:m_key(key) { }
 		~KeyReleaseEvent() override { }
 		inline int GetKeyEvent() { return m_key; }
 		EVENT_CLASS_TYPE(EventType::KeyRelease);

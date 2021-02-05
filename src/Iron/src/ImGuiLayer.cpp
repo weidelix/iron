@@ -15,7 +15,7 @@ namespace Iron
 	ImFont* ImGuiLayer::m_titleBarFont;
 	ImFontAtlas* ImGuiLayer::m_fontAtlas;
 
-	ImGuiLayer::ImGuiLayer(const std::string &name)
+	ImGuiLayer::ImGuiLayer(const string &name)
 		:Layer(name)
 	{
 		m_propStack.reserve(10);

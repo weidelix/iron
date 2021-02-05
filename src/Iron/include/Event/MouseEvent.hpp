@@ -10,7 +10,9 @@ namespace Iron
 		double posX, posY;
 	public:
 		MouseMoveEvent(double x, double y)
-			:posX(x), posY(y) { }
+			:posX(x), posY(y) 
+		{ }
+
 		~MouseMoveEvent() override { }
 
 		double GetMousePositionX()
@@ -34,7 +36,9 @@ namespace Iron
 		float xoffset, yoffset;
 	public:
 		MouseScrollEvent(float x, float y)
-			:xoffset(x), yoffset(y) { }
+			:xoffset(x), yoffset(y) 
+		{ }
+
 		~MouseScrollEvent() override { }
 
 		float GetMouseXOffset()
@@ -58,7 +62,9 @@ namespace Iron
 		int m_button;
 	protected:
 		MouseButtonEvent(int button)
-		:m_button(button) { }
+			:m_button(button) 
+		{ }
+		
 		virtual ~MouseButtonEvent() override { }
 	
 	public:
@@ -70,7 +76,8 @@ namespace Iron
 	{
 	public:
 		MouseButtonPressedEvent(int button)
-				:MouseButtonEvent(button) { }
+			:MouseButtonEvent(button) 
+		{ }
 
 		~MouseButtonPressedEvent() override { }
 
@@ -81,7 +88,7 @@ namespace Iron
 	{
 	public:
 		MouseButtonReleasedEvent(int button)
-				:MouseButtonEvent(button)
+			:MouseButtonEvent(button)
 		{ }
 
 		~MouseButtonReleasedEvent() override { }

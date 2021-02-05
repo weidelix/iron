@@ -20,6 +20,6 @@ namespace Iron
 
 		void SetClearColor(const glm::vec4& clearCol) override;
 		void Clear() override;
-		void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArr) override;
+		void DrawIndexed(const shared_ptr<VertexArray>& vertexArr) override;
 	};
 }
