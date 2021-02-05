@@ -3,7 +3,7 @@
 
 namespace Iron
 {
-	Mesh::Mesh(shared_ptr<VertexArray> &vertexArr)
+	Mesh::Mesh(const shared_ptr<VertexArray> &vertexArr)
 		:m_vertexArray(vertexArr)
 	{
 		Init();

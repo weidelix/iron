@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.hpp"
+#include "Core.hpp"
 #include "Renderer/VertexArray.hpp"
 
 namespace Iron 
@@ -10,7 +11,7 @@ namespace Iron
 		shared_ptr<VertexArray> m_vertexArray;
 	public: 
 		void Init();
-		Mesh(shared_ptr<VertexArray> &vertexArr);
+		Mesh(const shared_ptr<VertexArray> &vertexArr);
 		Mesh(const Mesh& mesh);
 		~Mesh();
 		shared_ptr<VertexArray>& GetVertexArray();
