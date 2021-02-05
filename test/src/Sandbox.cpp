@@ -6,12 +6,12 @@ using namespace Iron;
 class Sandbox : public Application
 {
 public:
-	GameObject plane;
+	GameObject plane = GameObject::CreatePrimitive(Primitives::Plane);
 	
 	// Runs code on start
 	void Start() override 
 	{
-		plane = GameObject::CreatePrimitive(Primitives::Plane);
+
 	}
 
 	// Runs code every frame
