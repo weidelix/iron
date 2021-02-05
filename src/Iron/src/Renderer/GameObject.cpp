@@ -53,22 +53,17 @@ namespace Iron
 		{
 			case Primitives::Plane:
 			{
-				float pos[] = 
+				return GameObject((float[]) 
 				{
-				 -0.5f, -0.5f, 0.0f,
-					0.5f, -0.5f, 0.0f,
-				 -0.5f,  0.5f, 0.0f,
-				  0.5f,  0.5f, 0.0f,
-				};
-
-				unsigned int indices[] = 
+					-0.5f, -0.5f, 0.0f,
+					 0.5f, -0.5f, 0.0f,
+					-0.5f,  0.5f, 0.0f,
+					 0.5f,  0.5f, 0.0f,
+				}, 12 * sizeof(float), (unsigned int[])
 				{
 					0, 1, 2,
 					2, 3, 1
-				};
-
-				//Mesh mesh(pos, 12 * sizeof(float), indices, 6);
-				return GameObject(pos, 12 * sizeof(float), indices, 6);
+				}, 6);
 				break;
 			}
 			case Primitives::Box:
