@@ -71,12 +71,6 @@ add_custom_command(TARGET Iron PRE_BUILD
 									"${CMAKE_SOURCE_DIR}/src/Iron/include/"
 									${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}/Iron/include/)
 
-# Copy dependencies for Sandbox
-add_custom_command(TARGET Iron PRE_BUILD 									
-									COMMAND ${CMAKE_COMMAND} -E copy_directory
-									"${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}/"
-									${CMAKE_SOURCE_DIR}/test/bin/${CONFIG_TYPE}/)
-
 # -------------------------------- SANDBOX -------------------------------- #
 
 

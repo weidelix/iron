@@ -12,7 +12,7 @@ namespace Iron
 	GameObject::GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
 		:m_mesh(make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count))
 	{
-
+		
 	}
 
 	GameObject::GameObject(const GameObject &gameObject)
