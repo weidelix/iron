@@ -1,202 +1,300 @@
-#include "Renderer/Shaders.hpp"
+#include <glad/glad.h>
+#include "Log.hpp"
+#include "Renderer/RenderCommand.hpp"
+#include <fstream>
 
-Shaders::Shaders(const char* vertex, const char* fragment)
+static GLenum StringToShaderType(string &type)
 {
-	cout << "Use \"string\" for for passing shader code" << endl;
+	if (type == "vertex")
+		return GL_VERTEX_SHADER;
+	if (type == "fragment" || type == "pixel")
+		return GL_FRAGMENT_SHADER;
+	
+	IRON_CORE_ASSERT(false, "Shader type invalid");
+	return 0;
 }
 
-Shaders::Shaders(const string& vertex, const string& fragment)
+static string ShaderTypeToString(GLenum type)
 {
-	CreateShader(vertex, fragment);
-	glUseProgram(m_RendererId);
+	if (type == GL_VERTEX_SHADER)
+		return "vertex";
+	if (type == GL_FRAGMENT_SHADER)
+		return "fragment";
+	
+	IRON_CORE_ASSERT(false, "Shader type invalid");
+	return 0;
 }
 
-Shaders::Shaders(ShaderSource source)
+namespace Iron
 {
-	CreateShader(source.vertex, source.fragment);
-	glUseProgram(m_RendererId);
-}
-
-Shaders::~Shaders()
-{
-	GlCall(glDeleteProgram(m_RendererId));
-}
-
-unsigned int Shaders::CompileShader(unsigned int type, const string& source)
-{
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	GlCall(glShaderSource(id, 1, &src, nullptr));
-	GlCall(glCompileShader(id));
-	int result;
-	GlCall(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
-
-	if (result == GL_FALSE)
+	Shader::Shader(const string &path)
 	{
-		int length;
-		GlCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
-		char* log = (char*)_alloca(length * sizeof(char));
-		GlCall(glGetShaderInfoLog(id, length, &length, log));
-		cout << "[GL ERROR] " << (type == GL_VERTEX_SHADER ? "Vertex " : "Fragment ")
-			<< "Shader: " << log << endl;
-		GlCall(glDeleteShader(id));
+		string file = ReadFile(path);
+		unordered_map<GLenum, string> sources = Preprocess(file);
+		Compile(sources);
+		glUseProgram(m_RendererId);
 
-		return 0;
+		// res/Shader/basic.glsl
+		auto lastSlash = path.find_last_of("/\\");
+		lastSlash = (lastSlash == string::npos) ? 0 : lastSlash + 1;
+		auto lastDot = path.rfind(".");
+		auto count = (lastDot == string::npos) ? file.size() - lastSlash : lastDot - lastSlash;
+		m_name = file.substr(lastSlash, count);
+		IRON_CORE_INFO(m_name.c_str()); 
 	}
-	else
-		cout << "[SUCCESS] Compilation successful!" << endl;
 
-	return id;
-}
-
-unsigned int Shaders::CompileShader(unsigned int type, const char* source)
-{
-	unsigned int id = glCreateShader(type);
-	const char* src = source;
-	GlCall(glShaderSource(id, 1, &src, nullptr));
-	GlCall(glCompileShader(id));
-	int result;
-	GlCall(glGetShaderiv(id, GL_COMPILE_STATUS, &result));
-
-	if (result == GL_FALSE)
+	Shader::Shader(const string &name, const string &path)
+		: m_name(name)
 	{
-		int length;
-		GlCall(glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length));
-		char* log = (char*)_alloca(length * sizeof(char));
-		GlCall(glGetShaderInfoLog(id, length, &length, log));
-		cout << "[GL ERROR] " << (type == GL_VERTEX_SHADER ? "Vertex " : "Fragment ")
-			<< "Shader: " << log << endl;
-		GlCall(glDeleteShader(id));
-
-		return 0;
+		string file = ReadFile(path);
+		unordered_map<GLenum, string> sources = Preprocess(file);
+		Compile(sources);
+		glUseProgram(m_RendererId);
 	}
-	else
-		cout << "[SUCCESS] Compilation successful!" << endl;
 
-	return id;
-}
-
-void Shaders::CreateShader(const string& vertexShader, const string& fragmentShader)
-{
-	m_RendererId		= glCreateProgram();
-	vertexShaderId		= CompileShader(GL_VERTEX_SHADER, vertexShader);
-	fragmentShaderId	= CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
-
-	GlCall(glAttachShader(m_RendererId, vertexShaderId));
-	GlCall(glAttachShader(m_RendererId, fragmentShaderId));
-	GlCall(glLinkProgram(m_RendererId));
-	GlCall(glValidateProgram(m_RendererId));
-
-	GlCall(glDeleteShader(vertexShaderId));
-	GlCall(glDeleteShader(fragmentShaderId));
-}
-// Int
-void Shaders::SetInt1(const char *name, int val1)
-{
-	glUniform1i(glGetUniformLocation(m_RendererId, name), val1);
-}
-
-void Shaders::SetInt2(const char* name, int val1, int val2)
-{
-	glUniform2i(glGetUniformLocation(m_RendererId, name), val1, val2);
-}
-
-void Shaders::SetInt3(const char* name, int val1, int val2, int val3)
-{
-	glUniform3i(glGetUniformLocation(m_RendererId, name), val1, val2, val3);
-}
-
-void Shaders::SetInt4(const char* name, int val1, int val2, int val3, int val4)
-{
-	glUniform4i(glGetUniformLocation(m_RendererId, name), val1, val2, val3, val4);
-}
-// Float
-void Shaders::SetFloat1(const char *name, float val1)
-{
-	glUniform1f(glGetUniformLocation(m_RendererId, name), val1);
-}
-
-void Shaders::SetFloat2(const char *name, float val1, float val2)
-{
-	glUniform2f(glGetUniformLocation(m_RendererId, name), val1, val2);
-}
-
-void Shaders::SetFloat3(const char *name, float val1, float val2, float val3)
-{
-	glUniform3f(glGetUniformLocation(m_RendererId, name), val1, val2, val3);
-}
-
-void Shaders::SetFloat4(const char *name, float val1, float val2, float val3, float val4)
-{
-	glUniform4f(glGetUniformLocation(m_RendererId, name), val1, val2, val3, val4);
-}
-// Boolean
-void Shaders::SetBool(const char *name, bool val1)
-{
-	glUniform1i(glGetUniformLocation(m_RendererId, name), val1);
-}
-
-void Shaders::SetMat4x4(const char* name, glm::mat4& matrix)
-{
-	glUniformMatrix4fv(glGetUniformLocation(m_RendererId, name), 1, GL_FALSE, glm::value_ptr(matrix));
-}
-
-void Shaders::Use()
-{
-	GlCall(glUseProgram(m_RendererId));
-}
-
-void Shaders::Remove()
-{
-	GlCall(glUseProgram(0));
-}
-
-void Shaders::Delete()
-{
-	GlCall(glDeleteProgram(m_RendererId));
-}
-
-unsigned int Shaders::Id() const
-{
-	return m_RendererId;
-}
-
-// ShaderSource
-
-ShaderSource ShaderSource::ParseShaderSource(const string& shaderPath)
-{
-	ifstream stream(shaderPath, ios::in);
-	string line;
-    
-	enum class Shaderintype
+	Shader::Shader(const std::string &name, const string &vertexSource, const string &fragmentSource)
+		: m_name(name)
 	{
-		NONE = -1,
-		VERintEX = 0,
-		FRAGMENint = 1,
-	};
+		unordered_map<GLenum, string> sources;
+		sources[GL_VERTEX_SHADER] = vertexSource;
+		sources[GL_FRAGMENT_SHADER] = fragmentSource;
+		Compile(sources);
+		glUseProgram(m_RendererId);
+	}
 
-	stringstream ss[2];
-	Shaderintype type = Shaderintype::NONE;
-
-	while (getline(stream, line))
+	Shader::~Shader()
 	{
-		if (line.find("#shader") != string::npos)
+		GlCall(glDeleteProgram(m_RendererId));
+	}
+
+	void Shader::Compile(unordered_map<GLenum, string>& Shaderources)
+	{
+		array<GLenum, 2> glShaderIds;
+		int shaderIdIndex = 0;
+		GLuint program = glCreateProgram();
+		
+		for (auto &kv : Shaderources)
 		{
-			if (line.find("vertex") != string::npos)
+			GLuint type = kv.first;
+			const string& source = kv.second;
+
+			unsigned int shader = glCreateShader(type);
+
+			const GLchar* sourceCstr = source.c_str();
+			GlCall(glShaderSource(shader, 1, &sourceCstr, NULL));
+			GlCall(glCompileShader(shader));
+			
+			GLint compileStatus;
+			GlCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &compileStatus));
+
+			if (compileStatus == GL_FALSE)
 			{
-				type = Shaderintype::VERintEX;
+				int length;
+				GlCall(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length));
+
+				std::vector<char> log(length);
+				GlCall(glGetShaderInfoLog(shader, length, &length, log.data()));
+
+				GlCall(glDeleteShader(shader));
+				IRON_CORE_ASSERT(false, "{0} shader failed to compile. error {1}", ShaderTypeToString(type), log.data());
+				break;
+			}
+			
+			glAttachShader(program, shader);
+			glShaderIds[shaderIdIndex++] = shader;
+		}
+
+
+		GlCall(glLinkProgram(program));
+		GLint isLinked = 0;
+		GlCall(glGetProgramiv(program, GL_LINK_STATUS, &isLinked));
+		if (isLinked == GL_FALSE)
+		{
+			GLint length = 0;
+			GlCall(glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length)); 
+
+			std::vector<char> log(length);
+			GlCall(glGetShaderInfoLog(program, length, &length, &log[0]));
+
+			GlCall(glDeleteProgram(program));
+			
+			for (auto id : glShaderIds)
+			{
+				GlCall(glDeleteShader(id));
 			}
 
-			else if (line.find("fragment") != string::npos)
-			{
-				type = Shaderintype::FRAGMENint;
-			}
+			IRON_CORE_ASSERT(false, "Shader program failed to link. error {}", log.data());
+			return;
+		}
+
+		for (auto id : glShaderIds)
+		{
+			GlCall(glDetachShader(program, id));
+			GlCall(glDeleteShader(id));
+		}
+		
+		m_RendererId = program;
+	}
+
+	string Shader::ReadFile(const string &path)
+	{
+		ifstream stream(path, ios::in | ios::binary);
+		string file;
+		
+		if (stream)
+		{
+			stream.seekg(0, ios::end);
+			file.resize(stream.tellg());
+			stream.seekg(0, ios::beg);
+			stream.read(&file[0], file.size());
+			stream.close();
 		}
 		else
 		{
-			ss[(int)type] << line << "\n";
+			IRON_CORE_ASSERT(false, "Failed to load shader in '{}'", path);
 		}
+		
+		return file;
 	}
-     
-	return { ss[0].str(), ss[1].str() };
+
+	unordered_map<GLenum, string> Shader::Preprocess(string& file)
+	{
+		unordered_map<GLenum, string> Shaderources;
+
+		const char* typeToken = "#shader";
+		size_t typeTokenSize = strlen(typeToken);
+		size_t pos = file.find(typeToken, 0);
+
+		while(pos != string::npos)
+		{
+			size_t eol = file.find_first_of("\r\n", pos);
+			IRON_CORE_ASSERT(eol, "Syntax error!");
+			size_t begin = pos + typeTokenSize + 1;
+			string type = file.substr(begin, eol - begin);
+			IRON_CORE_ASSERT(type == "vertex" || type == "fragment" || type == "pixel", "Shader type invalid!");
+
+			size_t nextLinePos = file.find_first_not_of("\r\n", eol);
+			pos = file.find(typeToken, nextLinePos);
+			Shaderources[StringToShaderType(type)] = file.substr(nextLinePos, pos -  nextLinePos);
+		}
+
+		return Shaderources;
+	}
+
+	string& Shader::GetName()
+	{
+		return m_name;
+	}
+
+	// Int
+	void Shader::SetInt1(const char *name, int val1)
+	{
+		GlCall(glUniform1i(glGetUniformLocation(m_RendererId, name), val1));
+	}
+
+	void Shader::SetInt2(const char* name, int val1, int val2)
+	{
+		GlCall(glUniform2i(glGetUniformLocation(m_RendererId, name), val1, val2));
+	}
+
+	void Shader::SetInt3(const char* name, int val1, int val2, int val3)
+	{
+		GlCall(glUniform3i(glGetUniformLocation(m_RendererId, name), val1, val2, val3));
+	}
+
+	void Shader::SetInt4(const char* name, int val1, int val2, int val3, int val4)
+	{
+		GlCall(glUniform4i(glGetUniformLocation(m_RendererId, name), val1, val2, val3, val4));
+	}
+	// Float
+	void Shader::SetFloat1(const char *name, float val1)
+	{
+		GlCall(glUniform1f(glGetUniformLocation(m_RendererId, name), val1));
+	}
+
+	void Shader::SetFloat2(const char *name, float val1, float val2)
+	{
+		GlCall(glUniform2f(glGetUniformLocation(m_RendererId, name), val1, val2));
+	}
+
+	void Shader::SetFloat3(const char *name, float val1, float val2, float val3)
+	{
+		GlCall(glUniform3f(glGetUniformLocation(m_RendererId, name), val1, val2, val3));
+	}
+
+	void Shader::SetFloat4(const char *name, float val1, float val2, float val3, float val4)
+	{
+		GlCall(glUniform4f(glGetUniformLocation(m_RendererId, name), val1, val2, val3, val4));
+	}
+	// Boolean
+	void Shader::SetBool(const char *name, bool val1)
+	{
+		GlCall(glUniform1i(glGetUniformLocation(m_RendererId, name), val1));
+	}
+
+	void Shader::SetMat4x4(const char* name, glm::mat4& matrix)
+	{
+		auto uniformLoc = glGetUniformLocation(m_RendererId, name);
+		GlCall(glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(matrix)));
+	}
+
+	void Shader::Use() const
+	{
+		GlCall(glUseProgram(m_RendererId));
+	}
+
+	void Shader::Remove()
+	{
+		GlCall(glUseProgram(0));
+	}
+
+	void Shader::Delete()
+	{
+		GlCall(glDeleteProgram(m_RendererId));
+	}
+
+	unsigned int Shader::Id() const
+	{
+		return m_RendererId;
+	}
+
+	void ShaderLibrary::Add(const shared_ptr<Shader> &shader)
+	{
+		string& shaderName = shader->GetName();
+		IRON_CORE_ASSERT(m_shaderLib.find(shaderName) == m_shaderLib.end(), "This shader already exist");
+		m_shaderLib[shaderName] = shader;
+	}
+
+	void ShaderLibrary::Add(const string &name, const shared_ptr<Shader> &shader)
+	{
+		IRON_CORE_ASSERT(m_shaderLib.find(name) == m_shaderLib.end(), "This shader already exist");
+		m_shaderLib[name] = shader;
+	}
+
+	shared_ptr<Shader>& ShaderLibrary::Load(const string &path)
+	{
+		auto shader = make_shared<Shader>(path);
+		Add(shader);
+
+		return Get(shader->GetName());
+	}
+	
+	shared_ptr<Shader>& ShaderLibrary::Load(const string &name, const string &path)
+	{
+		auto shader = make_shared<Shader>(name, path);
+		Add(name, shader);
+
+		return Get(shader->GetName());
+	}
+	
+	shared_ptr<Shader>& ShaderLibrary::Get(const string &name)
+	{
+		IRON_CORE_ASSERT(Exists(name), "Shader does not exist");
+		return m_shaderLib[name];
+	}
+
+	bool ShaderLibrary::Exists(const string &name)
+	{
+		return m_shaderLib.find(name) != m_shaderLib.end();
+	}
 }

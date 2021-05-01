@@ -1,3 +1,4 @@
+#include "glad/glad.h"
 #include "Renderer/IndexBuffer.hpp"
 #include "Renderer/RenderCommand.hpp"
 

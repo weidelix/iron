@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Window.hpp"
-#include "Log.hpp"
 #include "Event/MouseEvent.hpp"
 #include "Event/WindowEvent.hpp"
 #include "Event/KeyEvent.hpp"

@@ -12,12 +12,12 @@ namespace Iron
 		unsigned int m_RendererId;
 	public:
 		VertexBuffer(const void* data, unsigned int size);
-		~VertexBuffer();
+		virtual ~VertexBuffer();
 
-		void BufferData(const void *data, unsigned int size) const;
+		virtual void BufferData(const void *data, unsigned int size) const;
 
-		void Bind() const;
-		void BindVertex(unsigned int bindingIndex, unsigned int offset, unsigned int stride) const;
-		void Unbind() const;
+		virtual void Bind() const;
+		virtual void BindVertex(unsigned int bindingIndex, unsigned int offset, unsigned int stride) const;
+		virtual void Unbind() const;
 	};
 }

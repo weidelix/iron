@@ -1,3 +1,4 @@
+#include "glad/glad.h"
 #include "Renderer/Texture2D.hpp"
 #include "stb_image.h"
 

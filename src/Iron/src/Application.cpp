@@ -4,6 +4,8 @@
 #include "ImGuiLayer.hpp"
 #include "Application.hpp"
 #include "Renderer/GameObject.hpp"
+#include "Renderer/Shader.hpp"
+#include "Log.hpp"
 
 namespace Iron
 {
@@ -16,26 +18,16 @@ namespace Iron
 		IRON_CORE_ASSERT(!m_instance, "[IRON]: An instance already exist!");
 		m_instance = this;
 		m_window->SetEventCallback(bind(&Application::OnEvent, this, placeholders::_1));
-	}
-	
-	float pos[] = 
-	{
-		-1.0f, -1.0f, 0.0f,
-  	 1.0f, -1.0f, 0.0f,
-  	 0.0f,  1.0f, 0.0f,
-	};
 
-	unsigned int indices[] = 
-	{
-		0, 1, 2,
-	};
+		Renderer::LoadShader(string("default"), string("../../../res/shaders/default.glsl"));
+	}
 
 	bool Application::Run() 
 	{
-		RenderCommand::UseRenderer(Api::OpenGL);
 		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
+
 		m_instance->Start();
-		
+
 		while(isRunning)
 		{
 			RenderCommand::Clear();

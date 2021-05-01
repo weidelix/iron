@@ -4,41 +4,42 @@
 namespace Iron
 {
 	GameObject::GameObject()
-		:m_mesh(make_shared<VertexArray>(nullptr, 0, nullptr, 0))
+		:m_vertexArray(make_shared<VertexArray>(nullptr, 0, nullptr, 0)),
+		 m_shader(Renderer::GetDefaultShader()),
+		 m_transform(m_shader)
 	{ 
-
+		Init();
 	}
 
 	GameObject::GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
-		:m_mesh(make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count))
+		:m_vertexArray(make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count)),
+		 m_shader(Renderer::GetDefaultShader()),
+		 m_transform(m_shader)
 	{
-		
+		Init();
 	}
 
-	GameObject::GameObject(const GameObject &gameObject)
-		:m_mesh(gameObject.m_mesh)
+	GameObject::GameObject(Mesh& mesh) :m_mesh(mesh) { }
+
+	GameObject::~GameObject() { }
+
+	void GameObject::Init()
 	{
-
-	}
-
-	GameObject::GameObject(Mesh& mesh)
-		:m_mesh(mesh)
-	{
-		
-	}
-
-	GameObject::~GameObject() 
-	{ 
-
+		m_vertexArray->Init();		
 	}
 
 	void GameObject::Draw() 
 	{
-		m_mesh.GetVertexArray()->Bind();
-		Renderer::Submit(m_mesh.GetVertexArray());
+		Renderer::Submit(m_vertexArray);
+	}
+
+	Transform &GameObject::GetTransform()
+	{
+		m_shader->Use();
+		return m_transform;
 	}
 	
-	//*This won't be implemented until model loading is complete
+	//* This won't be implemented until model loading is complete
 	//* Might be replaced with "Model::Load"
 	/* static */
 	void GameObject::Create() { }
@@ -53,17 +54,13 @@ namespace Iron
 		{
 			case Primitives::Plane:
 			{
-				return GameObject((float[]) 
-				{
-					-0.5f, -0.5f, 0.0f,
-					 0.5f, -0.5f, 0.0f,
-					-0.5f,  0.5f, 0.0f,
-					 0.5f,  0.5f, 0.0f,
-				}, 12 * sizeof(float), (unsigned int[])
-				{
-					0, 1, 2,
-					2, 3, 1
-				}, 6);
+				// This is just a very simple way of drawing a plane in the screen.
+				// TODO : Add transform 
+
+				float vBuffer[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f,  0.5f, 0.0f,  0.5f,  0.5f, 0.0f };
+				unsigned int iBuffer[] = { 0, 1, 2, 2, 3, 1 };
+
+				return GameObject(vBuffer, 12 * sizeof(float), iBuffer, 6);
 				break;
 			}
 			case Primitives::Box:
@@ -72,7 +69,7 @@ namespace Iron
 			case Primitives::Sphere:
 				break;
 		}
-		
+
 		return GameObject::CreateEmpty();
 	}
 }

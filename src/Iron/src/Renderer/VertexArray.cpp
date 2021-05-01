@@ -1,3 +1,4 @@
+#include "glad/glad.h"
 #include "Renderer/VertexArray.hpp"
 #include "Renderer/RenderCommand.hpp"
 
@@ -24,9 +25,17 @@ namespace Iron
 		GlCall(glDeleteVertexArrays(1, &m_rendererId));
 	}
 
-	VertexArray VertexArray::Create()
+	void VertexArray::Init()
 	{
-		return VertexArray();
+		VertexArray::EnableVertexAttribArray(0);
+		VertexArray::VertexAttribBinding(0, 0);
+
+		VertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);
+
+		GetVertexBuffer().Bind();
+		GetIndexBuffer().Bind();
+				
+		GetVertexBuffer().BindVertex(0, 0, 3 * sizeof(float));
 	}
 
 	void VertexArray::Bind() const

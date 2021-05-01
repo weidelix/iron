@@ -1,5 +1,6 @@
 #include <glad/glad.h>
 #include "Platform/Windows/WindowsWindow.hpp"
+#include "Log.hpp"
 
 namespace Iron
 {

@@ -1,7 +1,6 @@
 #pragma once
 #include "Renderer/Components/Mesh.hpp"
 #include "Renderer/Components/Transform.hpp"
-#include "Core.hpp"
 
 namespace Iron
 {
@@ -17,17 +16,21 @@ namespace Iron
 	class IRON_API GameObject
 	{
 	private:
+		shared_ptr<VertexArray> m_vertexArray;
+		shared_ptr<Shader> m_shader;
 		Mesh m_mesh;
 		Transform m_transform;
 
-	public:
 		GameObject();
 		GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count);
-		GameObject(const GameObject &gameObject);
+	
+	public:
 		GameObject(Mesh &mesh);
 		~GameObject();
 		
+		void Init();
 		void Draw();
+		Transform& GetTransform();
 		
 		static void Create();
 		static GameObject CreateEmpty();
