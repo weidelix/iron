@@ -2,8 +2,8 @@
 
 namespace Iron
 {
-	shared_ptr<spdlog::logger> Log::s_ClientLogger;
-	shared_ptr<spdlog::logger> Log::s_CoreLogger;
+	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
+	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 	 
 	void Log::Init()
 	{

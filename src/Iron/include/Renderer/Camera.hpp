@@ -1,6 +1,6 @@
 #pragma once 
 #include "Core.hpp"
-#include "Renderer/Transform.hpp"
+#include "Renderer/Components/Transform.hpp"
 
 #include <glm.hpp>
 
@@ -11,18 +11,18 @@ namespace Iron
 	private:
 		int m_cameraId;
 		bool m_isMain = false;
-		mat4 m_projection;
-		mat4 m_view;
+		glm::mat4 m_projection;
+		glm::mat4 m_view;
 		Transform m_transform;
 
 		static Camera s_mainCamera;
 
 	public:
-		Camera();
-		~Camera();
+		Camera() = default;
+		~Camera() = default;
 
-		mat4 &GetProjectionMat();
-		mat4 &GetViewMat();
+		const glm::mat4 &GetProjectionMat() const;
+		const glm::mat4 &GetViewMat() const;
 		
 		static Camera Main();
 

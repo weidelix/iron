@@ -4,7 +4,7 @@
 namespace Iron
 {
 	GameObject::GameObject()
-		:m_vertexArray(make_shared<VertexArray>(nullptr, 0, nullptr, 0)),
+		:m_vertexArray(std::make_shared<VertexArray>(nullptr, 0, nullptr, 0)),
 		 m_shader(Renderer::GetDefaultShader()),
 		 m_transform(m_shader)
 	{ 
@@ -12,7 +12,7 @@ namespace Iron
 	}
 
 	GameObject::GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
-		:m_vertexArray(make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count)),
+		:m_vertexArray(std::make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count)),
 		 m_shader(Renderer::GetDefaultShader()),
 		 m_transform(m_shader)
 	{

@@ -87,7 +87,7 @@ namespace Iron
 		m_shader->SetMat4x4("model", m_model);
 	}
 
-	Transform::Transform(const shared_ptr<Shader>& shader)
+	Transform::Transform(const std::shared_ptr<Shader>& shader)
 		:m_position(glm::vec3(0, 0, 0)),
 		 m_rotation(glm::vec3(0, 0, 0)),
 		 m_scale(glm::vec3(0, 0, 0)),

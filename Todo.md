@@ -6,3 +6,7 @@
 - Structure of Camera
 
 - Camera API
+
+# Todo Urgent
+
+Fix segmentation fault

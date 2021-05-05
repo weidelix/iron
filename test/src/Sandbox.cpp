@@ -6,8 +6,8 @@ using namespace Iron;
 class Sandbox : public Application
 {
 public:
-	GameObject plane = GameObject::CreatePrimitive(Primitives::Plane);
-	Position position = Position({ 0.0, 1.0, 0.0 });
+	//GameObject plane = GameObject::CreatePrimitive(Primitives::Plane);
+	//Position position = Position({ 0.0, 1.0, 0.0 });
 	// Runs code on start
 	void Start() override 
 	{
@@ -17,8 +17,8 @@ public:
 	// Runs code every frame
 	void Update() override
 	{
-		plane.GetTransform().SetPosition(position);
-		plane.Draw();
+		//plane.GetTransform().SetPosition(position);
+		//plane.Draw();
 	}
 };
 

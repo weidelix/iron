@@ -13,11 +13,11 @@ namespace Iron
 	public:
 		static void BeginScene();
 		static void EndScene();
-		static void Submit(const shared_ptr<VertexArray>& vertexArr);
-		static void Submit(const shared_ptr<Shader> &shader, const shared_ptr<VertexArray>& vertexArr);
-		static shared_ptr<Shader> &LoadShader(const string &path);
-		static shared_ptr<Shader> &LoadShader(const string &name, const string &path);
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArr);
+		static void Submit(const std::shared_ptr<Shader> &shader, const std::shared_ptr<VertexArray>& vertexArr);
+		static std::shared_ptr<Shader> &LoadShader(const std::string &path);
+		static std::shared_ptr<Shader> &LoadShader(const std::string &name, const std::string &path);
 		static void UseDefaultShader();
-		static shared_ptr<Shader> &GetDefaultShader();
+		static std::shared_ptr<Shader> &GetDefaultShader();
 	};
 }

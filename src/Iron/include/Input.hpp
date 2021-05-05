@@ -158,7 +158,7 @@ namespace Iron
 	{
 	private:
 		Window* m_window;
-		vector<Iron::Event*>* m_events;
+		std::vector<Iron::Event*>* m_events;
 
 		 int IsPrintable(int key);
 		 int IsControlChar(int key);

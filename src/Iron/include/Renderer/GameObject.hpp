@@ -16,8 +16,8 @@ namespace Iron
 	class IRON_API GameObject
 	{
 	private:
-		shared_ptr<VertexArray> m_vertexArray;
-		shared_ptr<Shader> m_shader;
+		std::shared_ptr<VertexArray> m_vertexArray;
+		std::shared_ptr<Shader> m_shader;
 		Mesh m_mesh;
 		Transform m_transform;
 

@@ -29,11 +29,12 @@ namespace Iron
 		GlCall(glClear(GL_COLOR_BUFFER_BIT));
 	}
 
-	void RenderCommand::DrawIndexed(const shared_ptr<VertexArray> &vertexArr)
+	void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray> &vertexArr)
 	{
 		Renderer::UseDefaultShader();
+		const std::shared_ptr<Shader> &shader = Renderer::GetDefaultShader();
 		
-		Camera& mainCamera = Camera::Main();
+		const Camera &mainCamera = Camera::Main();
 		shader->SetMat4x4("projection", mainCamera.GetProjectionMat());
 		shader->SetMat4x4("view", mainCamera.GetViewMat());
 		
@@ -41,11 +42,11 @@ namespace Iron
 		GlCall(glDrawElements(GL_TRIANGLES, vertexArr->GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr));
 	}
 
-	void RenderCommand::DrawIndexed(const shared_ptr<Shader> &shader, const shared_ptr<VertexArray> &vertexArr)
+	void RenderCommand::DrawIndexed(const std::shared_ptr<Shader> &shader, const std::shared_ptr<VertexArray> &vertexArr)
 	{
 		shader->Use();
 
-		Camera& mainCamera = Camera::Main();
+		const Camera& mainCamera = Camera::Main();
 		shader->SetMat4x4("projection", mainCamera.GetProjectionMat());
 		shader->SetMat4x4("view", mainCamera.GetViewMat());
 

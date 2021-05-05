@@ -59,7 +59,7 @@ namespace Iron
 	class IRON_API Transform
 	{
 	private:
-		shared_ptr<Shader> m_shader;
+		std::shared_ptr<Shader> m_shader;
 		glm::mat4 m_model;
 		struct Position m_position;
 		struct Rotation m_rotation;
@@ -68,8 +68,8 @@ namespace Iron
 
 	public:
 		Transform();
-		Transform(const shared_ptr<Shader> &shader, const glm::vec3 &position);
-		Transform(const shared_ptr<Shader> &shader);
+		Transform(const std::shared_ptr<Shader> &shader, const glm::vec3 &position);
+		Transform(const std::shared_ptr<Shader> &shader);
 		~Transform();
 
 		struct Position &GetPosition();

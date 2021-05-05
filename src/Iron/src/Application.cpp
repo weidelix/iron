@@ -12,14 +12,14 @@ namespace Iron
 	Application* Application::m_instance = nullptr;
 	
 	Application::Application()
-		:m_window(unique_ptr<Window>(Window::Create())),
+		:m_window(std::unique_ptr<Window>(Window::Create())),
 		 m_input(m_window.get())
 	{
 		IRON_CORE_ASSERT(!m_instance, "[IRON]: An instance already exist!");
 		m_instance = this;
-		m_window->SetEventCallback(bind(&Application::OnEvent, this, placeholders::_1));
+		m_window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 
-		Renderer::LoadShader(string("default"), string("../../../res/shaders/default.glsl"));
+		Renderer::LoadShader(std::string("default"), std::string("../../../res/shaders/default.glsl"));
 	}
 
 	bool Application::Run() 
@@ -50,7 +50,7 @@ namespace Iron
 	void Application::OnEvent(Event& event)
 	{
 		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<KeyPressEvent>(bind(&Callback, placeholders::_1));
+		dispatcher.Dispatch<KeyPressEvent>(bind(&Callback, std::placeholders::_1));
 	}
 	
 	Input Application::Input()

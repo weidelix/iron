@@ -7,7 +7,7 @@
 #include "glm.hpp"
 #include "Log.hpp"
 
-#define ASSERT(x) if (!(x)) __debugbreak();
+#define ASSERT(x) if (!(x)) {} // __debugbreak()
 #define GlCall(x) GlClearError();\
 				x;\
 				ASSERT(GlLogCall(#x, __FILE__, __LINE__))
@@ -22,7 +22,7 @@ namespace Iron
 	public:
 		static void SetClearColor(const glm::vec4& clearCol);
 		static void Clear();
-		static void DrawIndexed(const shared_ptr<VertexArray> &vertexArr);
-		static void DrawIndexed(const shared_ptr<Shader> &shader, const shared_ptr<VertexArray> &vertexArr);
+		static void DrawIndexed(const std::shared_ptr<VertexArray> &vertexArr);
+		static void DrawIndexed(const std::shared_ptr<Shader> &shader, const std::shared_ptr<VertexArray> &vertexArr);
 	};
 }

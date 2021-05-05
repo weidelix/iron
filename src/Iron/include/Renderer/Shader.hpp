@@ -11,20 +11,20 @@ namespace Iron
 	class Shader
 	{
 	private:
-		vector<unsigned int> m_shaderIds;
+		std::vector<unsigned int> m_shaderIds;
 		unsigned int m_RendererId;
-		string m_name;
+		std::string m_name;
 
 	public:
-		Shader(const string &path);
-		Shader(const string &name, const string &path);
-		Shader(const string &name, const string &vertexSource, const string &fragmentSouce);
+		Shader(const std::string &path);
+		Shader(const std::string &name, const std::string &path);
+		Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSouce);
 		~Shader();
 
-		void Compile(unordered_map<unsigned int, string> &Shaderources);
-		string ReadFile(const string &path);
-		unordered_map<unsigned int, string> Preprocess(string &file);
-		string& GetName();
+		void Compile(std::unordered_map<unsigned int, std::string> &Shaderources);
+		std::string ReadFile(const std::string &path);
+		std::unordered_map<unsigned int, std::string> Preprocess(std::string &file);
+		std::string& GetName();
 
 		void SetInt1(const char *name, int val1);
 		void SetInt2(const char *name, int val1, int val2);
@@ -35,7 +35,7 @@ namespace Iron
 		void SetFloat3(const char *name, float val1, float val2, float val3);
 		void SetFloat4(const char *name, float val1, float val2, float val3, float val4);
 		void SetBool(const char *name, bool val1);
-		void SetMat4x4(const char* name, glm::mat4& matrix);
+		void SetMat4x4(const char* name, const glm::mat4& matrix);
 		unsigned int Id() const;
 		void Use() const;
 		void Remove();
@@ -45,14 +45,14 @@ namespace Iron
 	class ShaderLibrary
 	{
 	private:	
-		unordered_map<string, shared_ptr<Shader>> m_shaderLib;
+		std::unordered_map<std::string, std::shared_ptr<Shader>> m_shaderLib;
 
 	public:
-		void Add(const shared_ptr<Shader> &shader);
-		void Add(const string &name, const shared_ptr<Shader> &shader);
-		shared_ptr<Shader>& Load(const string &path);
-		shared_ptr<Shader>& Load(const string &name, const string &path);
-		shared_ptr<Shader>& Get(const string &name);
-		bool Exists(const string &name);
+		void Add(const std::shared_ptr<Shader> &shader);
+		void Add(const std::string &name, const std::shared_ptr<Shader> &shader);
+		std::shared_ptr<Shader>& Load(const std::string &path);
+		std::shared_ptr<Shader>& Load(const std::string &name, const std::string &path);
+		std::shared_ptr<Shader>& Get(const std::string &name);
+		bool Exists(const std::string &name);
 	};
 }

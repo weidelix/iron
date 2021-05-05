@@ -5,3 +5,5 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include <iterator>
+#include <algorithm>

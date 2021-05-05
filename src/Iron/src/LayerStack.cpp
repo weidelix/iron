@@ -2,7 +2,7 @@
 
 namespace Iron
 {
-    LayerStack::~LayerStack()
+	LayerStack::~LayerStack()
 	{
 		for (Layer* layer : m_layers)
 		{
@@ -15,18 +15,18 @@ namespace Iron
 	{
 		m_layers.emplace(m_layers.begin() + m_layerIndex, layer);
 		layer->OnAttach();
-        m_layerIndex++;
+      m_layerIndex++;
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay)
 	{
 		m_layers.emplace_back(overlay);
-        overlay->OnAttach();
+      overlay->OnAttach();
 	}
 	
 	void LayerStack::PopLayer(Layer* layer)
 	{
-		auto it = find(m_layers.begin(), m_layers.begin() + m_layerIndex, layer);
+		auto it = find(m_layers.begin(), m_layers.end(), layer);
 
 		// if layer is not the last layer in the stack
 		if (it != m_layers.begin() + m_layerIndex)
@@ -39,7 +39,7 @@ namespace Iron
 
 	void LayerStack::PopOverlay(Layer* overlay)
 	{
-		auto it = find(m_layers.begin() + m_layerIndex, m_layers.end(), overlay);
+		auto it = find(m_layers.begin(), m_layers.end(), overlay);
 		if (it != m_layers.end())
 		{
 			overlay->OnDetach();

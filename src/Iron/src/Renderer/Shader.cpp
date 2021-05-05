@@ -3,7 +3,7 @@
 #include "Renderer/RenderCommand.hpp"
 #include <fstream>
 
-static GLenum StringToShaderType(string &type)
+static GLenum StringToShaderType(std::string &type)
 {
 	if (type == "vertex")
 		return GL_VERTEX_SHADER;
@@ -14,7 +14,7 @@ static GLenum StringToShaderType(string &type)
 	return 0;
 }
 
-static string ShaderTypeToString(GLenum type)
+static std::string ShaderTypeToString(GLenum type)
 {
 	if (type == GL_VERTEX_SHADER)
 		return "vertex";
@@ -27,35 +27,35 @@ static string ShaderTypeToString(GLenum type)
 
 namespace Iron
 {
-	Shader::Shader(const string &path)
+	Shader::Shader(const std::string &path)
 	{
-		string file = ReadFile(path);
-		unordered_map<GLenum, string> sources = Preprocess(file);
+		std::string file = ReadFile(path);
+		std::unordered_map<GLenum, std::string> sources = Preprocess(file);
 		Compile(sources);
 		glUseProgram(m_RendererId);
 
 		// res/Shader/basic.glsl
 		auto lastSlash = path.find_last_of("/\\");
-		lastSlash = (lastSlash == string::npos) ? 0 : lastSlash + 1;
+		lastSlash = (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
 		auto lastDot = path.rfind(".");
-		auto count = (lastDot == string::npos) ? file.size() - lastSlash : lastDot - lastSlash;
+		auto count = (lastDot == std::string::npos) ? file.size() - lastSlash : lastDot - lastSlash;
 		m_name = file.substr(lastSlash, count);
 		IRON_CORE_INFO(m_name.c_str()); 
 	}
 
-	Shader::Shader(const string &name, const string &path)
+	Shader::Shader(const std::string &name, const std::string &path)
 		: m_name(name)
 	{
-		string file = ReadFile(path);
-		unordered_map<GLenum, string> sources = Preprocess(file);
+		std::string file = ReadFile(path);
+		std::unordered_map<GLenum, std::string> sources = Preprocess(file);
 		Compile(sources);
 		glUseProgram(m_RendererId);
 	}
 
-	Shader::Shader(const std::string &name, const string &vertexSource, const string &fragmentSource)
+	Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource)
 		: m_name(name)
 	{
-		unordered_map<GLenum, string> sources;
+		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSource;
 		sources[GL_FRAGMENT_SHADER] = fragmentSource;
 		Compile(sources);
@@ -67,16 +67,16 @@ namespace Iron
 		GlCall(glDeleteProgram(m_RendererId));
 	}
 
-	void Shader::Compile(unordered_map<GLenum, string>& Shaderources)
+	void Shader::Compile(std::unordered_map<GLenum, std::string>& Shaderources)
 	{
-		array<GLenum, 2> glShaderIds;
+		std::array<GLenum, 2> glShaderIds;
 		int shaderIdIndex = 0;
 		GLuint program = glCreateProgram();
 		
 		for (auto &kv : Shaderources)
 		{
 			GLuint type = kv.first;
-			const string& source = kv.second;
+			const std::string& source = kv.second;
 
 			unsigned int shader = glCreateShader(type);
 
@@ -136,16 +136,16 @@ namespace Iron
 		m_RendererId = program;
 	}
 
-	string Shader::ReadFile(const string &path)
+	std::string Shader::ReadFile(const std::string &path)
 	{
-		ifstream stream(path, ios::in | ios::binary);
-		string file;
+		std::ifstream stream(path, std::ios::in | std::ios::binary);
+		std::string file;
 		
 		if (stream)
 		{
-			stream.seekg(0, ios::end);
+			stream.seekg(0, std::ios::end);
 			file.resize(stream.tellg());
-			stream.seekg(0, ios::beg);
+			stream.seekg(0, std::ios::beg);
 			stream.read(&file[0], file.size());
 			stream.close();
 		}
@@ -157,20 +157,20 @@ namespace Iron
 		return file;
 	}
 
-	unordered_map<GLenum, string> Shader::Preprocess(string& file)
+	std::unordered_map<GLenum, std::string> Shader::Preprocess(std::string& file)
 	{
-		unordered_map<GLenum, string> Shaderources;
+		std::unordered_map<GLenum, std::string> Shaderources;
 
 		const char* typeToken = "#shader";
 		size_t typeTokenSize = strlen(typeToken);
 		size_t pos = file.find(typeToken, 0);
 
-		while(pos != string::npos)
+		while(pos != std::string::npos)
 		{
 			size_t eol = file.find_first_of("\r\n", pos);
 			IRON_CORE_ASSERT(eol, "Syntax error!");
 			size_t begin = pos + typeTokenSize + 1;
-			string type = file.substr(begin, eol - begin);
+			std::string type = file.substr(begin, eol - begin);
 			IRON_CORE_ASSERT(type == "vertex" || type == "fragment" || type == "pixel", "Shader type invalid!");
 
 			size_t nextLinePos = file.find_first_not_of("\r\n", eol);
@@ -181,7 +181,7 @@ namespace Iron
 		return Shaderources;
 	}
 
-	string& Shader::GetName()
+	std::string& Shader::GetName()
 	{
 		return m_name;
 	}
@@ -232,7 +232,7 @@ namespace Iron
 		GlCall(glUniform1i(glGetUniformLocation(m_RendererId, name), val1));
 	}
 
-	void Shader::SetMat4x4(const char* name, glm::mat4& matrix)
+	void Shader::SetMat4x4(const char* name, const glm::mat4& matrix)
 	{
 		auto uniformLoc = glGetUniformLocation(m_RendererId, name);
 		GlCall(glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(matrix)));
@@ -258,42 +258,42 @@ namespace Iron
 		return m_RendererId;
 	}
 
-	void ShaderLibrary::Add(const shared_ptr<Shader> &shader)
+	void ShaderLibrary::Add(const std::shared_ptr<Shader> &shader)
 	{
-		string& shaderName = shader->GetName();
+		std::string& shaderName = shader->GetName();
 		IRON_CORE_ASSERT(m_shaderLib.find(shaderName) == m_shaderLib.end(), "This shader already exist");
 		m_shaderLib[shaderName] = shader;
 	}
 
-	void ShaderLibrary::Add(const string &name, const shared_ptr<Shader> &shader)
+	void ShaderLibrary::Add(const std::string &name, const std::shared_ptr<Shader> &shader)
 	{
 		IRON_CORE_ASSERT(m_shaderLib.find(name) == m_shaderLib.end(), "This shader already exist");
 		m_shaderLib[name] = shader;
 	}
 
-	shared_ptr<Shader>& ShaderLibrary::Load(const string &path)
+	std::shared_ptr<Shader>& ShaderLibrary::Load(const std::string &path)
 	{
-		auto shader = make_shared<Shader>(path);
+		auto shader = std::make_shared<Shader>(path);
 		Add(shader);
 
 		return Get(shader->GetName());
 	}
 	
-	shared_ptr<Shader>& ShaderLibrary::Load(const string &name, const string &path)
+	std::shared_ptr<Shader>& ShaderLibrary::Load(const std::string &name, const std::string &path)
 	{
-		auto shader = make_shared<Shader>(name, path);
+		auto shader = std::make_shared<Shader>(name, path);
 		Add(name, shader);
 
 		return Get(shader->GetName());
 	}
 	
-	shared_ptr<Shader>& ShaderLibrary::Get(const string &name)
+	std::shared_ptr<Shader>& ShaderLibrary::Get(const std::string &name)
 	{
 		IRON_CORE_ASSERT(Exists(name), "Shader does not exist");
 		return m_shaderLib[name];
 	}
 
-	bool ShaderLibrary::Exists(const string &name)
+	bool ShaderLibrary::Exists(const std::string &name)
 	{
 		return m_shaderLib.find(name) != m_shaderLib.end();
 	}

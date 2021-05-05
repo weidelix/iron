@@ -2,8 +2,6 @@
 
 #define BIT(x) (1 << x)
 
-using namespace std;
-
 #if defined(IRON_PLATFORM_WINDOW)
 		#if defined(IRON_BUILD_DLL)
 		  	#if defined(USE_CLANG)       // Set Clang specific macros
@@ -20,13 +18,24 @@ using namespace std;
 				#define IRON_API __declspec(dllimport)
 			#endif
 	 #endif
+#elif defined(IRON_PLATFORM_LINUX)
+		#if defined(IRON_BUILD_DLL)
+		  	#define IRON_API __attribute__((visibility("default")))
+		#else
+			#define IRON_API
+		#endif
 #else
 	#error Iron only supports window at the moment!
 #endif
 
-#ifdef ENABLE_ASSERT
-	#define IRON_CORE_ASSERT(x,...) { if(!(x)) { IRON_CORE_ERROR(__VA_ARGS__); __debugbreak(); } }
-	#define IRON_ASSERT(x,...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); } }
+#if defined(ENABLE_ASSERT)
+	#if defined(IRON_PLATFORM_LINUX)
+		#define IRON_CORE_ASSERT(x,...) { if(!(x)) { IRON_CORE_ERROR(__VA_ARGS__); } }
+		#define IRON_ASSERT(x,...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); } }
+	#else
+		#define IRON_CORE_ASSERT(x,...) { if(!(x)) { IRON_CORE_ERROR(__VA_ARGS__); __debugbreak(); } }
+		#define IRON_ASSERT(x,...) { if(!(x)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); } }
+	#endif
 #else
 	#define IRON_CORE_ASSERT(x,...)
 	#define IRON_ASSERT(x,...)

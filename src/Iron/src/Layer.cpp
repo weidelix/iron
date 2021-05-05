@@ -2,7 +2,7 @@
 
 namespace Iron
 {
-	Layer::Layer(const string& debugName)
+	Layer::Layer(const std::string& debugName)
 		:m_debugName(debugName)
 	{
 		
