@@ -26,7 +26,7 @@ namespace Iron
 		virtual void OnExit(){ }
 		virtual bool Run();
 		virtual void OnEvent(Event& event);
-		Input Input();
+		Input GetInput();
 		static Application &Get();
 		Window& GetWindow();
 		void PushLayer(Layer* layer);

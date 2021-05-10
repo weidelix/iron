@@ -53,7 +53,7 @@ namespace Iron
 		dispatcher.Dispatch<KeyPressEvent>(bind(&Callback, std::placeholders::_1));
 	}
 	
-	Input Application::Input()
+	Input Application::GetInput()
 	{
 		return m_input;
 	}

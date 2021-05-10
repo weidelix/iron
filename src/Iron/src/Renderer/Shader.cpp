@@ -234,8 +234,8 @@ namespace Iron
 
 	void Shader::SetMat4x4(const char* name, const glm::mat4& matrix)
 	{
-		auto uniformLoc = glGetUniformLocation(m_RendererId, name);
-		GlCall(glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(matrix)));
+		// auto uniformLoc = glGetUniformLocation(m_RendererId, name);
+		// GlCall(glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(matrix)));
 	}
 
 	void Shader::Use() const
