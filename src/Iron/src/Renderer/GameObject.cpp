@@ -5,21 +5,20 @@ namespace Iron
 {
 	GameObject::GameObject()
 		:m_vertexArray(std::make_shared<VertexArray>(nullptr, 0, nullptr, 0)),
-		 m_shader(Renderer::GetDefaultShader()),
-		 m_transform(m_shader)
+		 m_shader(Renderer::GetDefaultShader())
 	{ 
 		Init();
 	}
 
-	GameObject::GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
+	GameObject::GameObject(const void *vertexBuffer, unsigned int size, 
+												 const unsigned int *indexBuffer, unsigned int count)
 		:m_vertexArray(std::make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count)),
-		 m_shader(Renderer::GetDefaultShader()),
-		 m_transform(m_shader)
+		 m_shader(Renderer::GetDefaultShader())
 	{
 		Init();
 	}
 
-	GameObject::GameObject(Mesh& mesh) :m_mesh(mesh) { }
+	// GameObject::GameObject(Mesh& mesh) :m_mesh(mesh) { }
 
 	GameObject::~GameObject() { }
 
@@ -30,12 +29,12 @@ namespace Iron
 
 	void GameObject::Draw() 
 	{
-		Renderer::Submit(m_vertexArray);
+		m_shader->SetMat4x4("model", m_transform.GetMatrix());
+		Renderer::Submit(m_shader, m_vertexArray);
 	}
 
 	Transform &GameObject::GetTransform()
 	{
-		m_shader->Use();
 		return m_transform;
 	}
 	

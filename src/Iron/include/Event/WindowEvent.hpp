@@ -14,6 +14,8 @@ namespace Iron
 		{ } 
 		
 		~WindowResizeEvent() override { }
+		float GetWidth() { return width; }
+		float GetHeight() { return height; }
 		EVENT_CLASS_TYPE(EventType::WindowResize);
 		EVENT_CLASS_CATEGORY(WindowCategory);
 	};

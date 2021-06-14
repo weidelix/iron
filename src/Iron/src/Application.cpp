@@ -5,7 +5,9 @@
 #include "Application.hpp"
 #include "Renderer/GameObject.hpp"
 #include "Renderer/Shader.hpp"
+#include "Internal.hpp"
 #include "Log.hpp"
+#include "Viewport.hpp"
 
 namespace Iron
 {
@@ -17,7 +19,8 @@ namespace Iron
 	{
 		IRON_CORE_ASSERT(!m_instance, "[IRON]: An instance already exist!");
 		m_instance = this;
-		m_window->SetEventCallback(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+		m_window->SetEventCallback(std::bind(&Application::EventHandler, this, std::placeholders::_1));
+		m_window->SetInternalEventCallback(std::bind(&Internal::InternalEventsHandler, std::placeholders::_1));
 
 		Renderer::LoadShader(std::string("default"), std::string("../../../res/shaders/default.glsl"));
 	}
@@ -25,7 +28,8 @@ namespace Iron
 	bool Application::Run() 
 	{
 		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
-
+		Viewport *viewport = new Viewport("Viewport");
+		m_layerStack.PushLayer(viewport);
 		m_instance->Start();
 
 		while(isRunning)
@@ -37,26 +41,38 @@ namespace Iron
 				layer->OnUpdate(); 
 			}
 			m_window->OnUpdate();
+
+			Time::SetDeltaTime();
 		}
 		return true; 
 	}
 	
 	bool Callback(Event& event)
 	{
-		IRON_INFO(event.ToString());
 		return true;
 	}
 
-	void Application::OnEvent(Event& event)
+	// TODO : Change function name to a better one
+	void Application::EventHandler(Event& event)
+	{
+		OnEvent(event);
+		for(auto *layer : m_layerStack)
+		{
+			layer->OnEvent(event);
+		}
+	}
+
+	void Application::OnEvent(Event &event)
 	{
 		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<KeyPressEvent>(bind(&Callback, std::placeholders::_1));
+		dispatcher.Dispatch<WindowResizeEvent>(bind(&Callback, std::placeholders::_1));
 	}
-	
+
 	Input Application::GetInput()
 	{
 		return m_input;
 	}
+
 	Application& Application::Get() 
 	{
 		return *m_instance;

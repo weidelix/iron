@@ -17,7 +17,8 @@ namespace Iron
 		bool isRunning = true;
 		LayerStack m_layerStack;
 		Input m_input;
-
+		void EventHandler(Event& event);
+	
 	public:
 		Application();
 		virtual ~Application(){ }
@@ -35,6 +36,6 @@ namespace Iron
 		void PopOverlay(Layer* overlay);
 	};
 
-	// DEFINE IN CLIENT
+	// Define in client
 	extern Application* CreateApplication();
 }

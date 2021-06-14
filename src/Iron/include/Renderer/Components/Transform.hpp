@@ -12,11 +12,14 @@ namespace Iron
 		glm::vec3 m_position;
 
 	public:
-		Position();
+		Position() = default;
 		Position(const glm::vec3 &position);
 		void SetPosition(const glm::vec3 &position);
 		void SetPosition(const Position &position);
-		glm::vec3 &GetPosition();
+		void MoveByX(float x);
+		void MoveByY(float y);
+		void MoveByZ(float z);
+		const glm::vec3 &GetPosition() const;
 	};
 
 	struct IRON_API Rotation
@@ -25,11 +28,14 @@ namespace Iron
 		glm::vec3 m_rotation;
 
 	public:
-		Rotation();
+		Rotation() = default;
 		Rotation(const glm::vec3 &rotation);
 		void SetRotation(const glm::vec3 &rotation);
 		void SetRotation(const Rotation &rotation);
-		glm::vec3 &GetRotation();
+		void RotateByX(float x);
+		void RotateByY(float y);
+		void RotateByZ(float z);
+		const glm::vec3 &GetRotation() const;
 	};
 
 	struct IRON_API Scale
@@ -38,38 +44,41 @@ namespace Iron
 		glm::vec3 m_scale;
 
 	public:
-		Scale();
+		Scale() = default;
 		Scale(const glm::vec3 &scale);
 		void SetScale(const glm::vec3& scale);
 		void SetScale(const Scale &scale);
-		glm::vec3 &GetScale();
-		
+		void ScaleByX(float x);
+		void ScaleByY(float y);
+		void ScaleByZ(float z);
+		const glm::vec3 &GetScale() const;
 	};
 
 	struct IRON_API LocalPosition
 	{
 	private:
-		glm::vec3 m_localPosition;
+		const glm::vec3 m_localPosition;
 	
 	public:
 		LocalPosition(const glm::vec3 &localPos);
-		glm::vec3 &GetLocalPosition();
+		const glm::vec3 &GetLocalPosition() const;
 	};
 
 	class IRON_API Transform
 	{
 	private:
-		std::shared_ptr<Shader> m_shader;
-		glm::mat4 m_model;
 		struct Position m_position;
 		struct Rotation m_rotation;
 		struct Scale m_scale;
 		//struct LocalPosition m_localPosition;
+		glm::mat4 m_mat;
+		glm::vec3 m_up = glm::vec3(0.0f, 1.0f,  0.0f);
+		glm::vec3 m_front = glm::vec3(0.0f, 0.0f, 1.0f);
+		glm::vec3 m_right = glm::vec3(1.0f, 0.0f, 0.0f);
 
 	public:
 		Transform();
-		Transform(const std::shared_ptr<Shader> &shader, const glm::vec3 &position);
-		Transform(const std::shared_ptr<Shader> &shader);
+		Transform(const glm::vec3 &position);
 		~Transform();
 
 		struct Position &GetPosition();
@@ -79,5 +88,14 @@ namespace Iron
 		void SetPosition(const Position &position);
 		void SetRotation(const Rotation &rotation);
 		void SetScale(const Scale &scale);
+		void SetPosition(const glm::vec3 &position);
+		void SetRotation(const glm::vec3 &rotation);
+		void SetScale(const glm::vec3 &scale);
+
+		const glm::vec3 &Front();
+		const glm::vec3 &Up();
+		const glm::vec3 &Right();
+		void LookAt(const glm::vec3 &lookAt);
+		glm::mat4 &GetMatrix() ;
 	};
 }

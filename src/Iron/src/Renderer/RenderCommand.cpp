@@ -31,10 +31,10 @@ namespace Iron
 
 	void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray> &vertexArr)
 	{
-		Renderer::UseDefaultShader();
 		const std::shared_ptr<Shader> &shader = Renderer::GetDefaultShader();
-		
-		const Camera &mainCamera = Camera::Main();
+		shader->Use();
+
+		Camera &mainCamera = Camera::Main();
 		shader->SetMat4x4("projection", mainCamera.GetProjectionMat());
 		shader->SetMat4x4("view", mainCamera.GetViewMat());
 		
@@ -46,7 +46,7 @@ namespace Iron
 	{
 		shader->Use();
 
-		const Camera& mainCamera = Camera::Main();
+		Camera& mainCamera = Camera::Main();
 		shader->SetMat4x4("projection", mainCamera.GetProjectionMat());
 		shader->SetMat4x4("view", mainCamera.GetViewMat());
 

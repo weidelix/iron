@@ -49,11 +49,11 @@ namespace Iron
 	#define IRON_FATAL(...)
 #endif
 
-// Disable using internal logging for client 
-#ifndef IRON_BUILD_DLL
-	#define IRON_CORE_INFO(...)
-	#define IRON_CORE_TRACE(...)
-	#define IRON_CORE_WARN(...)
-	#define IRON_CORE_ERROR(...)
-	#define IRON_CORE_FATAL(...)
-#endif
+// // Disable using internal logging for client 
+// #ifndef IRON_BUILD_DLL
+// 	#define IRON_CORE_INFO(...)
+// 	#define IRON_CORE_TRACE(...)
+// 	#define IRON_CORE_WARN(...)
+// 	#define IRON_CORE_ERROR(...)
+// 	#define IRON_CORE_FATAL(...)
+// #endif

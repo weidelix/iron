@@ -9,6 +9,8 @@
 #include "Event/Event.hpp"
 #include "Event/MouseEvent.hpp"
 #include "Renderer/GameObject.hpp"
+#include "Renderer/Camera.hpp"
+#include "Time.hpp"
 
 //-------------------- EntryPoint -----------------------//
 

@@ -34,11 +34,17 @@ namespace Iron
 		Compile(sources);
 		glUseProgram(m_RendererId);
 
-		// res/Shader/basic.glsl
 		auto lastSlash = path.find_last_of("/\\");
-		lastSlash = (lastSlash == std::string::npos) ? 0 : lastSlash + 1;
+		lastSlash = (lastSlash == std::string::npos) 
+			? 0 
+			: lastSlash + 1;
+
 		auto lastDot = path.rfind(".");
-		auto count = (lastDot == std::string::npos) ? file.size() - lastSlash : lastDot - lastSlash;
+
+		auto count = (lastDot == std::string::npos) 
+			? file.size() - lastSlash 
+			: lastDot - lastSlash;
+
 		m_name = file.substr(lastSlash, count);
 		IRON_CORE_INFO(m_name.c_str()); 
 	}
@@ -52,7 +58,8 @@ namespace Iron
 		glUseProgram(m_RendererId);
 	}
 
-	Shader::Shader(const std::string &name, const std::string &vertexSource, const std::string &fragmentSource)
+	Shader::Shader(const std::string &name, const std::string &vertexSource, 
+								 const std::string &fragmentSource)
 		: m_name(name)
 	{
 		std::unordered_map<GLenum, std::string> sources;
@@ -234,8 +241,7 @@ namespace Iron
 
 	void Shader::SetMat4x4(const char* name, const glm::mat4& matrix)
 	{
-		// auto uniformLoc = glGetUniformLocation(m_RendererId, name);
-		// GlCall(glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(matrix)));
+		glUniformMatrix4fv(glGetUniformLocation(m_RendererId, name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void Shader::Use() const
@@ -287,7 +293,7 @@ namespace Iron
 		return Get(shader->GetName());
 	}
 	
-	std::shared_ptr<Shader>& ShaderLibrary::Get(const std::string &name)
+	std::shared_ptr<Shader> &ShaderLibrary::Get(const std::string &name)
 	{
 		IRON_CORE_ASSERT(Exists(name), "Shader does not exist");
 		return m_shaderLib[name];

@@ -28,6 +28,7 @@ namespace Iron
 		virtual unsigned int GetHeight() = 0;
 
 		virtual void SetEventCallback(const std::function<void(Event&)> callback) = 0;
+		virtual void SetInternalEventCallback(const std::function<void(Event&)> callback) = 0;
 		virtual void SetVSync(bool val) = 0;
 		virtual GLFWwindow* GetWindowPointer() = 0;
 		virtual std::vector<Event*>* GetEvents() = 0;

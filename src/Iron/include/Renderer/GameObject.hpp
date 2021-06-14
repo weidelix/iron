@@ -17,7 +17,7 @@ namespace Iron
 	{
 	private:
 		std::shared_ptr<VertexArray> m_vertexArray;
-		std::shared_ptr<Shader> m_shader;
+		const std::shared_ptr<Shader>& m_shader;
 		Mesh m_mesh;
 		Transform m_transform;
 
@@ -25,7 +25,7 @@ namespace Iron
 		GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count);
 	
 	public:
-		GameObject(Mesh &mesh);
+		// GameObject(Mesh &mesh);
 		~GameObject();
 		
 		void Init();

@@ -69,6 +69,7 @@ namespace Iron
 	
 	public:
 		inline int GetMouseEvent() { return m_button; } 
+
 		EVENT_CLASS_CATEGORY(MouseCategory | MouseButtonCategory);
 	};
 
@@ -81,7 +82,7 @@ namespace Iron
 
 		~MouseButtonPressedEvent() override { }
 
-		EVENT_CLASS_TYPE(EventType::MouseClick)
+		EVENT_CLASS_TYPE(EventType::MouseClick);
 	};
 
 	class IRON_API MouseButtonReleasedEvent : public MouseButtonEvent
@@ -93,6 +94,6 @@ namespace Iron
 
 		~MouseButtonReleasedEvent() override { }
 
-		EVENT_CLASS_TYPE(EventType::MouseClick)
+		EVENT_CLASS_TYPE(EventType::MouseRelease);
 	};
 }
