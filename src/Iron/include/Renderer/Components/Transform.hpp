@@ -4,51 +4,10 @@
 #include "Core.hpp"
 #include "Renderer/Shader.hpp"
 #include "gtx/quaternion.hpp"
+#include "gtx/euler_angles.hpp"
 
 namespace Iron
 {
-	// struct IRON_API Position
-	// {
-	// private:
-	// 	glm::vec3 m_position;
-
-	// public:
-	// 	Position() = default;
-	// 	Position(const glm::vec3 &position);
-	// 	void SetPosition(const glm::vec3 &position);
-	// 	void SetPosition(const Position &position);
-	// 	void MoveByX(float x);
-	// 	void MoveByY(float y);
-	// 	void MoveByZ(float z);
-	// 	const glm::vec3 &GetPosition() const;
-	// };
-
-	// struct IRON_API Scale
-	// {
-	// private:
-	// 	glm::vec3 m_scale;
-
-	// public:
-	// 	Scale() = default;
-	// 	Scale(const glm::vec3 &scale);
-	// 	void SetScale(const glm::vec3& scale);
-	// 	void SetScale(const Scale &scale);
-	// 	void ScaleByX(float x);
-	// 	void ScaleByY(float y);
-	// 	void ScaleByZ(float z);
-	// 	const glm::vec3 &GetScale() const;
-	// };
-
-	// struct IRON_API LocalPosition
-	// {
-	// private:
-	// 	const glm::vec3 m_localPosition;
-	
-	// public:
-	// 	LocalPosition(const glm::vec3 &localPos);
-	// 	const glm::vec3 &GetLocalPosition() const;
-	// };
-
 	struct Vector3 
 	{
 	private:
