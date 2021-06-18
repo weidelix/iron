@@ -28,30 +28,26 @@ namespace Iron
 	void Position::MoveByY(float y) { m_position.y+=y; }
 	void Position::MoveByZ(float z) { m_position.z+=z; }
 
-	const glm::vec3 &Rotation::GetRotation() const
+	const glm::quat &Quaternion::GetQuaternion() const
 	{
 		return m_rotation;
 	}
 
-	Rotation::Rotation(const glm::vec3 &rotation)
+	Quaternion::Quaternion(const glm::vec3 &rotation)
 		:m_rotation(rotation)
 	{
 
 	}
 
-	void Rotation::SetRotation(const glm::vec3 &rotation)
+	void Quaternion::SetRotation(const glm::quat &rotation)
 	{
 		m_rotation = rotation;
 	}
 
-	void Rotation::SetRotation(const Rotation &rotation)
+	void Quaternion::SetRotation(const Quaternion &rotation)
 	{
 		m_rotation = rotation.m_rotation;
 	}
-
-	void Rotation::RotateByX(float x) { m_rotation.x+=x; }
-	void Rotation::RotateByY(float y) { m_rotation.y+=y; }
-	void Rotation::RotateByZ(float z) { m_rotation.z+=z; }
 
 	Scale::Scale(const glm::vec3 &scale)
 		:m_scale(scale)
@@ -89,71 +85,97 @@ namespace Iron
 		return m_localPosition;
 	}
 
+	glm::vec3 Quaternion::ToEuler(glm::quat &quat) 
+	{
+		return glm::eulerAngles(quat);
+	}
+
+	glm::quat Quaternion::ToQuat(glm::vec3 &euler) 
+	{
+		return glm::quat(euler);
+	}
+
 	Transform::Transform()
 		:m_position(glm::vec3(0, 0, 0)),
 		 m_rotation(glm::vec3(0, 0, 0)),
 		 m_scale(glm::vec3(1, 1, 1)),
-		 m_mat(1.0)
+		 m_model(1.0)
 	{
-		m_front = glm::normalize(m_position.GetPosition() - m_front);
-		m_right = glm::normalize(cross(m_up, m_front));
-		m_up    = glm::cross(m_front, m_right);
+		
 	}
 
-
-	Transform::~Transform()
-	{
-	}
+	Transform::~Transform() { }
 	
 	void Transform::SetPosition(const struct Position &position)
 	{
 		m_position = position;
-		m_mat = glm::translate(glm::mat4(1.0), position.GetPosition());
 
-		// glm::vec3 pos = m_mat * m_position.
-		// IRON
+		m_model = glm::translate(glm::mat4(1.0), m_position.GetPosition());
+		m_model = m_model * glm::toMat4(m_rotation.GetQuaternion());
+		m_model = glm::scale(m_model, m_scale.GetScale());
 
-		// m_front = glm::normalize(m_position.GetPosition() - m_front);
-		// m_right = glm::normalize(cross(m_up, m_front));
-		// m_up    = glm::cross(m_front, m_right);
+		m_right = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_up    = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_front = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 
 	void Transform::SetPosition(const glm::vec3 &position)
 	{
 		m_position.SetPosition(position);
-		m_mat = glm::translate(glm::mat4(1.0), position);
 
-		// m_front = glm::normalize(m_position.GetPosition() - m_front);
-		// m_right = glm::normalize(cross(m_up, m_front));
-		// m_up    = glm::cross(m_front, m_right);
+		m_model = glm::translate(glm::mat4(1.0), m_position.GetPosition());
+		m_model = m_model * glm::toMat4(m_rotation.GetQuaternion());
+		m_model = glm::scale(m_model, m_scale.GetScale());
+
+		m_right = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_up    = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_front = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 
-	void Transform::SetRotation(const struct Rotation &rotation)
+	void Transform::SetRotation(const struct Quaternion &rotation)
 	{
-		m_rotation = rotation;		
-		m_mat = glm::rotate(m_mat, m_rotation.GetRotation().x, { 1.0f, 0.0f, 0.0f });
-		m_mat = glm::rotate(m_mat, m_rotation.GetRotation().y, { 0.0f, 1.0f, 0.0f });
-		m_mat = glm::rotate(m_mat, m_rotation.GetRotation().z, { 0.0f, 0.0f, 1.0f });
+		m_rotation = rotation;
+		
+		m_model = glm::translate(glm::mat4(1.0), m_position.GetPosition());
+		m_model = m_model * glm::toMat4(m_rotation.GetQuaternion());
+		m_model = glm::scale(m_model, m_scale.GetScale());
+
+		m_right = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_up    = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_front = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 
-	void Transform::SetRotation(const glm::vec3 &rotation)
+	void Transform::SetRotation(const glm::quat &rotation)
 	{
 		m_rotation.SetRotation(rotation);
-		m_mat = glm::rotate(m_mat, rotation.x, { 1.0f, 0.0f, 0.0f });
-		m_mat = glm::rotate(m_mat, rotation.y, { 0.0f, 1.0f, 0.0f });
-		m_mat = glm::rotate(m_mat, rotation.z, { 0.0f, 0.0f, 1.0f });
+		
+		m_model = glm::translate(glm::mat4(1.0), m_position.GetPosition());
+		m_model = m_model * glm::toMat4(m_rotation.GetQuaternion());
+		m_model = glm::scale(m_model, m_scale.GetScale());
+
+		m_right = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(1.0f, 0.0f, 0.0f));
+		m_up    = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 1.0f, 0.0f));
+		m_front = glm::rotate(m_rotation.GetQuaternion(), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		m_eulerAngle = glm::eulerAngles(m_rotation.GetQuaternion());
 	}
 	
 	void Transform::SetScale(const struct Scale &scale)
 	{
 		m_scale = scale;
-		m_mat = glm::scale(m_mat, m_scale.GetScale());
+		
+		m_model = glm::translate(glm::mat4(1.0), m_position.GetPosition());
+		m_model = m_model * glm::toMat4(m_rotation.GetQuaternion());
+		m_model = glm::scale(m_model, m_scale.GetScale());
 	}
 
 	void Transform::SetScale(const glm::vec3 &scale)
 	{
 		m_scale.SetScale(scale);
-		m_mat = glm::scale(m_mat, scale);
+		
+		m_model = glm::translate(glm::mat4(1.0), m_position.GetPosition());
+		m_model = m_model * glm::toMat4(m_rotation.GetQuaternion());
+		m_model = glm::scale(m_model, m_scale.GetScale());
 	}
 
 	struct Position &Transform::GetPosition()
@@ -161,9 +183,14 @@ namespace Iron
 		return m_position;
 	}
 	
-	struct Rotation &Transform::GetRotation()
+	struct Quaternion &Transform::GetRotation()
 	{
 		return m_rotation;
+	}
+
+	glm::vec3 &Transform::GetEulerAngle()
+	{
+		return m_eulerAngle;
 	}
 	
 	struct Scale &Transform::GetScale()
@@ -173,18 +200,22 @@ namespace Iron
 
 	glm::mat4 &Transform::GetMatrix()
 	{
-		return m_mat;
+		return m_model;
 	}
 
 	void Transform::LookAt(const glm::vec3 &lookAt)
 	{
-		glm::vec3 up(0.0f, 1.0f, 0.0f);
 		auto &pos = m_position.GetPosition();
-		m_mat = glm::lookAt(pos, pos + lookAt, up);
 
-		m_right = glm::vec3(m_mat[0][0], m_mat[1][0], m_mat[2][0]);
-		m_up    = glm::vec3(m_mat[0][1], m_mat[1][1], m_mat[2][1]);
-		m_front = glm::vec3(m_mat[0][2], m_mat[1][2], m_mat[2][2]);
+		glm::mat4 mat = glm::lookAt(pos, pos + lookAt, { 0.0f, 1.0f, 0.0f });
+
+		m_model = glm::inverse(mat);
+		m_rotation.SetRotation(m_model);
+		m_eulerAngle = glm::eulerAngles(m_rotation.GetQuaternion());
+
+		m_front = glm::vec3(-mat[0][2], -mat[1][2], -mat[2][2]);
+		m_up    = glm::vec3( mat[0][1],  mat[1][1],  mat[2][1]);
+		m_right = glm::vec3(-mat[0][0], -mat[1][0], -mat[2][0]);
 	}
 	
 	const glm::vec3 &Transform::Front() 

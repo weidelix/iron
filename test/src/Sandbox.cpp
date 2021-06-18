@@ -6,30 +6,25 @@ using namespace Iron;
 class Sandbox : public Application
 {
 public:
-	GameObject plane1 = GameObject::CreatePrimitive(Primitives::Plane);
-	GameObject plane2 = GameObject::CreatePrimitive(Primitives::Plane);
+	GameObject plane = GameObject::CreatePrimitive(Primitives::Plane);
+	glm::vec3 rot = glm::vec3(0.0f, 0.0f, 0.0f);
 
-	Rotation rot1 = Rotation({ 0.01f, 0.02f, 0.01f });
-	Rotation rot2 = Rotation({ 0.03f, 0.03f, 0.03f });
 	// Runs code on start
 	void Start() override 
 	{
-		// plane1.GetTransform().SetPosition({1.0, 1.0, 1.0});
+
 	}
 
 	// Runs code every frame
 	void Update() override
 	{
-		// plane1.GetTransform().SetRotation(rot1);
-		plane1.Draw();
-		// plane2.GetTransform().SetRotation(rot2);
-		// plane2.Draw();
+		plane.Draw();
 	}
 
 	void OnEvent(Event &e) override
 	{
 		const float speed = 3.0f * Time::DeltaTime();
-		Transform &transform = plane1.GetTransform();
+		Transform &transform = plane.GetTransform();
 		Position &pos = transform.GetPosition();
     
 		if (e.GetEventType() == EventType::KeyPress)
@@ -37,18 +32,23 @@ public:
 			KeyPressEvent &event = (KeyPressEvent&)e;
 
 			if (event.GetKeyEvent() == Key::W)
-				pos.MoveByZ(speed);
+				pos.SetPosition(pos.GetPosition() + transform.Front() * speed);
 			else if (event.GetKeyEvent() == Key::S)
-				pos.MoveByZ(-speed);
+				pos.SetPosition(pos.GetPosition() - transform.Front() * speed);
 			else if (event.GetKeyEvent() == Key::A)
-				pos.MoveByX(-speed);
+				pos.SetPosition(pos.GetPosition() - transform.Right() * speed);
 			else if (event.GetKeyEvent() == Key::D)
-				pos.MoveByX(speed);
+				pos.SetPosition(pos.GetPosition() + transform.Right() * speed);
 			else if (event.GetKeyEvent() == Key::Up)
-				pos.MoveByY(speed);
+				pos.SetPosition(pos.GetPosition() + transform.Up() * speed);
 			else if (event.GetKeyEvent() == Key::Down)
-				pos.MoveByY(-speed);
+				pos.SetPosition(pos.GetPosition() - transform.Up() * speed);
+			else if (event.GetKeyEvent() == Key::Left)
+				rot.x += 0.01f;
+			else if (event.GetKeyEvent() == Key::Right)
+				rot.x -= 0.01f;
 
+			plane.GetTransform().SetRotation(Quaternion::ToQuat(rot));
 			transform.SetPosition(pos);
 		}
 	}

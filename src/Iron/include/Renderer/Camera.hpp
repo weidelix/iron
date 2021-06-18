@@ -28,7 +28,7 @@ namespace Iron
 
 		static Camera &Main();
 		const glm::mat4 &GetProjectionMat();
-		const glm::mat4 &GetViewMat();
+		const glm::mat4 GetViewMat();
 		Transform &GetTransform();
 		void SetAsMain();
 		void SetFOV(float fov);

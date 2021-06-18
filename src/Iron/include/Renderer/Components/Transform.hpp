@@ -3,6 +3,7 @@
 #include "pch.hpp"
 #include "Core.hpp"
 #include "Renderer/Shader.hpp"
+#include "gtx/quaternion.hpp"
 
 namespace Iron
 {
@@ -21,21 +22,19 @@ namespace Iron
 		void MoveByZ(float z);
 		const glm::vec3 &GetPosition() const;
 	};
-
-	struct IRON_API Rotation
+	class IRON_API Quaternion
 	{
 	private:
-		glm::vec3 m_rotation;
+		glm::quat m_rotation;
 
 	public:
-		Rotation() = default;
-		Rotation(const glm::vec3 &rotation);
-		void SetRotation(const glm::vec3 &rotation);
-		void SetRotation(const Rotation &rotation);
-		void RotateByX(float x);
-		void RotateByY(float y);
-		void RotateByZ(float z);
-		const glm::vec3 &GetRotation() const;
+		Quaternion() = default;
+		Quaternion(const glm::vec3 &rotation);
+		void SetRotation(const glm::quat &rotation);
+		void SetRotation(const Quaternion &rotation);
+		const glm::quat &GetQuaternion() const;
+		static glm::vec3 ToEuler(glm::quat &quat);
+		static glm::quat ToQuat(glm::vec3 &euler);
 	};
 
 	struct IRON_API Scale
@@ -68,13 +67,14 @@ namespace Iron
 	{
 	private:
 		struct Position m_position;
-		struct Rotation m_rotation;
+		struct Quaternion m_rotation;
 		struct Scale m_scale;
+		glm::vec3 m_eulerAngle;
 		//struct LocalPosition m_localPosition;
-		glm::mat4 m_mat;
+		glm::mat4 m_model;
 		glm::vec3 m_up = glm::vec3(0.0f, 1.0f,  0.0f);
 		glm::vec3 m_front = glm::vec3(0.0f, 0.0f, 1.0f);
-		glm::vec3 m_right = glm::vec3(1.0f, 0.0f, 0.0f);
+		glm::vec3 m_right = glm::vec3(-1.0f, 0.0f, 0.0f);
 
 	public:
 		Transform();
@@ -82,14 +82,15 @@ namespace Iron
 		~Transform();
 
 		struct Position &GetPosition();
-		struct Rotation &GetRotation();
+		struct Quaternion &GetRotation();
+		glm::vec3 &GetEulerAngle();
 		struct Scale &GetScale();
 
 		void SetPosition(const Position &position);
-		void SetRotation(const Rotation &rotation);
-		void SetScale(const Scale &scale);
 		void SetPosition(const glm::vec3 &position);
-		void SetRotation(const glm::vec3 &rotation);
+		void SetRotation(const Quaternion &rotation);
+		void SetRotation(const glm::quat &rotation);
+		void SetScale(const Scale &scale);
 		void SetScale(const glm::vec3 &scale);
 
 		const glm::vec3 &Front();
