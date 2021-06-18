@@ -13,12 +13,12 @@ namespace Iron
 		m_viewportCamera.SetAsMain();
 		m_viewportCamera.GetTransform().SetPosition({0.0, 0.0, 3.0});
 
-		glm::vec3 direction;
-		direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-		direction.y = sin(glm::radians(m_pitch));
-		direction.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+		Vector3 direction;
+		direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+		direction.SetY(sin(glm::radians(m_pitch)));
+		direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
 
-		m_viewportCamera.GetTransform().LookAt(glm::normalize(direction));
+		m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
 	}
 
 	void Viewport::OnDetach()
@@ -61,17 +61,17 @@ namespace Iron
 			yoffset *= sensitivity * Time::DeltaTime();
 
 			Transform &transform = m_viewportCamera.GetTransform();
-			Position &pos = transform.GetPosition();
+			Vector3 &pos = transform.GetPosition();
 			
 			if (xoffset > m_lastX)
-				pos.SetPosition(pos.GetPosition() + xoffset * transform.Right());
+				pos = pos + transform.Right() * xoffset;
 			else if (xoffset < m_lastX)
-				pos.SetPosition(pos.GetPosition() - xoffset * transform.Right());
+				pos = pos - transform.Right() * xoffset;
 
 			if (yoffset < m_lastY)
-				pos.SetPosition(pos.GetPosition() - yoffset * transform.Up());
+				pos = pos - transform.Up() * yoffset;
 			else if (yoffset > m_lastY)
-				pos.SetPosition(pos.GetPosition() + yoffset * transform.Up());
+				pos = pos + transform.Up() * yoffset;
 
 			transform.SetPosition(pos);
 		}
@@ -104,12 +104,12 @@ namespace Iron
 			if(m_pitch < -89.0f)
 					m_pitch = -89.0f;
 
-			glm::vec3 direction;
-			direction.x = cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
-			direction.y = sin(glm::radians(m_pitch));
-			direction.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
+			Vector3 direction;
+			direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+			direction.SetY(sin(glm::radians(m_pitch)));
+			direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
 
-			m_viewportCamera.GetTransform().LookAt(glm::normalize(direction));
+			m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
 		}
 		return true;
 	}
@@ -118,13 +118,13 @@ namespace Iron
 	{
 		float offset = event.GetMouseYOffset(); 
 		Transform &transform = m_viewportCamera.GetTransform();
-		Position &pos = transform.GetPosition();
+		Vector3 &pos = transform.GetPosition();
 
 		if(offset > 0)
-			pos.SetPosition(pos.GetPosition() - transform.Front() * event.GetMouseYOffset());	
+			pos = pos - transform.Front() * event.GetMouseYOffset();	
 		
 		if(offset < 0)
-			pos.SetPosition(pos.GetPosition() - transform.Front() * event.GetMouseYOffset());	
+			pos = pos - transform.Front() * event.GetMouseYOffset();	
 		
 		transform.SetPosition(pos);
 		return true;

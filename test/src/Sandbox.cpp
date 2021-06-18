@@ -7,12 +7,15 @@ class Sandbox : public Application
 {
 public:
 	GameObject plane = GameObject::CreatePrimitive(Primitives::Plane);
-	glm::vec3 rot = glm::vec3(0.0f, 0.0f, 0.0f);
+	Vector3 rot = Vector3(0.0f, 0.0f, 0.0f);
 
 	// Runs code on start
 	void Start() override 
 	{
-
+		float a = 0.0;
+		float &b = a;
+		b = 12;
+		IRON_CORE_INFO(a);
 	}
 
 	// Runs code every frame
@@ -25,28 +28,28 @@ public:
 	{
 		const float speed = 3.0f * Time::DeltaTime();
 		Transform &transform = plane.GetTransform();
-		Position &pos = transform.GetPosition();
+		Vector3 &pos = transform.GetPosition();
     
 		if (e.GetEventType() == EventType::KeyPress)
 		{
 			KeyPressEvent &event = (KeyPressEvent&)e;
 
 			if (event.GetKeyEvent() == Key::W)
-				pos.SetPosition(pos.GetPosition() + transform.Front() * speed);
+				pos = pos + transform.Front() * speed;
 			else if (event.GetKeyEvent() == Key::S)
-				pos.SetPosition(pos.GetPosition() - transform.Front() * speed);
+				pos = pos - transform.Front() * speed;
 			else if (event.GetKeyEvent() == Key::A)
-				pos.SetPosition(pos.GetPosition() - transform.Right() * speed);
+				pos = pos - transform.Right() * speed;
 			else if (event.GetKeyEvent() == Key::D)
-				pos.SetPosition(pos.GetPosition() + transform.Right() * speed);
+				pos = pos + transform.Right() * speed;
 			else if (event.GetKeyEvent() == Key::Up)
-				pos.SetPosition(pos.GetPosition() + transform.Up() * speed);
+				pos = pos + transform.Up() * speed;
 			else if (event.GetKeyEvent() == Key::Down)
-				pos.SetPosition(pos.GetPosition() - transform.Up() * speed);
+				pos = pos - transform.Up() * speed;
 			else if (event.GetKeyEvent() == Key::Left)
-				rot.x += 0.01f;
+				rot.SetX(rot.GetX() + 0.01f);
 			else if (event.GetKeyEvent() == Key::Right)
-				rot.x -= 0.01f;
+				rot.SetX(rot.GetX() - 0.01f);
 
 			plane.GetTransform().SetRotation(Quaternion::ToQuat(rot));
 			transform.SetPosition(pos);
