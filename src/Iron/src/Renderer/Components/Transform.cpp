@@ -11,6 +11,10 @@ namespace Iron
 		: m_vec(0.0f, 0.0f, 0.0f)
 	{ }
 
+	Vector3::Vector3(float v)
+		: m_vec(v, v, v)
+	{ }
+
 	Vector3::Vector3(const Vector3 &vec)
 		: m_vec(vec.m_vec)
 	{ }
@@ -22,6 +26,54 @@ namespace Iron
 	Vector3 Vector3::Normalize(const Vector3 &vec)
 	{
 		return Vector3(glm::normalize(vec.m_vec));
+	}
+
+	Vector3 &Vector3::operator+= (const Vector3 &rhs)
+	{
+		m_vec += rhs.m_vec;
+		return *this;
+	}
+
+	Vector3 &Vector3::operator-= (const Vector3 &rhs)
+	{
+		m_vec -= rhs.m_vec;
+		return *this;
+	}
+
+	Vector3 &Vector3::operator*= (const Vector3 &rhs)
+	{
+		m_vec *= rhs.m_vec;
+		return *this;
+	}
+
+	Vector3 &Vector3::operator/= (const Vector3 &rhs)
+	{
+		m_vec /= rhs.m_vec;
+		return *this;
+	}
+
+	Vector3 operator+ (Vector3 lhs, const Vector3 &rhs)
+	{
+		lhs.m_vec += rhs.m_vec;
+		return lhs;
+	}
+
+	Vector3 operator- (Vector3 lhs,const Vector3 &rhs)
+	{
+		lhs.m_vec -= rhs.m_vec;
+		return lhs;
+	}
+
+	Vector3 operator* (Vector3 lhs, const Vector3 &rhs)
+	{
+		lhs.m_vec *= rhs.m_vec;
+		return lhs;
+	}
+
+	Vector3 operator/ (Vector3 lhs, const Vector3 &rhs)
+	{
+		lhs.m_vec /= rhs.m_vec;
+		return lhs;
 	}
 
 	Quaternion::Quaternion(const Vector3 &rotation)
@@ -42,7 +94,7 @@ namespace Iron
 
 	Quaternion Quaternion::ToQuat(const Vector3 &euler) 
 	{
-		return Quaternion(euler.m_vec);
+		return Quaternion(Vector3(euler.m_vec));
 	}
 
 	Transform::Transform()
@@ -65,9 +117,9 @@ namespace Iron
 		m_model = m_model * glm::toMat4(rotation.m_rotation);
 		m_model = glm::scale(m_model, scale.m_vec);
 
-		m_right = glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f));
-		m_up    = glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
-		m_front = glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
+		m_up    = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f)));
+		m_front = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f)));
 	}
 
 	void Transform::SetRotation(const struct Quaternion &rotation)
@@ -78,9 +130,9 @@ namespace Iron
 		m_model = m_model * glm::toMat4(rotation.m_rotation);
 		m_model = glm::scale(m_model, scale.m_vec);
 
-		m_right = glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f));
-		m_up    = glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
-		m_front = glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
+		m_up    = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f)));
+		m_front = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f)));
 	}
 	
 	void Transform::SetScale(const struct Vector3 &scale)
