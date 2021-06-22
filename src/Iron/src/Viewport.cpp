@@ -11,14 +11,16 @@ namespace Iron
 	void Viewport::OnAttach()
 	{
 		m_viewportCamera.SetAsMain();
-		m_viewportCamera.GetTransform().SetPosition(Vector3(0.0, 0.0, 3.0));
+		m_viewportCamera.GetTransform().SetPosition(Vector3(0.0f, 0.0f, 3.0f));
+		m_viewportCamera.GetTransform().SetRotation(Vector3(0.0f));
+		// m_viewportCamera.GetTransform().LookAt(Vector3(0.0f) - m_viewportCamera.GetTransform().GetPosition());
 
-		Vector3 direction;
-		direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
-		direction.SetY(sin(glm::radians(m_pitch)));
-		direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+		// Vector3 direction;
+		// direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+		// direction.SetY(sin(glm::radians(m_pitch)));
+		// direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
 
-		m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
+		// m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
 	}
 
 	void Viewport::OnDetach()

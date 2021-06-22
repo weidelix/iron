@@ -53,7 +53,7 @@ public:
 	}
 };
 
-// Define "Iron::CreateApplication" method that returns an object that inherits from an "Application" class
+// Define "Iron::CreateApplication" method that returns an object that inherits from the Application class
 Iron::Application* Iron::CreateApplication()
 {
 	IRON_INFO("Iron Engine v{}", IRON_VERSION);

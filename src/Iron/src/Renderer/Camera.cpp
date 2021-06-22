@@ -16,10 +16,10 @@ namespace Iron
 	}
 
 	// TODO : Return reference?
-	const glm::mat4 Camera::GetViewMat() 
+	const glm::mat4 Camera::GetViewMat()
 	{
 		return glm::inverse(m_view);
-	} 
+	}
 
 	Transform &Camera::GetTransform() {
 		return m_transform;

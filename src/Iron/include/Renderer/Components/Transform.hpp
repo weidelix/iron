@@ -20,6 +20,7 @@ namespace Iron
 	private:
 		friend class Transform;
 		friend class Quaternion;
+		friend class Camera;
 
 		glm::vec3 m_vec;
 		explicit Vector3(const glm::vec3 &vec);
@@ -102,6 +103,7 @@ namespace Iron
 	{
 	private:
 		friend class Transform;
+		friend class Camera;
 		glm::quat m_rotation;
 		Quaternion(glm::quat &quat)
 		{
