@@ -31,21 +31,21 @@ namespace Iron
 		m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);
 	}
 
-	void Camera::SetNearPlane(float near)
+	void Camera::SetNearPlane(float nearPlane)
 	{
-		m_near = near;		
-		m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);
+		m_near = nearPlane;
+		m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);	
 	}
 
-	void Camera::SetFarPlane(float far)
+	void Camera::SetFarPlane(float farPlane)
 	{
-		m_far = far;		
+		m_far = farPlane;
 		m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);
 	}
 
 	void Camera::SetAspectRatio(float ratio)
 	{
-		m_aspectRatio = ratio;		
+		m_aspectRatio = ratio;
 		m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);
 	}
 

@@ -64,9 +64,9 @@ namespace Iron
 			Vector3 &pos = transform.GetPosition();
 			
 			if (xoffset > m_lastX)
-				pos = pos + transform.Right() * xoffset;
-			else if (xoffset < m_lastX)
 				pos = pos - transform.Right() * xoffset;
+			else if (xoffset < m_lastX)
+				pos = pos + transform.Right() * xoffset;
 
 			if (yoffset < m_lastY)
 				pos = pos - transform.Up() * yoffset;

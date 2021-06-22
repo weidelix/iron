@@ -43,9 +43,9 @@ public:
 			else if (event.GetKeyEvent() == Key::Down)
 				pos = pos - transform.Up() * speed;
 			else if (event.GetKeyEvent() == Key::Left)
-				rot.SetX(rot.GetX() + 0.01f);
+				rot.SetY(rot.GetY() + 0.01f);
 			else if (event.GetKeyEvent() == Key::Right)
-				rot.SetX(rot.GetX() - 0.01f);
+				rot.SetY(rot.GetY() - 0.01f);
 
 			plane.GetTransform().SetRotation(Quaternion::ToQuat(rot));
 			transform.SetPosition(pos);

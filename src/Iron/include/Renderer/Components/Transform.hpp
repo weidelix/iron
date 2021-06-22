@@ -15,7 +15,7 @@ using DisableIf = typename std::enable_if<!Condition::value, T>::type;
 
 namespace Iron
 {
-	struct Vector3 
+	struct IRON_API Vector3 
 	{
 	private:
 		friend class Transform;
@@ -45,57 +45,57 @@ namespace Iron
 		Vector3 &operator/= (const Vector3 &rhs);
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator+ (const Vector3 &lhs, const T &rhs)
+		friend IRON_API Vector3 operator+ (const Vector3 &lhs, const T &rhs)
 		{
 			return Vector3(lhs.m_vec + rhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator+ (const T &lhs, const Vector3 &rhs)
+		friend IRON_API Vector3 operator+ (const T &lhs, const Vector3 &rhs)
 		{
 			return Vector3(rhs.m_vec + lhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator- (const Vector3 &lhs, const T &rhs)
+		friend IRON_API Vector3 operator- (const Vector3 &lhs, const T &rhs)
 		{
 			return Vector3(lhs.m_vec - rhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator- (const T &lhs, const Vector3 &rhs)
+		friend IRON_API Vector3 operator- (const T &lhs, const Vector3 &rhs)
 		{
 			return Vector3(rhs.m_vec - lhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator* (const Vector3 &lhs, const T &rhs)
+		friend IRON_API Vector3 operator* (const Vector3 &lhs, const T &rhs)
 		{
 			return Vector3(lhs.m_vec * rhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator* (const T &lhs, const Vector3 &rhs)
+		friend IRON_API Vector3 operator* (const T &lhs, const Vector3 &rhs)
 		{
 			return Vector3(rhs.m_vec * lhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator/ (const Vector3 &lhs, const T &rhs)
+		friend IRON_API Vector3 operator/ (const Vector3 &lhs, const T &rhs)
 		{
 			return Vector3(lhs.m_vec / rhs);
 		}
 
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
-		friend Vector3 operator/ (const T &lhs, const Vector3 &rhs)
+		friend IRON_API Vector3 operator/ (const T &lhs, const Vector3 &rhs)
 		{
 			return Vector3(rhs.m_vec / lhs);
 		}
 		
-		friend Vector3 operator+ (Vector3 lhs, const Vector3 &rhs);
-		friend Vector3 operator- (Vector3 lhs, const Vector3 &rhs);
-		friend Vector3 operator* (Vector3 lhs, const Vector3 &rhs);
-		friend Vector3 operator/ (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator+ (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator- (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator* (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator/ (Vector3 lhs, const Vector3 &rhs);
 	};
 
 	class IRON_API Quaternion

@@ -38,7 +38,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set_target_properties(Iron PROPERTIES OUTPUT_NAME "iron")
 		message("Compiler -- Clang")
 		target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux)
-		target_compile_definitions(Iron PUBLIC USE_CLANG)
+		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC  IRON_PLATFORM_LINUX)
 		target_link_libraries(Iron PUBLIC glad
 																PUBLIC imgui
 																PUBLIC glfw3
@@ -57,10 +57,10 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		message("Compiler -- Clang")
-		target_compile_definitions(Iron PUBLIC USE_CLANG)
+		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC  IRON_PLATFORM_WINDOW)
 	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 		message("Compiler -- MSVC")
-		target_compile_definitions(Iron PUBLIC USE_MSVC)
+		target_compile_definitions(Iron PUBLIC USE_MSVC PUBLIC  IRON_PLATFORM_WINDOW)
 	endif()
 
 	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
@@ -72,7 +72,6 @@ endif()
 
 # Add Macro Definitions
 target_compile_definitions(Iron  PUBLIC  STB_IMAGE_IMPLEMENTATION
-											PUBLIC  IRON_PLATFORM_LINUX
 											PRIVATE IRON_BUILD_DLL
 											PUBLIC  ENABLE_ASSERT
 											PUBLIC  IRON_DEBUG)
@@ -93,6 +92,12 @@ add_custom_command(TARGET Iron PRE_BUILD
 									"${CMAKE_SOURCE_DIR}/src/Iron/include/"
 									${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}/Iron/include/)
 
+# Copy include files to bin 
+add_custom_command(TARGET Iron POST_BUILD
+									COMMAND ${CMAKE_COMMAND} -E copy_directory
+									"${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}/"
+									${CMAKE_SOURCE_DIR}/Sandbox/bin/${CONFIG_TYPE}/)
+
 # -------------------------------- SANDBOX -------------------------------- #
 
-add_subdirectory(test/ test/build)
+add_subdirectory(Sandbox/ Sandbox/build)

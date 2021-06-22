@@ -11,10 +11,10 @@ namespace Iron
 	{
 	private:
 		int m_cameraId;
-		float m_aspectRatio = (float)800.0/(float)480.0;
-		float m_fov = 45.0;
-		float m_near = 0.1;
-		float m_far = 100.0;
+		float m_aspectRatio = (float)800.0f/(float)480.0f;
+		float m_fov = 45.0f;
+		float m_near = 0.1f;
+		float m_far = 100.0f;
 		Transform m_transform;
 		glm::mat4 m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);
 		glm::mat4 &m_view = m_transform.GetMatrix();
@@ -32,8 +32,8 @@ namespace Iron
 		Transform &GetTransform();
 		void SetAsMain();
 		void SetFOV(float fov);
-		void SetNearPlane(float near);
-		void SetFarPlane(float far);
+		void SetNearPlane(float neaPlaner);
+		void SetFarPlane(float farPlane);
 		void SetAspectRatio(float ratio);
 		void OnEvent(Event &event);
 	};

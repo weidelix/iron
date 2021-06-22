@@ -117,7 +117,7 @@ namespace Iron
 		m_model = m_model * glm::toMat4(rotation.m_rotation);
 		m_model = glm::scale(m_model, scale.m_vec);
 
-		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
+		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(-1.0f, 0.0f, 0.0f)));
 		m_up    = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f)));
 		m_front = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f)));
 	}
@@ -130,7 +130,7 @@ namespace Iron
 		m_model = m_model * glm::toMat4(rotation.m_rotation);
 		m_model = glm::scale(m_model, scale.m_vec);
 
-		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
+		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(-1.0f, 0.0f, 0.0f)));
 		m_up    = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f)));
 		m_front = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f)));
 	}
