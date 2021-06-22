@@ -35,40 +35,39 @@ target_precompile_headers(Iron PRIVATE ${CMAKE_SOURCE_DIR}/src/Iron/include/pch.
 
 # # Use Linux specific libraries
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-set_target_properties(Iron PROPERTIES OUTPUT_NAME "iron")
-	message("Compiler -- Clang")
-	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux)
-	target_compile_definitions(Iron PUBLIC USE_CLANG)
-	target_link_libraries(Iron PUBLIC glad
-															PUBLIC imgui
-															PUBLIC glfw3
-															PUBLIC dl 
-															PUBLIC GL 
-															PUBLIC X11 
-															PUBLIC pthread)
+	set_target_properties(Iron PROPERTIES OUTPUT_NAME "iron")
+		message("Compiler -- Clang")
+		target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux)
+		target_compile_definitions(Iron PUBLIC USE_CLANG)
+		target_link_libraries(Iron PUBLIC glad
+																PUBLIC imgui
+																PUBLIC glfw3
+																PUBLIC dl 
+																PUBLIC GL 
+																PUBLIC X11 
+																PUBLIC pthread)
 
 # Use Windows specific libraries 
-# elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
+elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
+	set_target_properties(Iron PROPERTIES 
+									ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+									LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+									RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}"
+									OUTPUT_NAME "iron")
 
-# 	set_target_properties(Iron PROPERTIES 
-# 									ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-# 									LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-# 									RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}"
-# 									OUTPUT_NAME "iron")
+	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+		message("Compiler -- Clang")
+		target_compile_definitions(Iron PUBLIC USE_CLANG)
+	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+		message("Compiler -- MSVC")
+		target_compile_definitions(Iron PUBLIC USE_MSVC)
+	endif()
 
-# 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-# 		message("Compiler -- Clang")
-# 		target_compile_definitions(Iron PUBLIC USE_CLANG)
-# 	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-# 		message("Compiler -- MSVC")
-# 		target_compile_definitions(Iron PUBLIC USE_MSVC)
-# 	endif()
-
-# 	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
-# 	target_link_libraries(Iron PUBLIC opengl32
-# 										PUBLIC imgui
-# 										PUBLIC glad
-# 										PUBLIC glfw3)
+	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
+	target_link_libraries(Iron PUBLIC opengl32
+										PUBLIC imgui
+										PUBLIC glad
+										PUBLIC glfw3)
 endif()
 
 # Add Macro Definitions
