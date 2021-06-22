@@ -11,7 +11,7 @@ namespace Iron
 	void Viewport::OnAttach()
 	{
 		m_viewportCamera.SetAsMain();
-		m_viewportCamera.GetTransform().SetPosition({0.0, 0.0, 3.0});
+		m_viewportCamera.GetTransform().SetPosition(Vector3(0.0, 0.0, 3.0));
 
 		Vector3 direction;
 		direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));

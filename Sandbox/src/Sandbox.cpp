@@ -2,7 +2,6 @@
 
 using namespace Iron;
 
-//NOTE: TRY RECONFIGURING PROJECT THEN REBUILDING WHEN NOT WORKING PROPERLY
 class Sandbox : public Application
 {
 public:
@@ -12,10 +11,7 @@ public:
 	// Runs code on start
 	void Start() override 
 	{
-		float a = 0.0;
-		float &b = a;
-		b = 12;
-		IRON_CORE_INFO(a);
+
 	}
 
 	// Runs code every frame
