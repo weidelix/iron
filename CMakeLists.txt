@@ -13,19 +13,16 @@ project(Iron VERSION 1.0)
 configure_file(src/Iron/IronConfig.hpp.in IronConfig.hpp)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-# -------------------------------- DEPENDENCIES -------------------------------- #
-
-file(GLOB IMGUI_SOURCE ${CMAKE_SOURCE_DIR}/vendor/IMGUI/*.cpp)
-add_library(imgui STATIC ${IMGUI_SOURCE})
-
-file(GLOB GLAD_SOURCE ${CMAKE_SOURCE_DIR}/vendor/GLAD/src/*.c)
-add_library(glad STATIC ${GLAD_SOURCE})
-target_include_directories(glad PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLAD/include")
-
 # -------------------------------- PROGRAM -------------------------------- #
 
-file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/Iron/src/*.cpp)
-add_library(Iron SHARED ${SOURCE_FILES})
+set_source_files_properties(${CMAKE_SOURCE_DIR}/vendor/GLAD/src/glad.c PROPERTIES LANGUAGE CXX)
+
+file(GLOB IMGUI_SOURCE ${CMAKE_SOURCE_DIR}/vendor/IMGUI/*.cpp)
+file(GLOB_RECURSE IRON_SOURCE ${CMAKE_SOURCE_DIR}/src/Iron/src/*.cpp)
+
+add_library(Iron SHARED ${IRON_SOURCE} 
+												${IMGUI_SOURCE} 
+												${CMAKE_SOURCE_DIR}/vendor/GLAD/src/glad.c)
 set(CONFIG_TYPE Debug)
 set(IRON_DLL "${CMAKE_SOURCE_DIR}/bin/${CONFIG_TYPE}")
 file(COPY "${CMAKE_BINARY_DIR}/IronConfig.hpp" DESTINATION "${IRON_DLL}/Iron/include")
@@ -74,13 +71,17 @@ target_compile_definitions(Iron  PUBLIC  STB_IMAGE_IMPLEMENTATION
 											PUBLIC  ENABLE_ASSERT
 											PUBLIC  IRON_DEBUG)
 
+# Common shared library
+target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/lib/)
+
 # Include Paths
 target_include_directories(Iron PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLM-0.9.9.8/glm/glm/"
 																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/STB/include/"
 																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/SPDLOG/include/"
 																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/IMGUI/"
-																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLAD/include"
+																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLAD/include/"
 																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLFW/include/"
+																PUBLIC "${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/include/"
 																PUBLIC "${CMAKE_SOURCE_DIR}/src/Iron/include/")
 
 
