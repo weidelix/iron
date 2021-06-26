@@ -45,6 +45,11 @@ namespace Iron
 		Vector3 &operator*= (const Vector3 &rhs);
 		Vector3 &operator/= (const Vector3 &rhs);
 
+		friend IRON_API Vector3 operator+ (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator- (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator* (Vector3 lhs, const Vector3 &rhs);
+		friend IRON_API Vector3 operator/ (Vector3 lhs, const Vector3 &rhs);
+
 		template<typename T, typename = EnableIf<std::is_arithmetic<T>>> 
 		friend IRON_API Vector3 operator+ (const Vector3 &lhs, const T &rhs)
 		{
@@ -92,11 +97,6 @@ namespace Iron
 		{
 			return Vector3(rhs.m_vec / lhs);
 		}
-		
-		friend IRON_API Vector3 operator+ (Vector3 lhs, const Vector3 &rhs);
-		friend IRON_API Vector3 operator- (Vector3 lhs, const Vector3 &rhs);
-		friend IRON_API Vector3 operator* (Vector3 lhs, const Vector3 &rhs);
-		friend IRON_API Vector3 operator/ (Vector3 lhs, const Vector3 &rhs);
 	};
 
 	class IRON_API Quaternion

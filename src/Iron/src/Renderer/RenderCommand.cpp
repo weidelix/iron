@@ -52,5 +52,6 @@ namespace Iron
 
 		vertexArr->Bind();
 		GlCall(glDrawElements(GL_TRIANGLES, vertexArr->GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr));
+		vertexArr->Unbind();
 	}
 }

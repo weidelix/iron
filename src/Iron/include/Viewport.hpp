@@ -15,8 +15,8 @@ namespace Iron
 		glm::vec3 m_lookAt;
 		Camera m_viewportCamera = Camera();
 		float m_lastX, m_lastY;
-		float m_yaw = -90.0f;
-		float m_pitch = 0.0f;
+		float m_yaw = -130.0f;
+		float m_pitch = -33.0f;
 		float m_roll = 0.0f;
 		bool isHoldingRight = false;
 		bool isHoldingLeft = false;

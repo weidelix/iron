@@ -7,7 +7,7 @@ namespace Iron
 	enum Primitives
 	{
 		Plane,
-		Box,
+		Cube,
 		Sphere,
 		Cone,
 		Cylinder
@@ -16,7 +16,6 @@ namespace Iron
 	class IRON_API GameObject
 	{
 	private:
-		std::shared_ptr<VertexArray> m_vertexArray;
 		const std::shared_ptr<Shader>& m_shader;
 		Mesh m_mesh;
 		Transform m_transform;
@@ -25,7 +24,7 @@ namespace Iron
 		GameObject(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count);
 	
 	public:
-		// GameObject(Mesh &mesh);
+		GameObject(const Mesh &mesh);
 		~GameObject();
 		
 		void Init();

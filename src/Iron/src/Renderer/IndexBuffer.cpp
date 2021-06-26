@@ -17,6 +17,17 @@ namespace Iron
 		GlCall(glDeleteBuffers(1, &m_RendererId));
 	}
 
+	void IndexBuffer::SetCount(unsigned int count)
+	{
+		m_Count = count;
+	}
+
+	void IndexBuffer::BufferData(const void* data, unsigned int size) const
+	{
+		Bind();
+    GlCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+	}
+
 	void IndexBuffer::Bind() const
 	{
 		GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId));

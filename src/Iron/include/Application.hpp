@@ -17,7 +17,7 @@ namespace Iron
 		bool isRunning = true;
 		LayerStack m_layerStack;
 		Input m_input;
-		void EventHandler(Event& event);
+		void EventCallback(Event& event);
 	
 	public:
 		Application();

@@ -11,16 +11,15 @@ namespace Iron
 	void Viewport::OnAttach()
 	{
 		m_viewportCamera.SetAsMain();
-		m_viewportCamera.GetTransform().SetPosition(Vector3(0.0f, 0.0f, 3.0f));
-		m_viewportCamera.GetTransform().SetRotation(Vector3(0.0f));
-		// m_viewportCamera.GetTransform().LookAt(Vector3(0.0f) - m_viewportCamera.GetTransform().GetPosition());
+		m_viewportCamera.GetTransform().SetPosition(Vector3(5.0f, 5.0f, 6.0f));
+		m_viewportCamera.GetTransform().LookAt(Vector3(0) - Vector3(5.0f, 5.0f, 6.0f));
 
-		// Vector3 direction;
-		// direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
-		// direction.SetY(sin(glm::radians(m_pitch)));
-		// direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
-
-		// m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
+		Vector3 direction;
+		direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+		direction.SetY(sin(glm::radians(m_pitch)));
+		direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
+			
+		m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
 	}
 
 	void Viewport::OnDetach()
@@ -40,7 +39,8 @@ namespace Iron
 
 	bool Viewport::MouseMoveCallback(MouseMoveEvent &event)
 	{
-		float sensitivity = 0.3f;
+		float panSensitivity = 0.5f;
+		float rotationSensitivity = 0.3f;
 
 		if (isHoldingLeft)
 		{		
@@ -59,8 +59,8 @@ namespace Iron
 			m_lastX = xpos;
 			m_lastY = ypos;
 
-			xoffset *= sensitivity * Time::DeltaTime();
-			yoffset *= sensitivity * Time::DeltaTime();
+			xoffset *= panSensitivity * Time::DeltaTime();
+			yoffset *= panSensitivity * Time::DeltaTime();
 
 			Transform &transform = m_viewportCamera.GetTransform();
 			Vector3 &pos = transform.GetPosition();
@@ -95,8 +95,8 @@ namespace Iron
 			m_lastX = xpos;
 			m_lastY = ypos;
 
-			xoffset *= sensitivity;
-			yoffset *= sensitivity;
+			xoffset *= rotationSensitivity;
+			yoffset *= rotationSensitivity;
 
 			m_yaw += xoffset;
 			m_pitch += yoffset;
@@ -110,7 +110,7 @@ namespace Iron
 			direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
 			direction.SetY(sin(glm::radians(m_pitch)));
 			direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
-
+			
 			m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
 		}
 		return true;

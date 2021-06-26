@@ -5,7 +5,8 @@ using namespace Iron;
 class Sandbox : public Application
 {
 public:
-	GameObject plane = GameObject::CreatePrimitive(Primitives::Plane);
+	GameObject plane2 = GameObject::CreatePrimitive(Primitives::Plane);
+	GameObject plane = GameObject::CreatePrimitive(Primitives::Cube);
 	Vector3 rot = Vector3(0.0f, 0.0f, 0.0f);
 
 	// Runs code on start
@@ -18,6 +19,7 @@ public:
 	void Update() override
 	{
 		plane.Draw();
+		plane2.Draw();
 	}
 
 	void OnEvent(Event &e) override

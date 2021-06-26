@@ -4,33 +4,39 @@
 namespace Iron
 {
 	GameObject::GameObject()
-		:m_vertexArray(std::make_shared<VertexArray>(nullptr, 0, nullptr, 0)),
+		:m_mesh(),
 		 m_shader(Renderer::GetDefaultShader())
 	{ 
 		Init();
 	}
 
+	// TODO : Remove
 	GameObject::GameObject(const void *vertexBuffer, unsigned int size, 
 												 const unsigned int *indexBuffer, unsigned int count)
-		:m_vertexArray(std::make_shared<VertexArray>(vertexBuffer, size, indexBuffer, count)),
+		:m_mesh(),
 		 m_shader(Renderer::GetDefaultShader())
 	{
 		Init();
 	}
 
-	// GameObject::GameObject(Mesh& mesh) :m_mesh(mesh) { }
+	GameObject::GameObject(const Mesh &mesh) 
+		:m_mesh(mesh),
+		 m_shader(Renderer::GetDefaultShader())
+	{
+		Init();
+	}
 
 	GameObject::~GameObject() { }
 
 	void GameObject::Init()
 	{
-		m_vertexArray->Init();		
+		m_mesh.Setup();
 	}
 
 	void GameObject::Draw() 
 	{
 		m_shader->SetMat4x4("model", m_transform.GetMatrix());
-		Renderer::Submit(m_shader, m_vertexArray);
+		Renderer::Submit(m_shader, m_mesh.m_vertexArray);
 	}
 
 	Transform &GameObject::GetTransform()
@@ -54,15 +60,46 @@ namespace Iron
 			case Primitives::Plane:
 			{
 				// This is just a very simple way of drawing a plane in the screen.
-				// TODO : Add transform 
+				std::vector<Vertex> vBuffer = {
+																				{{-1.0f,  0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, {-1.0f, -1.0f}}, 
+																				{{ 1.0f,  0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f, -1.0f}}, 
+																				{{-1.0f,  0.0f,-1.0f}, {0.0f, 0.0f, 1.0f}, {-1.0f,  1.0f}}, 
+																				{{ 1.0f,  0.0f,-1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f,  1.0f}}
+																			};
 
-				float vBuffer[] = { -0.5f, -0.5f, 0.0f, 0.5f, -0.5f, 0.0f, -0.5f,  0.5f, 0.0f,  0.5f,  0.5f, 0.0f };
-				unsigned int iBuffer[] = { 0, 1, 2, 2, 3, 1 };
+				std::vector<unsigned int> iBuffer = { 0, 1, 2, 2, 3, 1 };
+				std::vector<Texture2D> tBuffer = { Texture2D() };
 
-				return GameObject(vBuffer, 12 * sizeof(float), iBuffer, 6);
+				return GameObject(Mesh(vBuffer, iBuffer, tBuffer));
 				break;
 			}
-			case Primitives::Box:
+			// NOTE : Temporary
+			case Primitives::Cube:
+			{
+				std::vector<Vertex> vBuffer = {
+																				{{-1.0f, -1.0f,  1.0f}, {0.0f, 0.0f, 1.0f}, {-1.0f, -1.0f}}, 
+																				{{ 1.0f, -1.0f,  1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f, -1.0f}}, 
+																				{{ 1.0f,  1.0f,  1.0f}, {0.0f, 0.0f, 1.0f}, {-1.0f,  1.0f}}, 
+																				{{-1.0f,  1.0f,  1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f,  1.0f}},
+																				{{-1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f,  1.0f}},
+																				{{ 1.0f, -1.0f, -1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f,  1.0f}},
+																				{{ 1.0f,  1.0f, -1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f,  1.0f}},
+																				{{-1.0f,  1.0f, -1.0f}, {0.0f, 0.0f, 1.0f}, { 1.0f,  1.0f}}
+																			};
+
+				std::vector<unsigned int> iBuffer = { 
+																							0, 1, 2, 2, 3, 0, 
+																							4, 5, 6, 6, 7, 4, 
+																							4, 0, 3, 3, 7, 4,
+																							5, 1, 2, 2, 6, 5,
+																							3, 2, 6, 6, 7, 3,
+																							0, 1, 5, 5, 4, 0
+																						};
+				std::vector<Texture2D> tBuffer = { Texture2D() };
+
+				return GameObject(Mesh(vBuffer, iBuffer, tBuffer));
+				break;
+			}
 			case Primitives::Cone:
 			case Primitives::Cylinder:
 			case Primitives::Sphere:

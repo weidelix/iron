@@ -37,15 +37,15 @@ target_precompile_headers(Iron PRIVATE ${CMAKE_SOURCE_DIR}/src/Iron/include/pch.
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set_target_properties(Iron PROPERTIES OUTPUT_NAME "iron")
 		message("Compiler -- Clang")
-		target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux)
-		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC  IRON_PLATFORM_LINUX)
-		target_link_libraries(Iron PUBLIC glad
-																PUBLIC imgui
-																PUBLIC glfw3
-																PUBLIC dl 
-																PUBLIC GL 
-																PUBLIC X11 
-																PUBLIC pthread)
+		target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux/
+																 PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/linux/)
+		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC IRON_PLATFORM_LINUX)
+		target_link_libraries(Iron PUBLIC glfw3
+															 PUBLIC assimp
+															 PUBLIC dl 
+															 PUBLIC GL 
+															 PUBLIC X11 
+															 PUBLIC pthread)
 
 # Use Windows specific libraries 
 elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
@@ -65,9 +65,7 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
 	target_link_libraries(Iron PUBLIC opengl32
-										PUBLIC imgui
-										PUBLIC glad
-										PUBLIC glfw3)
+														 PUBLIC glfw3)
 endif()
 
 # Add Macro Definitions

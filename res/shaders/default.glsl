@@ -2,6 +2,8 @@
 #version 330 core
 
 layout(location = 0) in vec4 vPosition;
+layout(location = 1) in vec3 vNormal;
+layout(location = 2) in vec2 vTexCoords;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -16,7 +18,13 @@ void main()
 };
 
 #shader fragment
-#version 330 core 
+#version 330 core
+
+uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_diffuse2;
+uniform sampler2D texture_diffuse3;
+uniform sampler2D texture_specular1;
+uniform sampler2D texture_specular2;
 
 in vec4 fColor;
 out vec4 oColor;

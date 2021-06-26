@@ -19,7 +19,7 @@ namespace Iron
 	{
 		IRON_CORE_ASSERT(!m_instance, "[IRON]: An instance already exist!");
 		m_instance = this;
-		m_window->SetEventCallback(std::bind(&Application::EventHandler, this, std::placeholders::_1));
+		m_window->SetEventCallback(std::bind(&Application::EventCallback, this, std::placeholders::_1));
 		m_window->SetInternalEventCallback(std::bind(&Internal::InternalEventsHandler, std::placeholders::_1));
 
 		Renderer::LoadShader(std::string("default"), std::string("../../../res/shaders/default.glsl"));
@@ -53,7 +53,7 @@ namespace Iron
 	}
 
 	// TODO : Change function name to a better one
-	void Application::EventHandler(Event& event)
+	void Application::EventCallback(Event& event)
 	{
 		OnEvent(event);
 		for(auto *layer : m_layerStack)

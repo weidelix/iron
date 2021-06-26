@@ -18,7 +18,7 @@ namespace Iron
 
 	void VertexBuffer::BufferData(const void* data, unsigned int size) const
 	{
-		GlCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererId));
+		Bind();
 		GlCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 	}
 
