@@ -5,3 +5,6 @@
 [submodule "vendor/SPDLOG"]
 	path = vendor/SPDLOG
 	url = https://github.com/gabime/spdlog
+[submodule "ASSIMP"]
+	path = vendor/ASSIMP-5.0.1
+	url = https://github.com/assimp/assimp.git
