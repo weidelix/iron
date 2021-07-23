@@ -8,21 +8,21 @@ namespace Iron
 		:m_vertexBuffer(nullptr, 0),
 		 m_indexBuffer(nullptr, 0)
 	{
-		GlCall(glGenVertexArrays(1, &m_rendererId));
-		GlCall(glBindVertexArray(m_rendererId));
+		GlCall(glGenVertexArrays(1, &m_rendererID));
+		GlCall(glBindVertexArray(m_rendererID));
 	}
 
 	VertexArray::VertexArray(const void *vertexBuffer, unsigned int size, const unsigned int *indexBuffer, unsigned int count)
 		:m_vertexBuffer(vertexBuffer, size),
 		 m_indexBuffer(indexBuffer, count)
 	{
-		GlCall(glGenVertexArrays(1, &m_rendererId));
-		GlCall(glBindVertexArray(m_rendererId));
+		GlCall(glGenVertexArrays(1, &m_rendererID));
+		GlCall(glBindVertexArray(m_rendererID));
 	}
 
 	VertexArray::~VertexArray()
 	{
-		GlCall(glDeleteVertexArrays(1, &m_rendererId));
+		GlCall(glDeleteVertexArrays(1, &m_rendererID));
 	}
 
 	void VertexArray::Init()
@@ -40,7 +40,7 @@ namespace Iron
 
 	void VertexArray::Bind() const
 	{
-		GlCall(glBindVertexArray(m_rendererId));
+		GlCall(glBindVertexArray(m_rendererID));
 	}
 
 	/* static */ 

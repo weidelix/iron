@@ -117,7 +117,7 @@ namespace Iron
 		m_model = m_model * glm::toMat4(rotation.m_rotation);
 		m_model = glm::scale(m_model, scale.m_vec);
 
-		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(-1.0f, 0.0f, 0.0f)));
+		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
 		m_up    = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f)));
 		m_front = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f)));
 	}
@@ -130,7 +130,7 @@ namespace Iron
 		m_model = m_model * glm::toMat4(rotation.m_rotation);
 		m_model = glm::scale(m_model, scale.m_vec);
 
-		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(-1.0f, 0.0f, 0.0f)));
+		m_right = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(1.0f, 0.0f, 0.0f)));
 		m_up    = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 1.0f, 0.0f)));
 		m_front = Vector3(glm::rotate(rotation.m_rotation, glm::vec3(0.0f, 0.0f, 1.0f)));
 	}
@@ -173,15 +173,15 @@ namespace Iron
 	{
 		auto &pos = position.m_vec;
 
-		glm::mat4 mat = glm::lookAt(pos, pos + lookAt.m_vec, { 0.0f, 1.0f, 0.0f });
+		glm::mat4 mat = glm::lookAt(pos, pos - lookAt.m_vec, { 0.0f, 1.0f, 0.0f });
 
 		m_model = glm::inverse(mat);
 		rotation.SetRotation(m_model);
 		eulerAngle = Quaternion::ToEuler(rotation.m_rotation);
 
-		m_front = Vector3(-mat[0][2], -mat[1][2], -mat[2][2]);
-		m_up    = Vector3( mat[0][1],  mat[1][1],  mat[2][1]);
-		m_right = Vector3(-mat[0][0], -mat[1][0], -mat[2][0]);
+		m_front = Vector3(mat[0][2], mat[1][2], mat[2][2]);
+		m_up    = Vector3(mat[0][1], mat[1][1], mat[2][1]);
+		m_right = Vector3(mat[0][0], mat[1][0], mat[2][0]);
 	}
 	
 	const Vector3 &Transform::Front() 

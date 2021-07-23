@@ -22,7 +22,7 @@ namespace Iron
 		m_window->SetEventCallback(std::bind(&Application::EventCallback, this, std::placeholders::_1));
 		m_window->SetInternalEventCallback(std::bind(&Internal::InternalEventsHandler, std::placeholders::_1));
 
-		Renderer::LoadShader(std::string("default"), std::string("../../../res/shaders/default.glsl"));
+		Renderer::LoadShader(std::string("default"), std::string("./../../../res/shaders/default.glsl"));
 	}
 
 	bool Application::Run() 

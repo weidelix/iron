@@ -12,7 +12,7 @@ namespace Iron
 	{
 	private:
 		std::vector<unsigned int> m_shaderIds;
-		unsigned int m_RendererId;
+		unsigned int m_rendererID;
 		std::string m_name;
 
 	public:

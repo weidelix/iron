@@ -8,7 +8,7 @@ namespace Iron
 	class VertexArray
 	{
 	private: 
-		unsigned int m_rendererId;
+		unsigned int m_rendererID;
 		IndexBuffer m_indexBuffer;
 		VertexBuffer m_vertexBuffer;
 
@@ -22,11 +22,11 @@ namespace Iron
 		
 		void Init();
 		void Bind() const;
+		void Unbind() const;
 		void VertexAttribFormat(unsigned int attribIndex, unsigned int componentCount, unsigned int type, unsigned int normalize, unsigned int attribOffset);
 		void SetIndexBuffer(IndexBuffer indexBuffer);
-		IndexBuffer& GetIndexBuffer();
 		void SetVertexBuffer(VertexBuffer vertexBuffer);
+		IndexBuffer& GetIndexBuffer();
 		VertexBuffer& GetVertexBuffer();
-		void Unbind() const;
 	};
 }

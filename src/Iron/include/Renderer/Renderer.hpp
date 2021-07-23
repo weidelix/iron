@@ -20,4 +20,11 @@ namespace Iron
 		static void UseDefaultShader();
 		static std::shared_ptr<Shader> &GetDefaultShader();
 	};
+
+	class ComponentLibrary
+	{
+	// private:
+	// public:
+	// 	void Add()
+	};
 }

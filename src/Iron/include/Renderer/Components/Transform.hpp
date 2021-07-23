@@ -129,7 +129,7 @@ namespace Iron
 		glm::mat4 m_model;
 		Vector3 m_up = Vector3(0.0f, 1.0f,  0.0f);
 		Vector3 m_front = Vector3(0.0f, 0.0f, 1.0f);
-		Vector3 m_right = Vector3(-1.0f, 0.0f, 0.0f);
+		Vector3 m_right = Vector3(1.0f, 0.0f, 0.0f);
 
 	public:
 		struct Vector3 position;

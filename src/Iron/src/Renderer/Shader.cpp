@@ -32,7 +32,7 @@ namespace Iron
 		std::string file = ReadFile(path);
 		std::unordered_map<GLenum, std::string> sources = Preprocess(file);
 		Compile(sources);
-		glUseProgram(m_RendererId);
+		glUseProgram(m_rendererID);
 
 		auto lastSlash = path.find_last_of("/\\");
 		lastSlash = (lastSlash == std::string::npos) 
@@ -55,7 +55,7 @@ namespace Iron
 		std::string file = ReadFile(path);
 		std::unordered_map<GLenum, std::string> sources = Preprocess(file);
 		Compile(sources);
-		glUseProgram(m_RendererId);
+		glUseProgram(m_rendererID);
 	}
 
 	Shader::Shader(const std::string &name, const std::string &vertexSource, 
@@ -66,12 +66,12 @@ namespace Iron
 		sources[GL_VERTEX_SHADER] = vertexSource;
 		sources[GL_FRAGMENT_SHADER] = fragmentSource;
 		Compile(sources);
-		glUseProgram(m_RendererId);
+		glUseProgram(m_rendererID);
 	}
 
 	Shader::~Shader()
 	{
-		GlCall(glDeleteProgram(m_RendererId));
+		GlCall(glDeleteProgram(m_rendererID));
 	}
 
 	void Shader::Compile(std::unordered_map<GLenum, std::string>& Shaderources)
@@ -140,7 +140,7 @@ namespace Iron
 			GlCall(glDeleteShader(id));
 		}
 		
-		m_RendererId = program;
+		m_rendererID = program;
 	}
 
 	std::string Shader::ReadFile(const std::string &path)
@@ -196,57 +196,57 @@ namespace Iron
 	// Int
 	void Shader::SetInt1(const char *name, int val1)
 	{
-		GlCall(glUniform1i(glGetUniformLocation(m_RendererId, name), val1));
+		GlCall(glUniform1i(glGetUniformLocation(m_rendererID, name), val1));
 	}
 
 	void Shader::SetInt2(const char* name, int val1, int val2)
 	{
-		GlCall(glUniform2i(glGetUniformLocation(m_RendererId, name), val1, val2));
+		GlCall(glUniform2i(glGetUniformLocation(m_rendererID, name), val1, val2));
 	}
 
 	void Shader::SetInt3(const char* name, int val1, int val2, int val3)
 	{
-		GlCall(glUniform3i(glGetUniformLocation(m_RendererId, name), val1, val2, val3));
+		GlCall(glUniform3i(glGetUniformLocation(m_rendererID, name), val1, val2, val3));
 	}
 
 	void Shader::SetInt4(const char* name, int val1, int val2, int val3, int val4)
 	{
-		GlCall(glUniform4i(glGetUniformLocation(m_RendererId, name), val1, val2, val3, val4));
+		GlCall(glUniform4i(glGetUniformLocation(m_rendererID, name), val1, val2, val3, val4));
 	}
 	// Float
 	void Shader::SetFloat1(const char *name, float val1)
 	{
-		GlCall(glUniform1f(glGetUniformLocation(m_RendererId, name), val1));
+		GlCall(glUniform1f(glGetUniformLocation(m_rendererID, name), val1));
 	}
 
 	void Shader::SetFloat2(const char *name, float val1, float val2)
 	{
-		GlCall(glUniform2f(glGetUniformLocation(m_RendererId, name), val1, val2));
+		GlCall(glUniform2f(glGetUniformLocation(m_rendererID, name), val1, val2));
 	}
 
 	void Shader::SetFloat3(const char *name, float val1, float val2, float val3)
 	{
-		GlCall(glUniform3f(glGetUniformLocation(m_RendererId, name), val1, val2, val3));
+		GlCall(glUniform3f(glGetUniformLocation(m_rendererID, name), val1, val2, val3));
 	}
 
 	void Shader::SetFloat4(const char *name, float val1, float val2, float val3, float val4)
 	{
-		GlCall(glUniform4f(glGetUniformLocation(m_RendererId, name), val1, val2, val3, val4));
+		GlCall(glUniform4f(glGetUniformLocation(m_rendererID, name), val1, val2, val3, val4));
 	}
 	// Boolean
 	void Shader::SetBool(const char *name, bool val1)
 	{
-		GlCall(glUniform1i(glGetUniformLocation(m_RendererId, name), val1));
+		GlCall(glUniform1i(glGetUniformLocation(m_rendererID, name), val1));
 	}
 
 	void Shader::SetMat4x4(const char* name, const glm::mat4& matrix)
 	{
-		glUniformMatrix4fv(glGetUniformLocation(m_RendererId, name), 1, GL_FALSE, glm::value_ptr(matrix));
+		glUniformMatrix4fv(glGetUniformLocation(m_rendererID, name), 1, GL_FALSE, glm::value_ptr(matrix));
 	}
 
 	void Shader::Use() const
 	{
-		GlCall(glUseProgram(m_RendererId));
+		GlCall(glUseProgram(m_rendererID));
 	}
 
 	void Shader::Remove()
@@ -256,12 +256,12 @@ namespace Iron
 
 	void Shader::Delete()
 	{
-		GlCall(glDeleteProgram(m_RendererId));
+		GlCall(glDeleteProgram(m_rendererID));
 	}
 
 	unsigned int Shader::Id() const
 	{
-		return m_RendererId;
+		return m_rendererID;
 	}
 
 	void ShaderLibrary::Add(const std::shared_ptr<Shader> &shader)

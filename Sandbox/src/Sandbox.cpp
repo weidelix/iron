@@ -5,8 +5,7 @@ using namespace Iron;
 class Sandbox : public Application
 {
 public:
-	GameObject plane2 = GameObject::CreatePrimitive(Primitives::Plane);
-	GameObject plane = GameObject::CreatePrimitive(Primitives::Cube);
+	GameObject bag = GameObject::Load(std::string("./../../../res/model/backpack/backpack.obj"));
 	Vector3 rot = Vector3(0.0f, 0.0f, 0.0f);
 
 	// Runs code on start
@@ -18,14 +17,13 @@ public:
 	// Runs code every frame
 	void Update() override
 	{
-		plane.Draw();
-		plane2.Draw();
+		bag.Draw();
 	}
 
 	void OnEvent(Event &e) override
 	{
 		const float speed = 3.0f * Time::DeltaTime();
-		Transform &transform = plane.GetTransform();
+		Transform &transform = bag.GetTransform();
 		Vector3 &pos = transform.GetPosition();
     
 		if (e.GetEventType() == EventType::KeyPress)
@@ -37,9 +35,9 @@ public:
 			else if (event.GetKeyEvent() == Key::S)
 				pos = pos - transform.Front() * speed;
 			else if (event.GetKeyEvent() == Key::A)
-				pos = pos - transform.Right() * speed;
-			else if (event.GetKeyEvent() == Key::D)
 				pos = pos + transform.Right() * speed;
+			else if (event.GetKeyEvent() == Key::D)
+				pos = pos - transform.Right() * speed;
 			else if (event.GetKeyEvent() == Key::Up)
 				pos = pos + transform.Up() * speed;
 			else if (event.GetKeyEvent() == Key::Down)
@@ -49,7 +47,7 @@ public:
 			else if (event.GetKeyEvent() == Key::Right)
 				rot.SetY(rot.GetY() - 0.01f);
 
-			plane.GetTransform().SetRotation(Quaternion::ToQuat(rot));
+			bag.GetTransform().SetRotation(Quaternion::ToQuat(rot));
 			transform.SetPosition(pos);
 		}
 	}

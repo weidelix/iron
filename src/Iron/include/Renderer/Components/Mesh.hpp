@@ -18,7 +18,6 @@ namespace Iron
 	private:
 		friend class GameObject;
 
-		static int s_bindingIndex;
 		std::shared_ptr<VertexArray> m_vertexArray;
 
 		// TODO : Optimize vectors
@@ -28,10 +27,11 @@ namespace Iron
 
 	public: 
 		Mesh();
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture2D> textures);
+		Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices, const std::vector<Texture2D> &textures);
 		Mesh(const Mesh& mesh);
 		~Mesh();
 
+		void Draw(const std::shared_ptr<Shader> &shader);
 		void Setup();
 	};
 }

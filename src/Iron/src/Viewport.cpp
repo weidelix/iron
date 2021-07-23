@@ -11,15 +11,8 @@ namespace Iron
 	void Viewport::OnAttach()
 	{
 		m_viewportCamera.SetAsMain();
-		m_viewportCamera.GetTransform().SetPosition(Vector3(5.0f, 5.0f, 6.0f));
-		m_viewportCamera.GetTransform().LookAt(Vector3(0) - Vector3(5.0f, 5.0f, 6.0f));
-
-		Vector3 direction;
-		direction.SetX(cos(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
-		direction.SetY(sin(glm::radians(m_pitch)));
-		direction.SetZ(sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch)));
-			
-		m_viewportCamera.GetTransform().LookAt(Vector3::Normalize(direction));
+		m_viewportCamera.GetTransform().SetPosition(Vector3(0.0f, 0.0f, 6.0f));
+		m_viewportCamera.GetTransform().LookAt(Vector3(0.0f, 0.0f, 6.0f) - Vector3(0.0f));
 	}
 
 	void Viewport::OnDetach()
@@ -39,7 +32,7 @@ namespace Iron
 
 	bool Viewport::MouseMoveCallback(MouseMoveEvent &event)
 	{
-		float panSensitivity = 0.5f;
+		float panSensitivity = 1.0f;
 		float rotationSensitivity = 0.3f;
 
 		if (isHoldingLeft)
@@ -66,9 +59,9 @@ namespace Iron
 			Vector3 &pos = transform.GetPosition();
 			
 			if (xoffset > m_lastX)
-				pos = pos - transform.Right() * xoffset;
-			else if (xoffset < m_lastX)
 				pos = pos + transform.Right() * xoffset;
+			else if (xoffset < m_lastX)
+				pos = pos - transform.Right() * xoffset;
 
 			if (yoffset < m_lastY)
 				pos = pos - transform.Up() * yoffset;
@@ -91,7 +84,7 @@ namespace Iron
 			}
 		
 			float xoffset = xpos - m_lastX;
-			float yoffset = m_lastY - ypos; 
+			float yoffset = m_lastY - ypos;
 			m_lastX = xpos;
 			m_lastY = ypos;
 
@@ -99,7 +92,7 @@ namespace Iron
 			yoffset *= rotationSensitivity;
 
 			m_yaw += xoffset;
-			m_pitch += yoffset;
+			m_pitch -= yoffset;
 
 			if(m_pitch > 89.0f)
 					m_pitch = 89.0f;

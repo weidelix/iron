@@ -36,6 +36,7 @@ namespace Iron {
 
 		int gladState = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		IRON_CORE_ASSERT(gladState, "failed to initialize glad");
+		glEnable(GL_DEPTH_TEST);
 
 		glfwSetErrorCallback([](int error, const char *desc) {
 			IRON_CORE_ERROR("[GLFW ERROR]({0}): {1}", error, desc);

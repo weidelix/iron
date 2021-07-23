@@ -1,23 +1,22 @@
 #pragma once
-#include <string>
-#include <iostream>
 
 #include "Renderer/RenderCommand.hpp"
 
 class Texture2D
 {
 private:
-	unsigned int m_RendererId;
-	int m_TexUnit = 0;
+	unsigned int m_rendererID;
+	std::string m_type;
+	std::string m_path;
 
 public:
-	// Default Texture Unit is GL_TEXTURE0
-	Texture2D(const char *path = nullptr, int textureUnit = 0, bool invert = false);
+	Texture2D(const std::string &type, const char *path = nullptr, bool invert = true);
 	~Texture2D();
 	
+	const std::string &GetPath() const;
 	void Bind() const;
 	void Unbind() const;
-	void AddTexture(const char *path, int textureUnit = 0, bool invert = false) const;
-	void UseTexture(int textureUnit) const;
+	void AddTexture(const std::string &type, const char *path, bool invert = true);
+	void RemoveTexture() const;
+	const std::string& GetType();
 };
-
