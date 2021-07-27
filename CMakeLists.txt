@@ -34,9 +34,9 @@ target_precompile_headers(Iron PRIVATE ${CMAKE_SOURCE_DIR}/src/Iron/include/pch.
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set_target_properties(Iron PROPERTIES OUTPUT_NAME "iron")
 		message("Compiler -- Clang")
+		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC IRON_PLATFORM_LINUX)
 		target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux/
 																 PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/lib/)
-		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC IRON_PLATFORM_LINUX)
 		target_link_libraries(Iron PUBLIC glfw3
 															 PUBLIC assimp
 															 PUBLIC dl 
@@ -54,15 +54,17 @@ elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 	if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 		message("Compiler -- Clang")
-		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC  IRON_PLATFORM_WINDOW)
+		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC IRON_PLATFORM_WINDOW)
 	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 		message("Compiler -- MSVC")
-		target_compile_definitions(Iron PUBLIC USE_MSVC PUBLIC  IRON_PLATFORM_WINDOW)
+		target_compile_definitions(Iron PUBLIC USE_MSVC PUBLIC IRON_PLATFORM_WINDOW)
 	endif()
 
-	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019)
+	target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-vc2019
+														   PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/lib/Release)
 	target_link_libraries(Iron PUBLIC opengl32
-														 PUBLIC glfw3)
+														 PUBLIC glfw3
+														 PUBLIC assimp-vc142-mt)
 endif()
 
 # Add Macro Definitions
@@ -70,9 +72,6 @@ target_compile_definitions(Iron  PUBLIC  STB_IMAGE_IMPLEMENTATION
 											PRIVATE IRON_BUILD_DLL
 											PUBLIC  ENABLE_ASSERT
 											PUBLIC  IRON_DEBUG)
-
-# Common shared library
-target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/lib/)
 
 # Include Paths
 target_include_directories(Iron PUBLIC "${CMAKE_SOURCE_DIR}/vendor/GLM-0.9.9.8/glm/glm/"
