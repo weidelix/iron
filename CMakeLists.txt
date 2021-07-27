@@ -35,7 +35,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 	set_target_properties(Iron PROPERTIES OUTPUT_NAME "iron")
 		message("Compiler -- Clang")
 		target_link_directories(Iron PUBLIC ${CMAKE_SOURCE_DIR}/vendor/GLFW/lib-linux/
-																 PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/linux/)
+																 PUBLIC ${CMAKE_SOURCE_DIR}/vendor/ASSIMP-5.0.1/lib/)
 		target_compile_definitions(Iron PUBLIC USE_CLANG PUBLIC IRON_PLATFORM_LINUX)
 		target_link_libraries(Iron PUBLIC glfw3
 															 PUBLIC assimp
