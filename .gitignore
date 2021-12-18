@@ -1,5 +1,5 @@
 build/
-a.txt
+out/
 *.pdb
 bin/
 *.ini
@@ -10,3 +10,5 @@ bin/Debug/
 bin/Release/
 .ccls-cache/
 .ccls
+.cache/
+compile_commands.json
