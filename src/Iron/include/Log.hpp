@@ -32,8 +32,7 @@ namespace Iron
 	#define IRON_TRACE(...)          SPDLOG_LOGGER_TRACE     (Iron::Log::GetClientLogger(), __VA_ARGS__)
 	#define IRON_WARN(...)           SPDLOG_LOGGER_WARN      (Iron::Log::GetClientLogger(), __VA_ARGS__)
 	#define IRON_ERROR(...)          SPDLOG_LOGGER_ERROR     (Iron::Log::GetClientLogger(), __VA_ARGS__)
-	#define IRON_FATAL(...)          SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetClientLogger(), __VA_ARGS__) 
-								 
+	#define IRON_FATAL(...)          SPDLOG_LOGGER_CRITICAL  (Iron::Log::GetClientLogger(), __VA_ARGS__) 							 
 #else
 	// Core
 	#define IRON_CORE_WARN(...) 
@@ -49,11 +48,11 @@ namespace Iron
 	#define IRON_FATAL(...)
 #endif
 
-// // Disable using internal logging for client 
-// #ifndef IRON_BUILD_DLL
-// 	#define IRON_CORE_INFO(...)
-// 	#define IRON_CORE_TRACE(...)
-// 	#define IRON_CORE_WARN(...)
-// 	#define IRON_CORE_ERROR(...)
-// 	#define IRON_CORE_FATAL(...)
-// #endif
+// Disable using internal logging for client 
+#ifndef IRON_BUILD_DLL
+	#define IRON_CORE_INFO(...)
+	#define IRON_CORE_TRACE(...)
+	#define IRON_CORE_WARN(...)
+	#define IRON_CORE_ERROR(...)
+	#define IRON_CORE_FATAL(...)
+#endif

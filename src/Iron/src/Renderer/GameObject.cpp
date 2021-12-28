@@ -152,7 +152,7 @@ namespace Iron
 		return m_transform;
 	}
 
-	/* staic */
+	/* static */
 	GameObject GameObject::Load(const std::string &path)
 	{
 		return GameObject(path);

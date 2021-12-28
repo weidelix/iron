@@ -1,3 +1,4 @@
+#include "Renderer/RenderCommand.hpp"
 #include "pch.hpp"
 #include "Renderer/Renderer.hpp"
 #include "Event/Event.hpp"
@@ -29,6 +30,7 @@ namespace Iron
 	{
 		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
 		Viewport *viewport = new Viewport("Viewport");
+		
 		m_layerStack.PushLayer(viewport);
 		m_instance->Start();
 

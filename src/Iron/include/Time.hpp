@@ -9,7 +9,9 @@ namespace Iron
 		static float s_deltaTime;
 		static float s_lastFrame;
 	public:
-		static void SetDeltaTime();
+		#ifdef IRON_BUILD_DLL
+			static void SetDeltaTime();
+		#endif
 		static float DeltaTime();
 	};
 }

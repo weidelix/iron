@@ -22,7 +22,7 @@ public:
 
 	void OnEvent(Event &e) override
 	{
-		const float speed = 3.0f * Time::DeltaTime();
+		/*const float speed = 3.0f * Time::DeltaTime();
 		Transform &transform = bag.GetTransform();
 		Vector3 &pos = transform.GetPosition();
     
@@ -49,7 +49,7 @@ public:
 
 			bag.GetTransform().SetRotation(Quaternion::ToQuat(rot));
 			transform.SetPosition(pos);
-		}
+		}*/
 	}
 };
 

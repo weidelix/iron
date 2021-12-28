@@ -17,7 +17,7 @@ namespace Iron
 		float m_far = 100.0f;
 		Transform m_transform;
 		glm::mat4 m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, m_near, m_far);
-		glm::mat4 &m_view = m_transform.GetMatrix();
+		glm::mat4 m_view = m_transform.GetMatrix();
 		
 		static Camera *s_mainCamera;
 
@@ -28,7 +28,7 @@ namespace Iron
 
 		static Camera &Main();
 		const glm::mat4 &GetProjectionMat();
-		const glm::mat4 GetViewMat();
+		const glm::mat4 &GetViewMat();
 		Transform &GetTransform();
 		void SetAsMain();
 		void SetFOV(float fov);
