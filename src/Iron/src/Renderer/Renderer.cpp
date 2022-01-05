@@ -1,8 +1,12 @@
 #include "Renderer/Renderer.hpp" 
+#include "Renderer/Components/Material.hpp"
+#include <memory>
 
 namespace Iron
 {
 	ShaderLibrary Renderer::m_shaderLibrary = ShaderLibrary();
+
+	std::shared_ptr<Material> Renderer::m_defaultMaterial = std::make_shared<Material>(); 
 
 	void Renderer::BeginScene() { }
 	void Renderer::EndScene() { }
@@ -35,5 +39,10 @@ namespace Iron
 	std::shared_ptr<Shader> &Renderer::GetDefaultShader()
 	{
 		return m_shaderLibrary.Get("default");
+	}
+
+	std::shared_ptr<Material> &Renderer::GetDefaultMaterial()
+	{
+		return m_defaultMaterial;
 	}
 }

@@ -2,7 +2,7 @@
 
 #include "Renderer/RenderCommand.hpp"
 
-class Texture2D
+class IRON_API Texture2D
 {
 private:
 	unsigned int m_rendererID;

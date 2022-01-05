@@ -8,12 +8,11 @@ namespace Iron
 		
 	}
 
-	Mesh::Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices, const std::vector<Texture2D> &textures)
+	Mesh::Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices)
 		:m_vertexArray(std::make_shared<VertexArray>())
 	{
 		m_vertices = vertices;
 		m_indices  = indices;
-		m_textures = textures;
 
 		Setup();
 	}
@@ -23,38 +22,13 @@ namespace Iron
 	{
 		m_vertices = mesh.m_vertices;
 		m_indices  = mesh.m_indices;
-		m_textures = mesh.m_textures;
 	
 		Setup();
 	}
 	
 	Mesh::~Mesh() 
 	{
-		for (auto t : m_textures)
-		{
-			t.RemoveTexture();
-		}
-	}
-
-	void Mesh::Draw(const std::shared_ptr<Shader> &shader)
-	{
-		unsigned int diffuseNr = 1;
-    unsigned int specularNr = 1;
-		for (unsigned int i = 0; i < m_textures.size(); i++)
-    {	
-			glActiveTexture(GL_TEXTURE0 + i);
-			std::string number;
-			std::string name = m_textures[i].GetType();
-
-			if(name == "texture_diffuse")
-			    number = std::to_string(diffuseNr++);
-			else if(name == "texture_specular")
-			    number = std::to_string(specularNr++);
-
-			m_textures[i].Bind();
-			shader->SetInt1(("fMaterial." + name + number).c_str(), i);
-		}
-		GlCall(glActiveTexture(GL_TEXTURE0));
+		
 	}
 
 	void Mesh::Setup()

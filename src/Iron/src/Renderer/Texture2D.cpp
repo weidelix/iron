@@ -1,3 +1,4 @@
+#include "Log.hpp"
 #include "glad/glad.h"
 #include "Renderer/Texture2D.hpp"
 #include "stb_image.h"
@@ -14,11 +15,11 @@ Texture2D::Texture2D(const std::string &type, const char *path, bool invert)
 	{
 		int height;
 		int width;
-		int nrChannel;
+		int channels;
 
 		stbi_set_flip_vertically_on_load(invert);
 
-		unsigned char* data = stbi_load(path, &width, &height, &nrChannel, 0);
+		unsigned char* data = stbi_load(path, &width, &height, &channels, 0);
 
 		GlCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
 		GlCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
@@ -27,8 +28,23 @@ Texture2D::Texture2D(const std::string &type, const char *path, bool invert)
 
 		if (data)
 		{
-			GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, (nrChannel > 3) ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data));
-			GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+			if (channels == 4)
+			{
+				IRON_CORE_INFO("{} rgba", channels);
+				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
+				// GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+			} 
+			else if (channels == 3)
+			{
+				IRON_CORE_INFO("{} rgb", channels);
+				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
+				// GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+			}
+			else if (channels == 1)
+			{
+				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data));
+				// GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+			}
 		}
 		else
 		{

@@ -23,6 +23,7 @@ namespace Iron
 		m_window->SetEventCallback(std::bind(&Application::EventCallback, this, std::placeholders::_1));
 		m_window->SetInternalEventCallback(std::bind(&Internal::InternalEventsHandler, std::placeholders::_1));
 
+		// Create a default shader on start
 		Renderer::LoadShader(std::string("default"), std::string("./../../../res/shaders/default.glsl"));
 	}
 
@@ -30,7 +31,7 @@ namespace Iron
 	{
 		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
 		Viewport *viewport = new Viewport("Viewport");
-		
+
 		m_layerStack.PushLayer(viewport);
 		m_instance->Start();
 
@@ -49,8 +50,10 @@ namespace Iron
 		return true; 
 	}
 	
-	bool Callback(Event& event)
+	bool EventHandler(Event& event)
 	{
+		// Do some event handling
+
 		return true;
 	}
 
@@ -67,7 +70,7 @@ namespace Iron
 	void Application::OnEvent(Event &event)
 	{
 		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<WindowResizeEvent>(bind(&Callback, std::placeholders::_1));
+		dispatcher.Dispatch<WindowResizeEvent>(bind(&EventHandler, std::placeholders::_1));
 	}
 
 	Input Application::GetInput()

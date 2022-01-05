@@ -3,7 +3,8 @@
 #include "pch.hpp"
 #include "Core.hpp"
 #include "Renderer/VertexArray.hpp"
-#include "Renderer/Texture2D.hpp"
+#include "Renderer/Components/Material.hpp"
+
 namespace Iron 
 {
 	struct Vertex
@@ -23,15 +24,13 @@ namespace Iron
 		// TODO : Optimize vectors
 		std::vector<Vertex> m_vertices;
 		std::vector<unsigned int> m_indices;
-		std::vector<Texture2D> m_textures;
 
 	public: 
 		Mesh();
-		Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices, const std::vector<Texture2D> &textures);
+		Mesh(const std::vector<Vertex> &vertices, const std::vector<unsigned int> &indices);
 		Mesh(const Mesh& mesh);
 		~Mesh();
 
-		void Draw(const std::shared_ptr<Shader> &shader);
 		void Setup();
 	};
 }

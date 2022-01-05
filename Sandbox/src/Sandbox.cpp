@@ -1,13 +1,14 @@
 #include "Iron.hpp"
+#include <memory>
 
 using namespace Iron;
 
 class Sandbox : public Application
 {
 public:
-	GameObject bag = GameObject::Load(std::string("./../../../res/model/backpack/backpack.obj"));
+	GameObject bag = GameObject::Load(std::string("backpack/backpack.obj"));
 	Vector3 rot = Vector3(0.0f, 0.0f, 0.0f);
-
+	
 	// Runs code on start
 	void Start() override 
 	{

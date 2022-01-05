@@ -1,19 +1,28 @@
+#include "Log.hpp"
+#include "Renderer/Components/Material.hpp"
+#include "Renderer/Texture2D.hpp"
+#include "assimp/material.h"
+#include "assimp/mesh.h"
 #include "glad/glad.h"
 #include "Renderer/GameObject.hpp"
 #include "Renderer/Renderer.hpp"
+#include <memory>
+#include <xmemory>
 
 namespace Iron
 {
 	GameObject::GameObject()
 		:m_meshes(),
-		 m_shader(Renderer::GetDefaultShader())
+		 m_shader(Renderer::GetDefaultShader()),
+		 m_material(Renderer::GetDefaultMaterial())
 	{ 
 
 	}
 
 	GameObject::GameObject(const std::string &path)
 		:m_meshes(),
-		 m_shader(Renderer::GetDefaultShader())
+		 m_shader(Renderer::GetDefaultShader()),
+		 m_material(Renderer::GetDefaultMaterial())
 	{ 
 		Assimp::Importer import;
     const aiScene *scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);	
@@ -28,14 +37,16 @@ namespace Iron
 
 	GameObject::GameObject(const std::vector<std::shared_ptr<Mesh>> &meshes) 
 		:m_meshes(meshes),
-		 m_shader(Renderer::GetDefaultShader())
+		 m_shader(Renderer::GetDefaultShader()),
+		 m_material(Renderer::GetDefaultMaterial())
 	{
 
 	}
 
 	GameObject::GameObject(const GameObject &go) 
 		:m_meshes(go.m_meshes),
-		 m_shader(Renderer::GetDefaultShader())
+		 m_shader(Renderer::GetDefaultShader()),
+		 m_material(Renderer::GetDefaultMaterial())
 	{
 
 	}
@@ -45,10 +56,10 @@ namespace Iron
 	void GameObject::Draw()
 	{
 		m_shader->SetMat4x4("model", m_transform.GetMatrix());
+		m_material->ApplyMaterial(m_shader);
 
 		for(auto& m : m_meshes)
 		{
-			m->Draw(m_shader);
 			Renderer::Submit(m_shader, m->m_vertexArray);
 		}
 	}
@@ -61,6 +72,7 @@ namespace Iron
       aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
       m_meshes.push_back(ProcessMesh(mesh, scene));
     }
+
     // then do the same for each of its children
     for(unsigned int i = 0; i < node->mNumChildren; i++)
     {
@@ -72,7 +84,6 @@ namespace Iron
 	{
 		std::vector<Vertex> vertices;
     std::vector<unsigned int> indices;
-    std::vector<Texture2D> textures;
 
     for(unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
@@ -96,41 +107,64 @@ namespace Iron
 			}
 			vertices.push_back(vertex);
     }
+		
     // process indices
     for(unsigned int i = 0; i < mesh->mNumFaces; i++)
 		{
 			aiFace face = mesh->mFaces[i];
 			for(unsigned int j = 0; j < face.mNumIndices; j++)
 			indices.push_back(face.mIndices[j]);
-		}
+		}    
 
-    // process material
-    if(mesh->mMaterialIndex >= 0)
+		ProcessMaterial(mesh, scene);
+		
+    return std::make_shared<Mesh>(vertices, indices);
+	}
+
+	void GameObject::ProcessMaterial(aiMesh *mesh, const aiScene *scene)
+	{
+		if(mesh->mMaterialIndex >= 0)
     {
       aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
 			
-			std::vector<Texture2D> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-			
-			std::vector<Texture2D> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-    }
+			std::vector<std::shared_ptr<Texture2D>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, TEX_ALBEDO);
 
-    return std::make_shared<Mesh>(vertices, indices, textures);
+			if (diffuseMaps.size() > 0)
+			{
+				m_material->SetAlbedo(diffuseMaps[0]);
+				for(unsigned int j = 0; j < m_texturesLoaded.size(); j++)
+				{
+					bool in = false;
+					// If not already loaded
+					if(std::strcmp(m_texturesLoaded[j]->GetPath().data(), "backpack/1001_AO.jpg") == 0)
+					{
+						in = true;
+					}
+					if (j == m_texturesLoaded.size() - 1 && !in)
+					{
+						std::shared_ptr<Texture2D> ao = std::make_shared<Texture2D>(TEX_AO, "backpack/1001_AO.jpg", false);
+						m_texturesLoaded.push_back(ao);
+						m_material->SetAO(ao);
+					}
+				}
+			}
+    }
 	}
 
-	std::vector<Texture2D> GameObject::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string &typeName)
+	std::vector<std::shared_ptr<Texture2D>> GameObject::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string &typeName)
 	{
-		std::vector<Texture2D> textures;
+		std::vector<std::shared_ptr<Texture2D>> textures;
     for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
 			aiString str;
 			mat->GetTexture(type, i, &str);
 			bool skip = false;
+			std::string path = fmt::format("{}/{}", m_dir, str.C_Str()).c_str();
+
 			for(unsigned int j = 0; j < m_texturesLoaded.size(); j++)
 			{
 				// TODO: Refactor
-				if(std::strcmp(m_texturesLoaded[j].GetPath().data(), fmt::format("{}/{}", m_dir, str.C_Str()).c_str()) == 0)
+				if(std::strcmp(m_texturesLoaded[j]->GetPath().data(), path.c_str()) == 0)
 				{
 					textures.push_back(m_texturesLoaded[j]);
 					skip = true;
@@ -139,7 +173,7 @@ namespace Iron
 			}
 			if(!skip)
 			{
-				Texture2D texture(typeName, fmt::format("{}/{}", m_dir, str.C_Str()).c_str(), false);
+				std::shared_ptr<Texture2D> texture = std::make_shared<Texture2D>(typeName, path.c_str(), false);
 				m_texturesLoaded.push_back(texture);
 				textures.push_back(m_texturesLoaded.back());
 			}
@@ -152,6 +186,11 @@ namespace Iron
 		return m_transform;
 	}
 
+	const std::shared_ptr<Material> &GameObject::GetMaterial()
+	{
+		return m_material;
+	}
+
 	/* static */
 	GameObject GameObject::Load(const std::string &path)
 	{
@@ -159,7 +198,7 @@ namespace Iron
 	}
 
 	/* static */
-	GameObject GameObject::Create() { return GameObject(); }
+	GameObject GameObject::CreateEmpty() { return GameObject(); }
 
 	/* static */
 	GameObject GameObject::Create(Primitives primitive)
@@ -177,7 +216,7 @@ namespace Iron
 				std::vector<unsigned int> iBuffer = { 0, 1, 2, 2, 3, 1 };
 				std::vector<Texture2D> tBuffer = { Texture2D(std::string("texture_diffuse"), "./../../../res/textures/grass.jpeg", true) };
 
-				std::vector<std::shared_ptr<Mesh>> meshes = { std::make_shared<Mesh>(vBuffer, iBuffer, tBuffer) };
+				std::vector<std::shared_ptr<Mesh>> meshes = { std::make_shared<Mesh>(vBuffer, iBuffer) };
 
 				return GameObject(meshes);
 				break;
@@ -218,6 +257,6 @@ namespace Iron
 				break;
 		}
 
-		return GameObject::Create();
+		return GameObject::CreateEmpty();
 	}
 }
