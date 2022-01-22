@@ -15,6 +15,7 @@ using DisableIf = typename std::enable_if<!Condition::value, T>::type;
 
 namespace Iron
 {
+	// TODO: remove glm::vec3 from Vector3 class
 	struct IRON_API Vector3 
 	{
 	private:
@@ -34,9 +35,9 @@ namespace Iron
 		inline void SetX(float x) { m_vec.x = x; }
 		inline void SetY(float y) { m_vec.y = y; }
 		inline void SetZ(float z) { m_vec.z = z; }
-		inline float GetX() { return m_vec.x; }
-		inline float GetY() { return m_vec.y; }
-		inline float GetZ() { return m_vec.z; }
+		inline float GetX() const { return m_vec.x; }
+		inline float GetY() const { return m_vec.y; }
+		inline float GetZ() const { return m_vec.z; }
 
 		static Vector3 Normalize(const Vector3 &vec);
 

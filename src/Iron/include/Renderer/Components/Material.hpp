@@ -18,22 +18,22 @@ namespace Iron
 {
 	class IRON_API Material
 	{
+		friend class GameObject;
+
 		std::shared_ptr<Texture2D> m_albedo;
 		std::shared_ptr<Texture2D> m_albedo2;
 		std::shared_ptr<Texture2D> m_ao;
 		std::shared_ptr<Texture2D> m_normalMap;
 		std::shared_ptr<Texture2D> m_heightMap;
-		Vector3 m_tint;
-		float m_tintA;
-		
-
+		Vector3 m_tint = Vector3(1.0f);
+		void ApplyMaterial(const std::shared_ptr<Shader> &shader);
+	
 	public:
 		Material();
 		~Material();
 
 		void SetAlbedo(const std::shared_ptr<Texture2D> &albedo);
 		void SetAO(const std::shared_ptr<Texture2D> &ao);
-		void SetTint(float r, float g, float b, float a);
-		void ApplyMaterial(const std::shared_ptr<Shader> &shader);
+		void SetTint(float r, float g, float b);
 	};
 }

@@ -37,14 +37,24 @@ struct Material
 in vec2 fTexCoords;
 
 uniform Material fMaterial;
-
-out vec4 oColor;
+uniform bool useAlbedo;
+uniform bool useAO;
 
 void main()
 {
 	// Set the albedo
-	oColor = texture(fMaterial.texture_diffuse1, fTexCoords) * fMaterial.tint;
+	if (useAlbedo)
+	{
+		gl_FragColor = texture(fMaterial.texture_diffuse1, fTexCoords) * fMaterial.tint;
+	}
+	else
+	{
+		gl_FragColor = vec4(1.0f);
+	}
 
 	// Apply AO map
-	oColor = vec4(texture(fMaterial.texture_ao, fTexCoords).r) * oColor;
+	if (useAO)
+	{
+		gl_FragColor = vec4(texture(fMaterial.texture_ao, fTexCoords).r) * gl_FragColor;
+	}	
 };

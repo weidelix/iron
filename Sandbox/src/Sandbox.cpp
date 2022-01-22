@@ -1,4 +1,10 @@
 #include "Iron.hpp"
+#include "Renderer/Components/Material.hpp"
+#include "Renderer/Components/Transform.hpp"
+#include "Renderer/RenderCommand.hpp"
+#include "Renderer/Renderer.hpp"
+#include "Renderer/Texture2D.hpp"
+#include "fwd.hpp"
 #include <memory>
 
 using namespace Iron;
@@ -6,9 +12,19 @@ using namespace Iron;
 class Sandbox : public Application
 {
 public:
-	GameObject bag = GameObject::Load(std::string("backpack/backpack.obj"));
-	Vector3 rot = Vector3(0.0f, 0.0f, 0.0f);
+	GameObject gun = GameObject::Load(std::string("M4A1/m4a1.obj"));
 	
+	Sandbox()
+	{
+		std::shared_ptr<Texture2D> albedo = std::make_shared<Texture2D>(TEX_ALBEDO, "M4A1/textures/n4a1_albedo.jpg", false);
+		std::shared_ptr<Texture2D> ao = std::make_shared<Texture2D>(TEX_AO, "M4A1/textures/n4a1_AO.jpg", false);
+
+		// gun.SetAlbedo(albedo);
+		// gun.SetAO(ao);
+		gun.GetMaterial()->SetAO(ao);
+		gun.GetTransform().SetScale(Vector3(0.05f));
+	}
+
 	// Runs code on start
 	void Start() override 
 	{
@@ -18,39 +34,12 @@ public:
 	// Runs code every frame
 	void Update() override
 	{
-		bag.Draw();
+		gun.Draw();
 	}
 
 	void OnEvent(Event &e) override
 	{
-		/*const float speed = 3.0f * Time::DeltaTime();
-		Transform &transform = bag.GetTransform();
-		Vector3 &pos = transform.GetPosition();
-    
-		if (e.GetEventType() == EventType::KeyPress)
-		{
-			KeyPressEvent &event = (KeyPressEvent&)e;
 
-			if (event.GetKeyEvent() == Key::W)
-				pos = pos + transform.Front() * speed;
-			else if (event.GetKeyEvent() == Key::S)
-				pos = pos - transform.Front() * speed;
-			else if (event.GetKeyEvent() == Key::A)
-				pos = pos + transform.Right() * speed;
-			else if (event.GetKeyEvent() == Key::D)
-				pos = pos - transform.Right() * speed;
-			else if (event.GetKeyEvent() == Key::Up)
-				pos = pos + transform.Up() * speed;
-			else if (event.GetKeyEvent() == Key::Down)
-				pos = pos - transform.Up() * speed;
-			else if (event.GetKeyEvent() == Key::Left)
-				rot.SetY(rot.GetY() + 0.01f);
-			else if (event.GetKeyEvent() == Key::Right)
-				rot.SetY(rot.GetY() - 0.01f);
-
-			bag.GetTransform().SetRotation(Quaternion::ToQuat(rot));
-			transform.SetPosition(pos);
-		}*/
 	}
 };
 

@@ -3,7 +3,6 @@
 #include "pch.hpp"
 #include "Core.hpp"
 #include "Renderer/VertexArray.hpp"
-#include "Renderer/Components/Material.hpp"
 
 namespace Iron 
 {

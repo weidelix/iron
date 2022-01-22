@@ -8,11 +8,11 @@ namespace Iron
 	{ }
 
 	Vector3::Vector3()
-		: m_vec(0.0f, 0.0f, 0.0f)
+		: m_vec(0.0f)
 	{ }
 
 	Vector3::Vector3(float v)
-		: m_vec(v, v, v)
+		: m_vec(1.0f)
 	{ }
 
 	Vector3::Vector3(const Vector3 &vec)
@@ -25,7 +25,8 @@ namespace Iron
 
 	Vector3 Vector3::Normalize(const Vector3 &vec)
 	{
-		return Vector3(glm::normalize(vec.m_vec));
+		auto norm = glm::normalize(vec.m_vec);
+		return Vector3();
 	}
 
 	Vector3 &Vector3::operator+= (const Vector3 &rhs)
@@ -89,7 +90,9 @@ namespace Iron
 
 	Vector3 Quaternion::ToEuler(const Quaternion &quat) 
 	{
-		return Vector3(glm::eulerAngles(quat.m_rotation));
+		auto val = glm::eulerAngles(quat.m_rotation);
+
+		return Vector3(val.x, val.y, val.z);
 	}
 
 	Quaternion Quaternion::ToQuat(const Vector3 &euler) 

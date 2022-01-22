@@ -1,5 +1,5 @@
 #include "Log.hpp"
-#include "Renderer/Components/Material.hpp"
+#include "Renderer/Components/Transform.hpp"
 #include "Renderer/Texture2D.hpp"
 #include "assimp/material.h"
 #include "assimp/mesh.h"
@@ -31,8 +31,10 @@ namespace Iron
     {
         IRON_CORE_ASSERT(false, fmt::format("ERROR::ASSIMP::{}", import.GetErrorString()));
     }
+		
     m_dir = path.substr(0, path.find_last_of('/'));
     ProcessNode(scene->mRootNode, scene);
+		m_material->ApplyMaterial(m_shader);
 	}
 
 	GameObject::GameObject(const std::vector<std::shared_ptr<Mesh>> &meshes) 
@@ -56,6 +58,8 @@ namespace Iron
 	void GameObject::Draw()
 	{
 		m_shader->SetMat4x4("model", m_transform.GetMatrix());
+
+		// Try to avoid applying the material every draw
 		m_material->ApplyMaterial(m_shader);
 
 		for(auto& m : m_meshes)
@@ -115,70 +119,8 @@ namespace Iron
 			for(unsigned int j = 0; j < face.mNumIndices; j++)
 			indices.push_back(face.mIndices[j]);
 		}    
-
-		ProcessMaterial(mesh, scene);
 		
     return std::make_shared<Mesh>(vertices, indices);
-	}
-
-	void GameObject::ProcessMaterial(aiMesh *mesh, const aiScene *scene)
-	{
-		if(mesh->mMaterialIndex >= 0)
-    {
-      aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-			
-			std::vector<std::shared_ptr<Texture2D>> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, TEX_ALBEDO);
-
-			if (diffuseMaps.size() > 0)
-			{
-				m_material->SetAlbedo(diffuseMaps[0]);
-				for(unsigned int j = 0; j < m_texturesLoaded.size(); j++)
-				{
-					bool in = false;
-					// If not already loaded
-					if(std::strcmp(m_texturesLoaded[j]->GetPath().data(), "backpack/1001_AO.jpg") == 0)
-					{
-						in = true;
-					}
-					if (j == m_texturesLoaded.size() - 1 && !in)
-					{
-						std::shared_ptr<Texture2D> ao = std::make_shared<Texture2D>(TEX_AO, "backpack/1001_AO.jpg", false);
-						m_texturesLoaded.push_back(ao);
-						m_material->SetAO(ao);
-					}
-				}
-			}
-    }
-	}
-
-	std::vector<std::shared_ptr<Texture2D>> GameObject::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, const std::string &typeName)
-	{
-		std::vector<std::shared_ptr<Texture2D>> textures;
-    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
-    {
-			aiString str;
-			mat->GetTexture(type, i, &str);
-			bool skip = false;
-			std::string path = fmt::format("{}/{}", m_dir, str.C_Str()).c_str();
-
-			for(unsigned int j = 0; j < m_texturesLoaded.size(); j++)
-			{
-				// TODO: Refactor
-				if(std::strcmp(m_texturesLoaded[j]->GetPath().data(), path.c_str()) == 0)
-				{
-					textures.push_back(m_texturesLoaded[j]);
-					skip = true;
-					break;
-				}
-			}
-			if(!skip)
-			{
-				std::shared_ptr<Texture2D> texture = std::make_shared<Texture2D>(typeName, path.c_str(), false);
-				m_texturesLoaded.push_back(texture);
-				textures.push_back(m_texturesLoaded.back());
-			}
-		}
-    return textures;
 	}
 
 	Transform &GameObject::GetTransform()
@@ -186,10 +128,44 @@ namespace Iron
 		return m_transform;
 	}
 
+	void GameObject::SetMaterial(const std::shared_ptr<Material> &material)
+	{
+		m_material = material;
+		m_material->ApplyMaterial(m_shader);
+	}
+
 	const std::shared_ptr<Material> &GameObject::GetMaterial()
 	{
 		return m_material;
 	}
+
+	const std::shared_ptr<Shader> &GameObject::GetShader()
+	{
+		return m_shader;
+	}
+
+	void GameObject::SetShader(const std::shared_ptr<Shader> &shader)
+	{
+		m_shader = shader;
+	}
+
+	// void GameObject::SetTint(const Vector3 &tint)
+	// {
+	// 	m_material->SetTint(tint.GetX(), tint.GetY(), tint.GetZ());
+	// 	m_material->ApplyMaterial(m_shader);
+	// }
+
+	// void GameObject::SetAlbedo(const std::shared_ptr<Texture2D> &albedo)
+	// {
+	// 	m_material->SetAlbedo(albedo);
+	// 	m_material->ApplyMaterial(m_shader);
+	// }
+
+	// void GameObject::SetAO(const std::shared_ptr<Texture2D> &ao)
+	// {
+	// 	m_material->SetAO(ao);
+	// 	m_material->ApplyMaterial(m_shader);
+	// }
 
 	/* static */
 	GameObject GameObject::Load(const std::string &path)

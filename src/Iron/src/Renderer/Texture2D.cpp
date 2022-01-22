@@ -2,13 +2,13 @@
 #include "glad/glad.h"
 #include "Renderer/Texture2D.hpp"
 #include "stb_image.h"
+#include <memory>
 
 Texture2D::Texture2D(const std::string &type, const char *path, bool invert)
 	:m_type(type),
 	 m_path(path)
 {	
 	GlCall(glGenTextures(1, &m_rendererID));
-	GlCall(glActiveTexture(GL_TEXTURE0));
 	GlCall(glBindTexture(GL_TEXTURE_2D, m_rendererID));
 	
 	if (path != nullptr)
@@ -30,33 +30,90 @@ Texture2D::Texture2D(const std::string &type, const char *path, bool invert)
 		{
 			if (channels == 4)
 			{
-				IRON_CORE_INFO("{} rgba", channels);
 				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
-				// GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+				GlCall(glGenerateMipmap(GL_TEXTURE_2D));
 			} 
 			else if (channels == 3)
 			{
-				IRON_CORE_INFO("{} rgb", channels);
-				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
-				// GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
+				GlCall(glGenerateMipmap(GL_TEXTURE_2D));
 			}
 			else if (channels == 1)
 			{
 				GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data));
-				// GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+				GlCall(glGenerateMipmap(GL_TEXTURE_2D));
 			}
 		}
 		else
 		{
-			IRON_CORE_INFO("[ERROR] Failed to load image");
+			IRON_CORE_ERROR("Failed to load image");
 		}
+
+		GlCall(glBindTexture(GL_TEXTURE_2D, 0));
 		stbi_image_free(data);
 	}
+}
+
+Texture2D::Texture2D(const unsigned char *data, int width, int height, int channels)
+		: m_path(""),
+			m_type("")
+	{
+	GlCall(glGenTextures(1, &m_rendererID));
+	GlCall(glBindTexture(GL_TEXTURE_2D, m_rendererID));
+
+	GlCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+	GlCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+	GlCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+	GlCall(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+
+	if (data)
+	{
+		if (channels == 4)
+		{
+			GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
+			GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+		} 
+		else if (channels == 3)
+		{
+			GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
+			GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+		}
+		else if (channels == 1)
+		{
+			GlCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_UNSIGNED_BYTE, data));
+			GlCall(glGenerateMipmap(GL_TEXTURE_2D));
+		}
+	}
+	else
+	{
+		IRON_CORE_ERROR("Failed to load image");
+	}
+
+	GlCall(glBindTexture(GL_TEXTURE_2D, 0));
+	delete[] data;
 }
 
 Texture2D::~Texture2D()
 {
 
+}
+
+/* static */
+Texture2D Texture2D::SolidColor(const Iron::Vector3 &color)
+{
+	int size = 1;
+	int channels = 4;
+	unsigned char *data = new unsigned char[channels * size * size * sizeof(unsigned char)];
+
+	for (unsigned int i = 0; i < size * size; i++) 
+	{
+		data[i * channels    ] = (unsigned char)(color.GetX() * 255.0f);
+		data[i * channels + 1] = (unsigned char)(color.GetY() * 255.0f);
+		data[i * channels + 2] = (unsigned char)(color.GetZ() * 255.0f);
+		data[i * channels + 3] = (unsigned char)(255.0f);
+	}
+
+	return Texture2D(data, size, size, 4);
 }
 
 const std::string &Texture2D::GetPath() const 
@@ -89,13 +146,13 @@ void Texture2D::AddTexture(const std::string &type, const char *path, bool inver
 	}
 	else
 	{
-		IRON_CORE_INFO("[IRON] Failed to load image");
+		IRON_CORE_ERROR("Failed to load image");
 	}
 }
 
 void Texture2D::RemoveTexture() const
 {
-		GlCall(glDeleteTextures(1, &m_rendererID));
+	GlCall(glDeleteTextures(1, &m_rendererID));
 }
 
 void Texture2D::Bind() const

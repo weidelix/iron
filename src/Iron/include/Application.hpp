@@ -26,7 +26,7 @@ namespace Iron
 		virtual void Update(){ }
 		virtual void OnExit(){ }
 		virtual bool Run();
-		virtual void OnEvent(Event& event);
+		virtual void OnEvent(Event& event) { }
 		Input GetInput();
 		static Application &Get();
 		Window& GetWindow();

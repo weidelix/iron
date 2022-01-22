@@ -15,8 +15,8 @@ namespace Iron
 	Application* Application::m_instance = nullptr;
 	
 	Application::Application()
-		:m_window(std::unique_ptr<Window>(Window::Create())),
-		 m_input(m_window.get())
+		: m_window(std::unique_ptr<Window>(Window::Create())),
+		  m_input(m_window.get())
 	{
 		IRON_CORE_ASSERT(!m_instance, "[IRON]: An instance already exist!");
 		m_instance = this;
@@ -49,13 +49,6 @@ namespace Iron
 		}
 		return true; 
 	}
-	
-	bool EventHandler(Event& event)
-	{
-		// Do some event handling
-
-		return true;
-	}
 
 	// TODO : Change function name to a better one
 	void Application::EventCallback(Event& event)
@@ -65,12 +58,6 @@ namespace Iron
 		{
 			layer->OnEvent(event);
 		}
-	}
-
-	void Application::OnEvent(Event &event)
-	{
-		EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<WindowResizeEvent>(bind(&EventHandler, std::placeholders::_1));
 	}
 
 	Input Application::GetInput()
