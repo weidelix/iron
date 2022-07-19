@@ -12,7 +12,7 @@ namespace Iron
 	{ }
 
 	Vector3::Vector3(float v)
-		: m_vec(1.0f)
+		: m_vec(v)
 	{ }
 
 	Vector3::Vector3(const Vector3 &vec)
@@ -26,7 +26,7 @@ namespace Iron
 	Vector3 Vector3::Normalize(const Vector3 &vec)
 	{
 		auto norm = glm::normalize(vec.m_vec);
-		return Vector3();
+		return Vector3(norm);
 	}
 
 	Vector3 &Vector3::operator+= (const Vector3 &rhs)
@@ -103,7 +103,7 @@ namespace Iron
 	Transform::Transform()
 		:position(0, 0, 0),
 		 rotation(Vector3(0, 0, 0)),
-		 eulerAngle(Quaternion::ToEuler(rotation.m_rotation)),
+		 eulerAngles(Quaternion::ToEuler(rotation.m_rotation)),
 		 scale(1, 1, 1),
 		 m_model(1.0)
 	{
@@ -147,22 +147,22 @@ namespace Iron
 		m_model = glm::scale(m_model, scale.m_vec);
 	}
 
-	struct Vector3 &Transform::GetPosition()
+	struct Vector3 Transform::GetPosition()
 	{
 		return position;
 	}
 	
-	struct Quaternion &Transform::GetRotation()
+	struct Quaternion Transform::GetRotation()
 	{
 		return rotation;
 	}
 
-	struct Vector3 &Transform::GetEulerAngle()
+	struct Vector3 Transform::GetEulerAngles()
 	{
-		return eulerAngle;
+		return eulerAngles;
 	}
 	
-	struct Vector3 &Transform::GetScale()
+	struct Vector3 Transform::GetScale()
 	{
 		return scale;
 	}
@@ -180,7 +180,7 @@ namespace Iron
 
 		m_model = glm::inverse(mat);
 		rotation.SetRotation(m_model);
-		eulerAngle = Quaternion::ToEuler(rotation.m_rotation);
+		eulerAngles = Quaternion::ToEuler(rotation.m_rotation);
 
 		m_front = Vector3(mat[0][2], mat[1][2], mat[2][2]);
 		m_up    = Vector3(mat[0][1], mat[1][1], mat[2][1]);

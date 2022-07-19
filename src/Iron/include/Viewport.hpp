@@ -5,6 +5,7 @@
 #include "Event/KeyEvent.hpp"
 #include "Input.hpp"
 #include "Log.hpp"
+#include "Renderer/Components/Transform.hpp"
 #include "Time.hpp"
 
 namespace Iron
@@ -18,9 +19,10 @@ namespace Iron
 		float m_yaw = 90.0f;
 		float m_pitch = 0.0f;
 		float m_roll = 0.0f;
-		bool isHoldingRight = false;
-		bool isHoldingLeft = false;
-		bool firstMouse = true;
+		bool m_isHoldingRight = false;
+		bool m_isHoldingLeft = false;
+		bool m_firstMouse = true;
+		Vector3 m_newPos;
 	
 	public:
 		Viewport(const std::string& name);

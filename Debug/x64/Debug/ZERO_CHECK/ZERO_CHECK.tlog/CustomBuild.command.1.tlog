@@ -1,0 +1,10 @@
+^D:\REPO\IRON\DEBUG\CMAKEFILES\6815F8C6BE6D4C0791AECB176E2B06AA\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Repo/Iron -BD:/Repo/Iron/Debug --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file D:/Repo/Iron/Debug/Iron.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

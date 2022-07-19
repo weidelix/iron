@@ -33,8 +33,8 @@ namespace Iron
 		inline void SetInternalEventCallback(const std::function<void(Event&)> callback) override { m_data.InternalEventCallback = callback; }
 		inline GLFWwindow* GetWindowPointer() override { return m_window; }
 		inline std::vector<Event*>* GetEvents() override { return &m_data.Events; }
-		inline void SetVSync(bool val) override;
-		inline void OnUpdate() override;
+		void SetVSync(bool val) override;
+		void OnUpdate() override;
 		
 		void Init(const WindowProps& prop);
 		void Close();

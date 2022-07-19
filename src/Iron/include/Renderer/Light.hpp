@@ -9,8 +9,13 @@ namespace Iron
 	{
 	private:
 		Transform m_transform;
+		Vector3 m_color;
+
+
 	public:
 		Light();
 		~Light();
+
+		
 	};
 }

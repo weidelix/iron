@@ -116,7 +116,6 @@ namespace Iron
 	public:
 		Quaternion() = default;
 		Quaternion(const Vector3 &rotation);
-		// void SetRotation(const glm::quat &rotation);
 		void SetRotation(const Quaternion &rotation);
 		const Quaternion &GetQuaternion() const;
 		static Vector3 ToEuler(const Quaternion &quat);
@@ -126,7 +125,6 @@ namespace Iron
 	class IRON_API Transform
 	{
 	private:
-		//struct LocalPosition m_localPosition;
 		glm::mat4 m_model;
 		Vector3 m_up = Vector3(0.0f, 1.0f,  0.0f);
 		Vector3 m_front = Vector3(0.0f, 0.0f, 1.0f);
@@ -135,17 +133,17 @@ namespace Iron
 	public:
 		struct Vector3 position;
 		struct Quaternion rotation;
-		struct Vector3 eulerAngle;
+		struct Vector3 eulerAngles;
 		struct Vector3 scale;
 		
 		Transform();
 		Transform(const glm::vec3 &position);
 		~Transform();
 
-		struct Vector3 &GetPosition();
-		struct Quaternion &GetRotation();
-		struct Vector3 &GetEulerAngle();
-		struct Vector3 &GetScale();
+		struct Vector3 GetPosition();
+		struct Quaternion GetRotation();
+		struct Vector3 GetEulerAngles();
+		struct Vector3 GetScale();
 
 		void SetPosition(const Vector3 &position);
 		void SetRotation(const Quaternion &rotation);

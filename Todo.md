@@ -7,7 +7,3 @@
 
 - Camera API
 
-# Todo Urgent
-
-Fix segmentation fault in Shader.cpp::SetMat4x4
-Fix cmake rebuild non-modified files 

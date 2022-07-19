@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Platform/OpenGL/ImGui_GLFW.h"
-#include "Platform/OpenGL/ImGui_OpenGL3.h"
+#include "ImGui/ImGui_GLFW.h"
+#include "ImGui/ImGui_OpenGL3.h"
 #include "Log.hpp"
 #include "Core.hpp"
 #include "Layer.hpp"

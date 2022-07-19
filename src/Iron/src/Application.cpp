@@ -22,14 +22,14 @@ namespace Iron
 		m_instance = this;
 		m_window->SetEventCallback(std::bind(&Application::EventCallback, this, std::placeholders::_1));
 		m_window->SetInternalEventCallback(std::bind(&Internal::InternalEventsHandler, std::placeholders::_1));
-
-		// Create a default shader on start
+		
+		// Load a default shader on start
 		Renderer::LoadShader(std::string("default"), std::string("./../../../res/shaders/default.glsl"));
 	}
 
 	bool Application::Run() 
 	{
-		RenderCommand::SetClearColor({ 0.2, 0.2, 0.2, 1.0 });
+		RenderCommand::SetClearColor({ 0.8f, 0.8f, 1.0f, 1.0f });
 		Viewport *viewport = new Viewport("Viewport");
 
 		m_layerStack.PushLayer(viewport);

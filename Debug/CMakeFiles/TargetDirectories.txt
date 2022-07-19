@@ -1,0 +1,4 @@
+D:/Repo/Iron/Debug/CMakeFiles/Iron.dir
+D:/Repo/Iron/Debug/CMakeFiles/ALL_BUILD.dir
+D:/Repo/Iron/Debug/CMakeFiles/ZERO_CHECK.dir
+D:/Repo/Iron/Debug/Sandbox/build/CMakeFiles/Sandbox.dir

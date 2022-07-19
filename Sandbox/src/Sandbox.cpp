@@ -19,16 +19,16 @@ public:
 		std::shared_ptr<Texture2D> albedo = std::make_shared<Texture2D>(TEX_ALBEDO, "M4A1/textures/n4a1_albedo.jpg", false);
 		std::shared_ptr<Texture2D> ao = std::make_shared<Texture2D>(TEX_AO, "M4A1/textures/n4a1_AO.jpg", false);
 
-		// gun.SetAlbedo(albedo);
-		// gun.SetAO(ao);
+		gun.GetMaterial()->SetAlbedo(albedo);
 		gun.GetMaterial()->SetAO(ao);
 		gun.GetTransform().SetScale(Vector3(0.05f));
+		gun.GetMaterial()->SetTint(1, 1, 1);	
 	}
 
 	// Runs code on start
 	void Start() override 
 	{
-
+		gun.GetTransform().SetScale(Vector3(0.05));
 	}
 
 	// Runs code every frame

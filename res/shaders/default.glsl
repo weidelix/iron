@@ -42,7 +42,6 @@ uniform bool useAO;
 
 void main()
 {
-	// Set the albedo
 	if (useAlbedo)
 	{
 		gl_FragColor = texture(fMaterial.texture_diffuse1, fTexCoords) * fMaterial.tint;
@@ -52,7 +51,6 @@ void main()
 		gl_FragColor = vec4(1.0f);
 	}
 
-	// Apply AO map
 	if (useAO)
 	{
 		gl_FragColor = vec4(texture(fMaterial.texture_ao, fTexCoords).r) * gl_FragColor;

@@ -1,4 +1,6 @@
 #include "Viewport.hpp"
+#include "Log.hpp"
+#include "Renderer/Components/Transform.hpp"
 
 namespace Iron
 {
@@ -12,6 +14,7 @@ namespace Iron
 	{
 		m_viewportCamera.SetAsMain();
 		m_viewportCamera.GetTransform().SetPosition(Vector3(0.0f, 0.0f, 6.0f));
+		m_newPos = m_viewportCamera.GetTransform().GetPosition();
 		m_viewportCamera.GetTransform().LookAt(Vector3(0.0f, 0.0f, 6.0f) - Vector3(0.0f));
 	}
 
@@ -22,7 +25,9 @@ namespace Iron
 
 	void Viewport::OnUpdate()
 	{
-
+		auto &transform = m_viewportCamera.GetTransform();
+		auto curPos = transform.GetPosition();
+		transform.SetPosition(curPos + (m_newPos - curPos) * 0.2f);
 	}
 
 	bool Viewport::KeyCallback(KeyPressEvent &event)
@@ -35,16 +40,15 @@ namespace Iron
 		float panSensitivity = 1.0f;
 		float rotationSensitivity = 0.3f;
 
-		if (isHoldingLeft)
+		if (m_isHoldingLeft)
 		{		
 			double xpos = event.GetMousePositionX();
 			double ypos = event.GetMousePositionY();
-
-			if (firstMouse)
+			if (m_firstMouse)
 			{
 				m_lastX = xpos;
 				m_lastY = ypos;
-				firstMouse = false;
+				m_firstMouse = false;
 			}
 
 			float xoffset = xpos - m_lastX;
@@ -56,7 +60,7 @@ namespace Iron
 			yoffset *= panSensitivity * Time::DeltaTime();
 
 			Transform &transform = m_viewportCamera.GetTransform();
-			Vector3 &pos = transform.GetPosition();
+			Vector3 pos = transform.GetPosition();
 			
 			if (xoffset > m_lastX)
 				pos = pos + transform.Right() * xoffset;
@@ -68,19 +72,19 @@ namespace Iron
 			else if (yoffset > m_lastY)
 				pos = pos + transform.Up() * yoffset;
 
-			transform.SetPosition(pos);
+			m_newPos = pos;
 		}
 
-		if (isHoldingRight)
+		if (m_isHoldingRight)
 		{
 			double xpos = event.GetMousePositionX();
 			double ypos = event.GetMousePositionY();
 
-			if (firstMouse)
+			if (m_firstMouse)
 			{
 				m_lastX = xpos;
 				m_lastY = ypos;
-				firstMouse = false;
+				m_firstMouse = false;
 			}
 		
 			float xoffset = xpos - m_lastX;
@@ -111,48 +115,32 @@ namespace Iron
 
 	bool Viewport::MouseScrollCallback(MouseScrollEvent &event)
 	{
+		float scrollSensitivity = 1.5f;
 		float offset = event.GetMouseYOffset(); 
 		Transform &transform = m_viewportCamera.GetTransform();
-		Vector3 &pos = transform.GetPosition();
+		Vector3 position = transform.GetPosition();
 
-		if(offset > 0)
-			pos = pos - transform.Front() * event.GetMouseYOffset();	
-		
-		if(offset < 0)
-			pos = pos - transform.Front() * event.GetMouseYOffset();	
-		
-		transform.SetPosition(pos);
+		m_newPos = position - transform.Front() * offset * scrollSensitivity;
 		return true;
 	}
 
 	bool Viewport::MouseButtonCallback(MouseButtonPressedEvent &event)
 	{
-		if (event.GetMouseEvent() == Mouse::Mouse_Right)
-			isHoldingRight = true;
-
-		else if (event.GetMouseEvent() == Mouse::Mouse_Left)
-			isHoldingLeft = true;
-
+		m_isHoldingRight = event.GetMouseEvent() == Mouse::Mouse_Right;
+		m_isHoldingLeft = event.GetMouseEvent() == Mouse::Mouse_Left;
 		return true;
 	}
 
 	bool Viewport::MouseReleaseCallback(MouseButtonReleasedEvent &event)
 	{
-		if (event.GetMouseEvent() == Mouse::Mouse_Right)
-		{
-			firstMouse = true;
-			isHoldingRight = false;
-		}
-		else if (event.GetMouseEvent() == Mouse::Mouse_Left)
-		{
-			firstMouse = true;
-			isHoldingLeft = false;
-		}
+		m_firstMouse = true;
+		m_isHoldingRight = false;
+		m_isHoldingLeft = false;
 		return true;
 	}
 
 	void Viewport::OnEvent(Event& event)
-	{;
+	{
 		EventDispatcher dispatcher(event);
 
 		dispatcher.Dispatch<KeyPressEvent>(bind(&Viewport::KeyCallback, this, std::placeholders::_1));
