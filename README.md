@@ -10,5 +10,5 @@
 * Lighting and Materials
 
 ### TODO
-* Check for data leaks (especially in events)
-* Optimized textures
+* Check for data leaks
+* Optimize textures
