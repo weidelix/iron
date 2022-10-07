@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include "Log.hpp"
 #include "Renderer/RenderCommand.hpp"
+#include "Renderer/Shader.hpp"
 #include <fstream>
 
 static GLenum StringToShaderType(std::string &type)
@@ -288,6 +289,17 @@ namespace Iron
 	std::shared_ptr<Shader>& ShaderLibrary::Load(const std::string &name, const std::string &path)
 	{
 		auto shader = std::make_shared<Shader>(name, path);
+		Add(name, shader);
+
+		return Get(shader->GetName());
+	}
+
+	std::shared_ptr<Shader>& ShaderLibrary::Load(const std::string &name, const std::string &vertexShaderPath, const std::string &fragmentShaderPath)
+	{
+		std::string vertexSource = Shader::ReadFile(vertexShaderPath);
+		std::string fragmentSource = Shader::ReadFile(fragmentShaderPath);
+		
+		auto shader = CREATE_SHADER(name, vertexSource, fragmentSource);
 		Add(name, shader);
 
 		return Get(shader->GetName());

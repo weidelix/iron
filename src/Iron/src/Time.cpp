@@ -17,4 +17,9 @@ namespace  Iron
 	{
 		return s_deltaTime;
 	}
+
+	float Time::TimeElapsed()
+	{
+		return glfwGetTime();
+	}
 }

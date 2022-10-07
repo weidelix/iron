@@ -1,4 +1,6 @@
+#include "Core.hpp"
 #include "Log.hpp"
+#include "Renderer/Components/Material.hpp"
 #include "Renderer/Components/Transform.hpp"
 #include "Renderer/Texture2D.hpp"
 #include "assimp/material.h"
@@ -34,7 +36,6 @@ namespace Iron
 		
     m_dir = path.substr(0, path.find_last_of('/'));
     ProcessNode(scene->mRootNode, scene);
-		m_material->ApplyMaterial(m_shader);
 	}
 
 	GameObject::GameObject(const std::vector<std::shared_ptr<Mesh>> &meshes) 
@@ -58,8 +59,6 @@ namespace Iron
 	void GameObject::Draw()
 	{
 		m_shader->SetMat4x4("model", m_transform.GetMatrix());
-
-		// Try to avoid applying the material every draw
 		m_material->ApplyMaterial(m_shader);
 
 		for(auto& m : m_meshes)
@@ -112,7 +111,7 @@ namespace Iron
 			vertices.push_back(vertex);
     }
 		
-    // process indices
+    // Process indices
     for(unsigned int i = 0; i < mesh->mNumFaces; i++)
 		{
 			aiFace face = mesh->mFaces[i];
@@ -131,7 +130,6 @@ namespace Iron
 	void GameObject::SetMaterial(const std::shared_ptr<Material> &material)
 	{
 		m_material = material;
-		m_material->ApplyMaterial(m_shader);
 	}
 
 	const std::shared_ptr<Material> &GameObject::GetMaterial()
@@ -148,24 +146,6 @@ namespace Iron
 	{
 		m_shader = shader;
 	}
-
-	// void GameObject::SetTint(const Vector3 &tint)
-	// {
-	// 	m_material->SetTint(tint.GetX(), tint.GetY(), tint.GetZ());
-	// 	m_material->ApplyMaterial(m_shader);
-	// }
-
-	// void GameObject::SetAlbedo(const std::shared_ptr<Texture2D> &albedo)
-	// {
-	// 	m_material->SetAlbedo(albedo);
-	// 	m_material->ApplyMaterial(m_shader);
-	// }
-
-	// void GameObject::SetAO(const std::shared_ptr<Texture2D> &ao)
-	// {
-	// 	m_material->SetAO(ao);
-	// 	m_material->ApplyMaterial(m_shader);
-	// }
 
 	/* static */
 	GameObject GameObject::Load(const std::string &path)
@@ -190,7 +170,7 @@ namespace Iron
 																				{{ 1.0f, 0.0f,-1.0f}, {0.0f, 1.0f, 0.0f}, {1.0f, 1.0f}}
 																			};
 				std::vector<unsigned int> iBuffer = { 0, 1, 2, 2, 3, 1 };
-				std::vector<Texture2D> tBuffer = { Texture2D(std::string("texture_diffuse"), "./../../../res/textures/grass.jpeg", true) };
+				std::vector<Texture2D> tBuffer = { Texture2D(TEX_ALBEDO, "./../../../res/textures/grass.jpeg", true) };
 
 				std::vector<std::shared_ptr<Mesh>> meshes = { std::make_shared<Mesh>(vBuffer, iBuffer) };
 
@@ -212,8 +192,8 @@ namespace Iron
 																			};
 
 				std::vector<unsigned int> iBuffer = { 
-																							0, 1, 2, 2, 3, 0, 
-																							4, 5, 6, 6, 7, 4, 
+																							0, 1, 2, 2, 3, 0,
+																							4, 5, 6, 6, 7, 4,
 																							4, 0, 3, 3, 7, 4,
 																							5, 1, 2, 2, 6, 5,
 																							3, 2, 6, 6, 7, 3,
@@ -222,7 +202,7 @@ namespace Iron
 
 				std::vector<Texture2D> tBuffer = { };
 
-				std::vector<std::shared_ptr<Mesh>> meshes = { std::make_shared<Mesh>() };
+				std::vector<std::shared_ptr<Mesh>> meshes = { std::make_shared<Mesh>(vBuffer, iBuffer) };
 
 				return GameObject(meshes);
 				break;

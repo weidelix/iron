@@ -11,18 +11,20 @@ namespace Iron
 	{
 	private:
 		static ShaderLibrary m_shaderLibrary;
-		static std::shared_ptr<Material> m_defaultMaterial;
+		static MaterialLibrary m_materialLibrary;
 
 	public:
 		static void BeginScene();
 		static void EndScene();
 		static void Submit(const std::shared_ptr<VertexArray>& vertexArr);
-		static void Submit(const std::shared_ptr<Shader> &shader, const std::shared_ptr<VertexArray>& vertexArr);
-		static std::shared_ptr<Shader> &LoadShader(const std::string &path);
-		static std::shared_ptr<Shader> &LoadShader(const std::string &name, const std::string &path);
+		static void Submit(const IEShader &shader, const std::shared_ptr<VertexArray>& vertexArr);
+		static IEShader &LoadShader(const std::string &path);
+		static IEShader &LoadShader(const std::string &name, const std::string &path);
+		static IEShader &LoadShader(const std::string &name, const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
+		static IEMaterial &CreateMaterial(const std::string &name);
 		static void UseDefaultShader();
-		static std::shared_ptr<Shader> &GetDefaultShader();
-		static std::shared_ptr<Material> &GetDefaultMaterial();
+		static IEShader &GetDefaultShader();
+		static IEMaterial &GetDefaultMaterial();
 	};
 
 	class ComponentLibrary

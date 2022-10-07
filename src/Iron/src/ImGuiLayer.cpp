@@ -4,7 +4,7 @@
 #include "ImGuiLayer.hpp"
 #include <imgui_internal.h>
 #include "Window.hpp"
-#include "Application.hpp"
+#include "IronEngine.hpp"
 
 using namespace ImGui;
 
@@ -36,7 +36,7 @@ namespace Iron
 		io.Fonts->AddFontDefault(m_defaultFont->ConfigData);
 
 		// Setup Platform/Renderer bindings
-		Window &window = Application::Get().GetWindow();
+		Window &window = IronEngine::Get().GetWindow();
 		ImGui_ImplGlfw_InitForOpenGL(window.GetWindowPointer(), true);
 		ImGui_ImplOpenGL3_Init("#version 330");
 		// Setup Dear ImGui style
@@ -52,7 +52,7 @@ namespace Iron
 	
 	void ImGuiLayer::OnUpdate() 
 	{ 
-		auto& window = Application::Get();
+		auto& window = IronEngine::Get();
 		ImGui_ImplOpenGL3_NewFrame();        
 		ImGui_ImplGlfw_NewFrame();
 		NewFrame();

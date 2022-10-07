@@ -1,11 +1,14 @@
 ![Iron Engine Logo](https://github.com/weidelix/iron/blob/master/res/images/iron_logo.png)
 
-## __Internal features being worked on🔧__
-* Model loading and primitives 
-* Engine API
+## __What's working__
+* Model Loading
+* Events
+* Input
+* Material System (partial)
 
-## TODO
+## __Features being worked on🔧__
+* Lighting and Materials
+
+### TODO
 * Check for data leaks (especially in events)
-* Implement primitive game objects
-
-## More engine description will be added in the future👍
+* Optimized textures

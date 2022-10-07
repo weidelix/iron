@@ -6,6 +6,14 @@
 #include "Core.hpp"
 #include <unordered_map>
 
+namespace Iron 
+{
+	class Shader;
+}
+
+using IEShader = std::shared_ptr<Iron::Shader>;
+#define CREATE_SHADER(name, vertex, fragment) std::make_shared<Iron::Shader>(name, vertex, fragment)
+
 namespace Iron
 {
 	class Shader
@@ -22,7 +30,7 @@ namespace Iron
 		~Shader();
 
 		void Compile(std::unordered_map<unsigned int, std::string> &Shaderources);
-		std::string ReadFile(const std::string &path);
+		static std::string ReadFile(const std::string &path);
 		std::unordered_map<unsigned int, std::string> Preprocess(std::string &file);
 		std::string& GetName();
 
@@ -52,6 +60,7 @@ namespace Iron
 		void Add(const std::string &name, const std::shared_ptr<Shader> &shader);
 		std::shared_ptr<Shader>& Load(const std::string &path);
 		std::shared_ptr<Shader>& Load(const std::string &name, const std::string &path);
+		std::shared_ptr<Shader>& Load(const std::string &name, const std::string &vertexShaderPath, const std::string &fragmentShaderPath);
 		std::shared_ptr<Shader>& Get(const std::string &name);
 		bool Exists(const std::string &name);
 	};

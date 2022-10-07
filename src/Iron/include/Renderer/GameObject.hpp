@@ -3,6 +3,7 @@
 #include "Renderer/Components/Material.hpp"
 #include "Renderer/Components/Mesh.hpp"
 #include "Renderer/Components/Transform.hpp"
+#include "Renderer/Shader.hpp"
 #include "Renderer/Texture2D.hpp"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -23,10 +24,10 @@ namespace Iron
 	class IRON_API GameObject
 	{
 	private:
-		std::shared_ptr<Shader> &m_shader;
-		std::shared_ptr<Material> &m_material;
+		IEShader &m_shader;
+		IEMaterial m_material;
 		std::vector<std::shared_ptr<Mesh>> m_meshes;
-		std::vector<std::shared_ptr<Texture2D>> m_texturesLoaded;
+		std::vector<IETexture2D> m_texturesLoaded;
 		Transform m_transform;
 		std::string m_dir;
 
@@ -46,10 +47,6 @@ namespace Iron
 		const std::shared_ptr<Material> &GetMaterial();
 		void SetShader(const std::shared_ptr<Shader> &shader);
 		const std::shared_ptr<Shader> &GetShader();
-
-		// void SetTint(const Vector3 &tint);
-		// void SetAlbedo(const std::shared_ptr<Texture2D> &albedo);
-		// void SetAO(const std::shared_ptr<Texture2D> &ao);
 		
 		static GameObject Load(const std::string &path);
 		static GameObject CreateEmpty();

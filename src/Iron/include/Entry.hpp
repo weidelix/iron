@@ -1,7 +1,8 @@
 #pragma once 
 
+#include "IronEngine.hpp"
 #if defined(IRON_PLATFORM_WINDOW)
-	extern Iron::Application* Iron::CreateApplication();
+	extern Iron::IronEngine* Iron::CreateApplication();
  
 	int main()
 	{
@@ -11,7 +12,7 @@
 		delete app;
 	}
 #elif defined(IRON_PLATFORM_LINUX)
-	extern Iron::Application* Iron::CreateApplication();
+	extern Iron::IronEngine* Iron::CreateApplication();
  
 	int main()
 	{
