@@ -97,46 +97,46 @@ namespace Iron {
 		glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 			switch (action) {
-			case GLFW_PRESS: {
-				if (mods != 0) {
-					KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);
+				case GLFW_PRESS: {
+					if (mods != 0) {
+						KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);
+						data.Events.push_back(e);
+						data.InternalEventCallback(*e);
+						data.EventCallback(*e);
+					}
+
+					else {
+						KeyPressEvent* e = new KeyPressEvent(key, false);
+						data.Events.push_back(e);
+						data.InternalEventCallback(*e);
+						data.EventCallback(*e);
+					}
+				} break;
+
+				case GLFW_RELEASE: {
+					KeyReleaseEvent* e = new KeyReleaseEvent(key);
 					data.Events.push_back(e);
 					data.InternalEventCallback(*e);
 					data.EventCallback(*e);
-				}
+				} break;
 
-				else {
-					KeyPressEvent* e = new KeyPressEvent(key, false);
-					data.Events.push_back(e);
-					data.InternalEventCallback(*e);
-					data.EventCallback(*e);
-				}
-			} break;
+				case GLFW_REPEAT: {
+					if (mods != 0) {
+						KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);
+						data.Events.push_back(e);
+						data.InternalEventCallback(*e);
+						data.EventCallback(*e);
+					}
 
-			case GLFW_RELEASE: {
-				KeyReleaseEvent* e = new KeyReleaseEvent(key);
-				data.Events.push_back(e);
-				data.InternalEventCallback(*e);
-				data.EventCallback(*e);
-			} break;
-
-			case GLFW_REPEAT: {
-				if (mods != 0) {
-					KeyCombinationEvent* e = new KeyCombinationEvent(key, mods);
-					data.Events.push_back(e);
-					data.InternalEventCallback(*e);
-					data.EventCallback(*e);
-				}
-
-				else {
-					KeyPressEvent* e = new KeyPressEvent(key, true);
-					data.Events.push_back(e);
-					data.InternalEventCallback(*e);
-					data.EventCallback(*e);
-				}
-			} break;
+					else {
+						KeyPressEvent* e = new KeyPressEvent(key, true);
+						data.Events.push_back(e);
+						data.InternalEventCallback(*e);
+						data.EventCallback(*e);
+					}
+				} break;
 			}
-			});
+		});
 	}
 
 	void WindowsWindow::Close() { glfwTerminate(); }
