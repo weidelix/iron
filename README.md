@@ -9,6 +9,3 @@
 ## __Features being worked on🔧__
 * Lighting and Materials
 
-### TODO
-* Check for data leaks
-* Optimize textures

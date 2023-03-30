@@ -29,7 +29,7 @@ namespace Iron
 		Renderer::LoadShader(std::string("default"), 
 												 std::string("./../../../res/shaders/default/default.vert"), 
 												 std::string("./../../../res/shaders/default/default.frag"));
-		Renderer::CreateMaterial("default");
+		CreateMaterial("default");
 	}
 
 	bool IronEngine::Run() 
